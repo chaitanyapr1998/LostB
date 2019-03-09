@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "817541340712",
+    "firebase_url": "https://lostb-48c7c.firebaseio.com",
+    "project_id": "lostb-48c7c",
+    "storage_bucket": "lostb-48c7c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817541340712:android:9d4462ffb7d0e10a",
+        "android_client_info": {
+          "package_name": "com.example.chaitanya.lostb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "817541340712-ba000o9fm4btcmbr67hrj2lnf48kt6jq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chaitanya.lostb",
+            "certificate_hash": "d46bf540fe1b6f6f357aa750efe9281895edc620"
+          }
+        },
+        {
+          "client_id": "817541340712-l6m645fi4ehgg4k866fljle23kuimth1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1zyhEkTStQnoosgTyclGOPH6JaEkDjTA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "817541340712-l6m645fi4ehgg4k866fljle23kuimth1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
