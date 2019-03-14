@@ -5,38 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".LostActivity"
-    tools:showIn="@layout/app_bar_lost">
+    tools:context=".ProfileActivity">
 
-    <EditText
-        android:id="@+id/edt_id"
+    <ImageView
+        android:id="@+id/img_pro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:editable="false"/>
+        android:src="@drawable/image_place_holder"/>
 
-    <EditText
-        android:id="@+id/edt_title"
+    <TextView
+        android:id="@+id/txt_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Title" />
+        android:text="abcd@gmail.com"
+        android:textStyle="bold"/>
 
-    <EditText
-        android:id="@+id/edt_place"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <TextView
+        android:id="@+id/txt_his"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Place" />
-
-
-
-    <Button
-        android:id="@+id/btn_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SUBMIT"
-        android:background="@color/colorAccent"/>
-
-
+        android:text="History"/>
 
 
 </LinearLayout>

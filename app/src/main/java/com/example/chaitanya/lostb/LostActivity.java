@@ -1,7 +1,11 @@
 package com.example.chaitanya.lostb;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,15 +18,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.IOException;
 
 public class LostActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    ImageView pics;
-    EditText name, place;
-    private static final int IMAGE_CODE=111;
+
+    EditText name, place, id;
+    Button btnSubmit;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +53,8 @@ public class LostActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(LostActivity.this, PostLostItems.class);
+                startActivity(intent);
             }
         });
 
@@ -49,32 +67,20 @@ public class LostActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        pics = (ImageView)findViewById(R.id.img_pics);
         name = (EditText)findViewById(R.id.edt_title);
         place = (EditText)findViewById(R.id.edt_place);
+        id = (EditText)findViewById(R.id.edt_id);
 
-        pics.setOnClickListener(new View.OnClickListener() {
+        btnSubmit = (Button)findViewById(R.id.btn_submit);
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageChooser();
+
             }
         });
-    }
 
-    private void imageChooser(){
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Please select an image"), IMAGE_CODE);
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == IMAGE_CODE && resultCode == RESULT_OK && data != null && data.getData()!= null){
-
-        }
     }
 
     @Override
@@ -126,7 +132,10 @@ public class LostActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_logout) {
-
+            FirebaseAuth.getInstance().signOut();
+            finish();
+            Intent intent = new Intent(LostActivity.this, MainActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

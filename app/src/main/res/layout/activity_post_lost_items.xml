@@ -5,38 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".LostActivity"
-    tools:showIn="@layout/app_bar_lost">
-
-    <EditText
-        android:id="@+id/edt_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:editable="false"/>
+    tools:context=".PostLostItems">
 
     <EditText
         android:id="@+id/edt_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Title" />
+        android:hint="Title*"/>
 
     <EditText
-        android:id="@+id/edt_place"
+        android:id="@+id/edt_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Place" />
+        android:hint="Description"/>
 
+    <EditText
+        android:id="@+id/edt_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Date*"/>
 
+    <EditText
+        android:id="@+id/edt_loc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Location*"/>
+
+    <Spinner
+        android:id="@+id/spin_cat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </Spinner>
 
     <Button
         android:id="@+id/btn_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SUBMIT"
-        android:background="@color/colorAccent"/>
+        android:text="SUBMIT"/>
 
-
-
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CLEAR"/>
 
 </LinearLayout>
