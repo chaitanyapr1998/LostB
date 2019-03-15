@@ -1,28 +1,40 @@
 package com.example.chaitanya.lostb;
 
 public class Post {
-    private String mTitle;
-    private String mDate;
-    private String mLoc;
+    private String Title;
+    private String Date;
+    private String Location;
 
     public Post() {
     }
 
-    public Post(String mTitle, String mDate, String mLoc) {
-        this.mTitle = mTitle;
-        this.mDate = mDate;
-        this.mLoc = mLoc;
+    public Post(String title, String date, String location) {
+        Title = title;
+        Date = date;
+        Location = location;
     }
 
-    public String getmTitle() {
-        return mTitle;
+    public String getTitle() {
+        return Title;
     }
 
-    public String getmDate() {
-        return mDate;
+    public void setTitle(String title) {
+        Title = title;
     }
 
-    public String getmLoc() {
-        return mLoc;
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String date) {
+        Date = date;
+    }
+
+    public String getLocation() {
+        return Location;
+    }
+
+    public void setLocation(String location) {
+        Location = location;
     }
 }

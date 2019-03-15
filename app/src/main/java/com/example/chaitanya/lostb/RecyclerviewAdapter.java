@@ -17,20 +17,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.ViewHolder>{
 
-    private ArrayList<String> mTitle = new ArrayList<>();
-    private ArrayList<String> mDate = new ArrayList<>();
-    private ArrayList<String> mLoc = new ArrayList<>();
-    private ArrayList<String> mImages = new ArrayList<>();
+//    private ArrayList<String> mTitle = new ArrayList<>();
+//    private ArrayList<String> mDate = new ArrayList<>();
+//    private ArrayList<String> mLoc = new ArrayList<>();
+//    private ArrayList<String> mImages = new ArrayList<>();
     private Context mContext;
 
-    private ArrayList<Post> mData = new ArrayList<Post>();
+    private ArrayList<Post> mData ;
 
-    public RecyclerviewAdapter(ArrayList<String> mTitle, ArrayList<String> mDate, ArrayList<String> mLoc, ArrayList<String> mImages, Context mContext) {
-        this.mTitle = mTitle;
-        this.mDate = mDate;
-        this.mLoc = mLoc;
-        this.mImages = mImages;
+    public RecyclerviewAdapter(Context mContext, ArrayList<Post> mData) {
         this.mContext = mContext;
+        this.mData = mData;
     }
 
     @NonNull
@@ -43,19 +40,19 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Glide.with(mContext)
-                .asBitmap()
-                .load(mImages.get(i))
-                .into(viewHolder.image);
-        viewHolder.title.setText(mTitle.get(i));
-        viewHolder.date.setText(mDate.get(i));
-        viewHolder.place.setText(mLoc.get(i));
+//        Glide.with(mContext)
+//                .asBitmap()
+//                .load(mImages.get(i))
+//                .into(viewHolder.image);
+        viewHolder.title.setText(mData.get(i).getTitle());
+        viewHolder.date.setText(mData.get(i).getDate());
+        viewHolder.place.setText(mData.get(i).getLocation());
 
     }
 
     @Override
     public int getItemCount() {
-        return mTitle.size();
+        return mData.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

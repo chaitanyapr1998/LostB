@@ -35,6 +35,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -47,13 +48,15 @@ import java.util.Map;
 public class LostActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    ArrayList<String> mTitle = new ArrayList<>();
-    ArrayList<String> mDate = new ArrayList<>();
-    ArrayList<String> mLoc = new ArrayList<>();
-    ArrayList<String> mImages = new ArrayList<>();
+//    ArrayList<String> mTitle = new ArrayList<>();
+//    ArrayList<String> mDate = new ArrayList<>();
+//    ArrayList<String> mLoc = new ArrayList<>();
+//    ArrayList<String> mImages = new ArrayList<>();
 
-    ArrayList<Post> data = new ArrayList<Post>();
+    ArrayList<Post> data;
+    RecyclerView v;
     DatabaseReference ref;
+    RecyclerviewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,26 +83,48 @@ public class LostActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        demo();
+        data = new ArrayList<Post>();
+        v = (RecyclerView)findViewById(R.id.lost_recyclerview);
+        v.setLayoutManager(new LinearLayoutManager(this));
+        ref = FirebaseDatabase.getInstance().getReference().child("Lost");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot d : dataSnapshot.getChildren()){
+                    Post p = d.getValue(Post.class);
+                    data.add(p);
+                }
+                adapter = new RecyclerviewAdapter(LostActivity.this, data);
+                v.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        //demo();
 
     }
 
 
 
-    private void demo(){
-        mTitle.add("Bag");
-        mDate.add("12-06-98");
-        mLoc.add("Molas");
-        mImages.add("https://i.ibb.co/r6G9Xrc/tomato.png");
-        recyclerView();
-    }
+//    private void demo(){
+//        mTitle.add("Bag");
+//        mDate.add("12-06-98");
+//        mLoc.add("Molas");
+//        mImages.add("https://i.ibb.co/r6G9Xrc/tomato.png");
+//        //recyclerView();
+//    }
 
-    private void recyclerView(){
-        RecyclerView recyclerView = findViewById(R.id.lost_recyclerview);
-        RecyclerviewAdapter adapter = new RecyclerviewAdapter(mTitle, mDate, mLoc, mImages, this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
+//    private void recyclerView(){
+//        //RecyclerView recyclerView = findViewById(R.id.lost_recyclerview);
+//        RecyclerviewAdapter adapter = new RecyclerviewAdapter(mTitle, mDate, mLoc, mImages, this);
+//        recyclerView.setAdapter(adapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//    }
 
     @Override
     public void onBackPressed() {
