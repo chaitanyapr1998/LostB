@@ -9,33 +9,12 @@
     tools:context=".LostActivity"
     tools:showIn="@layout/app_bar_lost">
 
-    <EditText
-        android:id="@+id/edt_id"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lost_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:editable="false"/>
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/edt_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Title" />
-
-    <EditText
-        android:id="@+id/edt_place"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Place" />
-
-
-
-    <Button
-        android:id="@+id/btn_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SUBMIT"
-        android:background="@color/colorAccent"/>
-
+    </android.support.v7.widget.RecyclerView>
 
 
 

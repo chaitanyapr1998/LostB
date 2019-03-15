@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -26,21 +28,32 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LostActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    ArrayList<String> mTitle = new ArrayList<>();
+    ArrayList<String> mDate = new ArrayList<>();
+    ArrayList<String> mLoc = new ArrayList<>();
+    ArrayList<String> mImages = new ArrayList<>();
 
-    EditText name, place, id;
-    Button btnSubmit;
-
+    ArrayList<Post> data = new ArrayList<Post>();
+    DatabaseReference ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,20 +80,25 @@ public class LostActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        name = (EditText)findViewById(R.id.edt_title);
-        place = (EditText)findViewById(R.id.edt_place);
-        id = (EditText)findViewById(R.id.edt_id);
+        demo();
 
-        btnSubmit = (Button)findViewById(R.id.btn_submit);
-
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+    }
 
 
+
+    private void demo(){
+        mTitle.add("Bag");
+        mDate.add("12-06-98");
+        mLoc.add("Molas");
+        mImages.add("https://i.ibb.co/r6G9Xrc/tomato.png");
+        recyclerView();
+    }
+
+    private void recyclerView(){
+        RecyclerView recyclerView = findViewById(R.id.lost_recyclerview);
+        RecyclerviewAdapter adapter = new RecyclerviewAdapter(mTitle, mDate, mLoc, mImages, this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
