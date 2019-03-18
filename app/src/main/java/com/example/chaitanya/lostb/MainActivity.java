@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
     Button login, signup;
     EditText edtEmail, edtPassword;
-    private FirebaseAuth mAuth;
-
+    static FirebaseAuth mAuth;
+    static String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

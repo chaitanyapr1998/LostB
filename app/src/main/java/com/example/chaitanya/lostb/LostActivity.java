@@ -54,9 +54,13 @@ public class LostActivity extends AppCompatActivity
 //    ArrayList<String> mImages = new ArrayList<>();
 
     ArrayList<Post> data;
+    ArrayList<Post> test;
+    ArrayList<String> uq = new ArrayList<String>();
     RecyclerView v;
     DatabaseReference ref;
     RecyclerviewAdapter adapter;
+    private static int ij = 0;
+    private static int check = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,17 +90,36 @@ public class LostActivity extends AppCompatActivity
         data = new ArrayList<Post>();
         v = (RecyclerView)findViewById(R.id.lost_recyclerview);
         v.setLayoutManager(new LinearLayoutManager(this));
+
+
         ref = FirebaseDatabase.getInstance().getReference().child("Lost");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                check = check + 1;
 
                 for(DataSnapshot d : dataSnapshot.getChildren()){
-                    Post p = d.getValue(Post.class);
-                    data.add(p);
+                    //data.clear();
+                    if(ij == 0){
+                        Post p = d.getValue(Post.class);
+                        data.add(p);
+                    }
+                    if(check == 6){
+                        //data.clear();
+                        Post p = d.getValue(Post.class);
+                        test.add(p);
+                        data.addAll(test);
+                    }
+
                 }
-                adapter = new RecyclerviewAdapter(LostActivity.this, data);
-                v.setAdapter(adapter);
+                ij = ij + 1;
+
+
+//                if(ij == 0){
+//                    adapter.notifyDataSetChanged();
+//                    ij = ij + 1;
+//                }
+
             }
 
             @Override
@@ -105,26 +128,18 @@ public class LostActivity extends AppCompatActivity
             }
         });
 
-        //demo();
+        adapter = new RecyclerviewAdapter(LostActivity.this, data);
+        v.setAdapter(adapter);
 
     }
 
+    private void refreshData(){
+        System.out.print("Hello");
+        //data.get(0).getId()
+        adapter = new RecyclerviewAdapter(LostActivity.this, data);
+        v.setAdapter(adapter);
+    }
 
-
-//    private void demo(){
-//        mTitle.add("Bag");
-//        mDate.add("12-06-98");
-//        mLoc.add("Molas");
-//        mImages.add("https://i.ibb.co/r6G9Xrc/tomato.png");
-//        //recyclerView();
-//    }
-
-//    private void recyclerView(){
-//        //RecyclerView recyclerView = findViewById(R.id.lost_recyclerview);
-//        RecyclerviewAdapter adapter = new RecyclerviewAdapter(mTitle, mDate, mLoc, mImages, this);
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//    }
 
     @Override
     public void onBackPressed() {
@@ -151,8 +166,8 @@ public class LostActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_refresh) {
+            refreshData();
         }
 
         return super.onOptionsItemSelected(item);

@@ -4,14 +4,16 @@ public class Post {
     private String Title;
     private String Date;
     private String Location;
+    private String Id;
 
     public Post() {
     }
 
-    public Post(String title, String date, String location) {
+    public Post(String title, String date, String location, String id) {
         Title = title;
         Date = date;
         Location = location;
+        Id = id;
     }
 
     public String getTitle() {
@@ -36,5 +38,13 @@ public class Post {
 
     public void setLocation(String location) {
         Location = location;
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
     }
 }

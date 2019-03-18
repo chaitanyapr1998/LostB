@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -18,7 +19,11 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
     EditText title, description, date, location;
     Spinner category;
     Button submit, cancel;
+    String unique;
     private static int num = 0;
+    private static String userId = MainActivity.uid;
+
+    //FirebaseAuth mAuth;
 
     DatabaseReference mRootReference;
 
@@ -61,6 +66,9 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
                 DatabaseReference childReference4 = mRootReference.child("Location");
                 childReference4.setValue(l);
+
+                DatabaseReference childReference5 = mRootReference.child("Id");
+                childReference5.setValue(unique);
             }
         });
 
@@ -76,9 +84,11 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
     }
 
     private void incrementingNumber(){
-        num = num + 1;
+//        num = num + 1;
+        String time = String.valueOf(System.currentTimeMillis());
+        unique = time + userId;
         mRootReference = FirebaseDatabase.getInstance()
-                .getReferenceFromUrl("https://lostb-48c7c.firebaseio.com/Lost/" + String.valueOf(num));
+                .getReferenceFromUrl("https://lostb-48c7c.firebaseio.com/Lost/" + unique);
     }
 
     @Override
