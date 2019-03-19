@@ -1,5 +1,6 @@
 package com.example.chaitanya.lostb;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -39,6 +40,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.karan.churi.PermissionManager.PermissionManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,6 +63,8 @@ public class LostActivity extends AppCompatActivity
     RecyclerviewAdapter adapter;
     private static int ij = 0;
     private static int check = 1;
+
+    PermissionManager permission;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,11 +135,28 @@ public class LostActivity extends AppCompatActivity
         adapter = new RecyclerviewAdapter(LostActivity.this, data);
         v.setAdapter(adapter);
 
+        permission = new PermissionManager() {};
+        permission.checkAndRequestPermissions(this);
+
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        permission.checkResult(requestCode,permissions, grantResults);
+        //To get Granted Permission and Denied Permission
+        ArrayList<String> granted=permission.getStatus().get(0).granted;
+        ArrayList<String> denied=permission.getStatus().get(0).denied;
+
+        for(String i : granted){
+            Toast.makeText(LostActivity.this, i,
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+
 
     private void refreshData(){
         System.out.print("Hello");
-        //data.get(0).getId()
         adapter = new RecyclerviewAdapter(LostActivity.this, data);
         v.setAdapter(adapter);
     }
@@ -180,15 +201,18 @@ public class LostActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {
-            // Handle the camera action
+            Intent intent = new Intent(LostActivity.this, ProfileActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_lost) {
-
+            Intent intent = new Intent(LostActivity.this, LostActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_found) {
 
         } else if (id == R.id.nav_inbox) {
 
         } else if (id == R.id.nav_settings) {
-
+            Intent intent = new Intent(LostActivity.this, SettingsActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_logout) {
             FirebaseAuth.getInstance().signOut();
             finish();

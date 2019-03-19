@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,9 +22,13 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 
 import java.util.Calendar;
@@ -32,7 +37,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
     EditText title, description, date, location;
     Spinner category;
-    Button submit, cancel;
+    Button submit, cancel, upload;
     String unique;
     ImageButton dateBtn, locBtn;
     private static int num = 0;
@@ -41,6 +46,9 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
     private DatePickerDialog.OnDateSetListener dateSetListener;
 
     private int PLACE_PICKER_REQUEST = 1;
+    private int LOAD_IMAGE_CODE = 2;
+
+    private StorageReference mStorage;
 
     //FirebaseAuth mAuth;
 
@@ -59,6 +67,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
         cancel = (Button)findViewById(R.id.btn_cancel);
         dateBtn = (ImageButton)findViewById(R.id.dateBtn);
         locBtn = (ImageButton)findViewById(R.id.locBtn);
+        upload = (Button)findViewById(R.id.btn_upload);
 
         category = (Spinner)findViewById(R.id.spin_cat);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories_array, android.R.layout.simple_spinner_item);
@@ -149,6 +158,19 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 }
             }
         });
+
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent();
+                i.setType("image/*");
+                i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                i.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(i, "Select images"), LOAD_IMAGE_CODE);
+            }
+        });
+
+        mStorage = FirebaseStorage.getInstance().getReference();
     }
 
 
@@ -162,6 +184,37 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
             }
         }
+
+        if(requestCode == LOAD_IMAGE_CODE && resultCode == RESULT_OK){
+            if(data.getClipData() != null){
+                //many images
+                int itemCount = data.getClipData().getItemCount();
+                for (int i = 0; i < itemCount; i++){
+                    Uri imageUri = data.getClipData().getItemAt(i).getUri();
+                    String uniqueFileName = uniqueFileName();
+
+                    StorageReference file = mStorage.child("UploadImages").child(uniqueFileName);
+                    file.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(PostLostItems.this, "Images Uploaded",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+
+            } else if (data.getData() != null){
+                //one image
+            } else {
+                //no image
+            }
+        }
+    }
+
+    private String uniqueFileName(){
+        String time = String.valueOf(System.currentTimeMillis());
+        String u = time + userId;
+        return u;
     }
 
     private void incrementingNumber(){

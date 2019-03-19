@@ -1,6 +1,7 @@
 package com.example.chaitanya.lostb;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -47,6 +48,13 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
         viewHolder.title.setText(mData.get(i).getTitle());
         viewHolder.date.setText(mData.get(i).getDate());
         viewHolder.place.setText(mData.get(i).getLocation());
+        viewHolder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), DetailedViewActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
 
     }
 
@@ -59,7 +67,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
 
         CircleImageView image;
         TextView title, date, place;
-        RelativeLayout listitem;
+        RelativeLayout layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,6 +76,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
             title = itemView.findViewById(R.id.txt_ltitle);
             date = itemView.findViewById(R.id.txt_ldate);
             place = itemView.findViewById(R.id.txt_lloc);
+            layout = itemView.findViewById(R.id.layout_listitem);
         }
     }
 }
