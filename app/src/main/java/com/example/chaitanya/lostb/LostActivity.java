@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -57,6 +58,7 @@ public class LostActivity extends AppCompatActivity
 
     ArrayList<Post> data;
     ArrayList<Post> test;
+    ArrayList<Post> search = new ArrayList<Post>();
     ArrayList<String> uq = new ArrayList<String>();
     RecyclerView v;
     DatabaseReference ref;
@@ -65,6 +67,9 @@ public class LostActivity extends AppCompatActivity
     private static int check = 1;
 
     PermissionManager permission;
+
+    EditText edtSearch;
+    ImageButton btnSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,9 +96,39 @@ public class LostActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        edtSearch = (EditText)findViewById(R.id.edt_search);
+        btnSearch = (ImageButton)findViewById(R.id.btn_search);
+
         data = new ArrayList<Post>();
         v = (RecyclerView)findViewById(R.id.lost_recyclerview);
         v.setLayoutManager(new LinearLayoutManager(this));
+
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = edtSearch.getText().toString();
+                Query searchQuery = ref.orderByChild("Title").startAt(text).endAt(text + "\uf8ff");
+                searchQuery.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()){
+                            search.clear();
+                            for(DataSnapshot d : dataSnapshot.getChildren()){
+                                Post p = d.getValue(Post.class);
+                                search.add(p);
+                            }
+                            searchRefresh();
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
 
 
         ref = FirebaseDatabase.getInstance().getReference().child("Lost");
@@ -158,6 +193,11 @@ public class LostActivity extends AppCompatActivity
     private void refreshData(){
         System.out.print("Hello");
         adapter = new RecyclerviewAdapter(LostActivity.this, data);
+        v.setAdapter(adapter);
+    }
+
+    private void searchRefresh(){
+        adapter = new RecyclerviewAdapter(LostActivity.this, search);
         v.setAdapter(adapter);
     }
 

@@ -12,4 +12,63 @@
         android:layout_height="wrap_content"
         android:src="@drawable/image_place_holder"/>
 
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title -"
+        android:textSize="30sp"
+        android:layout_below="@+id/images"/>
+
+    <TextView
+        android:id="@+id/tit_val"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/images"
+        android:layout_toRightOf="@+id/txt_title"
+        android:text="Bag"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:id="@+id/txt_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date -"
+        android:textSize="30sp"
+        android:layout_below="@+id/txt_title"/>
+
+    <TextView
+        android:id="@+id/dat_val"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_title"
+        android:layout_toRightOf="@+id/txt_date"
+        android:text="20-06-2019"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:id="@+id/txt_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Place -"
+        android:textSize="30sp"
+        android:layout_below="@+id/txt_date"/>
+
+    <TextView
+        android:id="@+id/pla_val"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_date"
+        android:layout_toRightOf="@+id/txt_place"
+        android:text="Kaunas"
+        android:textSize="30sp"/>
+
+    <Button
+        android:id="@+id/btn_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:layout_alignParentBottom="true"
+        android:paddingLeft="10dp"/>
+
 </RelativeLayout>

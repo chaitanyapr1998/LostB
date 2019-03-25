@@ -40,7 +40,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
 //        Glide.with(mContext)
 //                .asBitmap()
 //                .load(mImages.get(i))
@@ -52,6 +52,12 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), DetailedViewActivity.class);
+                String title = mData.get(i).getTitle();
+                String date = mData.get(i).getDate();
+                String place = mData.get(i).getLocation();
+                intent.putExtra("title", title);
+                intent.putExtra("date", date);
+                intent.putExtra("place", place);
                 v.getContext().startActivity(intent);
             }
         });
