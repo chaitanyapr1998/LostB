@@ -11,7 +11,7 @@ import android.widget.TextView;
 public class DetailedViewActivity extends AppCompatActivity {
 
     TextView txtT, txtD, txtP, tVal, dVal, pVal;
-    Button btnEmail;
+    Button btnEmail, btnChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,7 @@ public class DetailedViewActivity extends AppCompatActivity {
         pVal = (TextView)findViewById(R.id.pla_val);
 
         btnEmail = (Button)findViewById(R.id.btn_email);
+        btnChat = (Button)findViewById(R.id.btn_chat);
 
         Intent i= getIntent();
         Bundle b = i.getExtras();
@@ -49,6 +50,14 @@ public class DetailedViewActivity extends AppCompatActivity {
                         "mailto", "abc@gmail.com", null));
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Findingg App");
                 startActivity(Intent.createChooser(intent, "Choose one"));
+            }
+        });
+
+        btnChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(DetailedViewActivity.this, ChatActivity.class);
+                startActivity(i);
             }
         });
     }

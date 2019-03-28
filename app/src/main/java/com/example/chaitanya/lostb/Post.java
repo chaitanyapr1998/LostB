@@ -5,15 +5,19 @@ public class Post {
     private String Date;
     private String Location;
     private String Id;
+    private String Email;
+    private String Category;
 
     public Post() {
     }
 
-    public Post(String title, String date, String location, String id) {
+    public Post(String title, String date, String location, String id, String email, String category) {
         Title = title;
         Date = date;
         Location = location;
         Id = id;
+        Email = email;
+        Category = category;
     }
 
     public String getTitle() {
@@ -46,5 +50,21 @@ public class Post {
 
     public void setId(String id) {
         Id = id;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public String getCategory() {
+        return Category;
+    }
+
+    public void setCategory(String category) {
+        Category = category;
     }
 }

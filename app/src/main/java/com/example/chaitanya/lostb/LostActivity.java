@@ -65,7 +65,7 @@ public class LostActivity extends AppCompatActivity
 //    ArrayList<String> mLoc = new ArrayList<>();
 //    ArrayList<String> mImages = new ArrayList<>();
 
-    ArrayList<Post> data;
+    static ArrayList<Post> data;
     ArrayList<Post> test;
     ArrayList<Post> search = new ArrayList<Post>();
     ArrayList<String> uq = new ArrayList<String>();

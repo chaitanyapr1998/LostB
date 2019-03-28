@@ -24,6 +24,7 @@ import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -31,7 +32,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class PostLostItems extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -53,6 +57,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
     //FirebaseAuth mAuth;
 
     DatabaseReference mRootReference;
+    FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +80,8 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
         category.setAdapter(adapter);
         category.setOnItemSelectedListener(this);
 
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+
 
 // Create a new Places client instance.
         //PlacesClient placesClient = Places.createClient(this);
@@ -86,23 +93,47 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 String d = description.getText().toString();
                 String da = date.getText().toString();
                 String l = location.getText().toString();
+                String e = mUser.getEmail();
+                String u = String.valueOf(System.currentTimeMillis()) + userId;
+                String ca = category.getSelectedItem().toString();
+                //String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
                 incrementingNumber();
 
                 DatabaseReference childReference = mRootReference.child("Title");
                 childReference.setValue(t);
 
+                sleepThread();
+
                 DatabaseReference childReference2 = mRootReference.child("Description");
                 childReference2.setValue(d);
+
+                sleepThread();
 
                 DatabaseReference childReference3 = mRootReference.child("Date");
                 childReference3.setValue(da);
 
+                sleepThread();
+
                 DatabaseReference childReference4 = mRootReference.child("Location");
                 childReference4.setValue(l);
 
+                sleepThread();
+
+                DatabaseReference childReference7 = mRootReference.child("Email");
+                childReference7.setValue(e);
+
+                sleepThread();
+
                 DatabaseReference childReference5 = mRootReference.child("Id");
-                childReference5.setValue(unique);
+                childReference5.setValue(u);
+
+                sleepThread();
+
+                DatabaseReference childReference6 = mRootReference.child("Category");
+                childReference6.setValue(ca);
+
+
             }
         });
 
@@ -234,5 +265,13 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    private void sleepThread(){
+        try {
+            Thread.sleep(700);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
     }
 }

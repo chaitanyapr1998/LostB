@@ -13,13 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DetailedViewActivity"
-            android:parentActivityName=".LostActivity"></activity>
-        <activity android:name=".SettingsActivity"
-            android:parentActivityName=".LostActivity"/>
+        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".InboxActivity" />
+        <activity
+            android:name=".DetailedViewActivity"
+            android:parentActivityName=".LostActivity" />
+        <activity
+            android:name=".SettingsActivity"
+            android:parentActivityName=".LostActivity" />
         <activity android:name=".PostLostItems" />
-        <activity android:name=".ProfileActivity"
-            android:parentActivityName=".LostActivity"/>
+        <activity
+            android:name=".ProfileActivity"
+            android:parentActivityName=".LostActivity" />
         <activity
             android:name=".LostActivity"
             android:label="@string/title_activity_lost"
