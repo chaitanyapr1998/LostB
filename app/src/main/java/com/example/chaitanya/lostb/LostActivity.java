@@ -1,8 +1,12 @@
 package com.example.chaitanya.lostb;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -21,10 +25,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,6 +53,7 @@ import com.karan.churi.PermissionManager.PermissionManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,7 +78,12 @@ public class LostActivity extends AppCompatActivity
     PermissionManager permission;
 
     EditText edtSearch;
-    ImageButton btnSearch;
+    ImageButton btnSearch, btnFilter;
+
+    Dialog mDialog;
+
+    private DatePickerDialog.OnDateSetListener dateSetListener;
+    private DatePickerDialog.OnDateSetListener toDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +91,7 @@ public class LostActivity extends AppCompatActivity
         setContentView(R.layout.activity_lost);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mDialog = new Dialog(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +113,7 @@ public class LostActivity extends AppCompatActivity
 
         edtSearch = (EditText)findViewById(R.id.edt_search);
         btnSearch = (ImageButton)findViewById(R.id.btn_search);
+        btnFilter = (ImageButton)findViewById(R.id.btn_filter);
 
         data = new ArrayList<Post>();
         v = (RecyclerView)findViewById(R.id.lost_recyclerview);
@@ -130,6 +146,13 @@ public class LostActivity extends AppCompatActivity
             }
         });
 
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popUpView(v);
+            }
+        });
+
 
         ref = FirebaseDatabase.getInstance().getReference().child("Lost");
         ref.addValueEventListener(new ValueEventListener() {
@@ -153,12 +176,6 @@ public class LostActivity extends AppCompatActivity
                 }
                 ij = ij + 1;
 
-
-//                if(ij == 0){
-//                    adapter.notifyDataSetChanged();
-//                    ij = ij + 1;
-//                }
-
             }
 
             @Override
@@ -173,6 +190,101 @@ public class LostActivity extends AppCompatActivity
         permission = new PermissionManager() {};
         permission.checkAndRequestPermissions(this);
 
+    }
+
+    private void popUpView(View v){
+        final EditText ti, lo, from, to;
+        final Spinner ca;
+        Button show, cancel;
+        mDialog.setContentView(R.layout.layout_popupview);
+
+        ti = (EditText) mDialog.findViewById(R.id.edt_ti);
+        lo = (EditText) mDialog.findViewById(R.id.edt_lo);
+        from = (EditText) mDialog.findViewById(R.id.edt_datefrom);
+        to = (EditText) mDialog.findViewById(R.id.edt_dateto);
+        ca = (Spinner) mDialog.findViewById(R.id.spin_ca);
+        show = (Button) mDialog.findViewById(R.id.btn_show);
+        cancel = (Button) mDialog.findViewById(R.id.btn_cancel);
+
+        from.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int y = cal.get(Calendar.YEAR);
+                int m = cal.get(Calendar.MONTH);
+                int da = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog d = new DatePickerDialog(
+                        LostActivity.this,
+                        android.R.style.Theme_Holo_Light,
+                        dateSetListener,
+                        y,m,da);
+                d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                d.show();
+            }
+        });
+
+        dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                int m = month + 1;
+                String dateSet = dayOfMonth + "-" + m + "-" + year;
+                from.setText(dateSet);
+            }
+        };
+
+        to.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int y = cal.get(Calendar.YEAR);
+                int m = cal.get(Calendar.MONTH);
+                int da = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog d = new DatePickerDialog(
+                        LostActivity.this,
+                        android.R.style.Theme_Holo_Light,
+                        toDateSetListener,
+                        y,m,da);
+                d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                d.show();
+            }
+        });
+
+        toDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                int m = month + 1;
+                String dateSet = dayOfMonth + "-" + m + "-" + year;
+                to.setText(dateSet);
+            }
+        };
+
+
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ca.setAdapter(adapter);
+//        ca.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String t = ti.getText().toString();
+                String l = lo.getText().toString();
+                String df = from.getText().toString();
+                String dt = to.getText().toString();
+                String c = ca.getSelectedItem().toString();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        });
+        mDialog.show();
     }
 
     @Override

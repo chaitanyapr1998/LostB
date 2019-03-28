@@ -17,10 +17,19 @@
         android:id="@+id/btn_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/edt_search"
         android:src="@drawable/ic_search_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/btn_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/btn_search"
+        android:src="@drawable/ic_filter_list_black_24dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lost_recyclerview"

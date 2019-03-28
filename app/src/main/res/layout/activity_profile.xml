@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,29 +7,55 @@
     android:orientation="vertical"
     tools:context=".ProfileActivity">
 
-    <ImageView
-        android:id="@+id/img_pro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/image_place_holder"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/cir_pic"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/image_place_holder"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"/>
 
     <TextView
         android:id="@+id/txt_email"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/cir_pic"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp"
         android:text="abcd@gmail.com"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:fontFamily="monospace"/>
 
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_below="@+id/txt_email"
         android:background="@android:color/darker_gray"/>
 
     <TextView
         android:id="@+id/txt_his"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:text="History"
+        android:layout_centerHorizontal="true"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="History"/>
+        android:layout_below="@+id/txt_his"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tab_layout"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v4.view.ViewPager>
 
 
-</LinearLayout>
+</RelativeLayout>

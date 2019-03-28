@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#a09484"
+    android:layout_width="300dp"
+    android:layout_height="350dp"
+    android:padding="20dp"
+    android:layout_gravity="center">
+
+    <EditText
+        android:id="@+id/edt_ti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter lost item name"/>
+
+    <EditText
+        android:id="@+id/edt_lo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edt_ti"
+        android:hint="Enter lost item location"/>
+
+    <EditText
+        android:id="@+id/edt_datefrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edt_lo"
+        android:hint="20-12-1998"/>
+
+    <EditText
+        android:id="@+id/edt_dateto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/edt_datefrom"
+        android:layout_below="@+id/edt_lo"
+        android:hint="21-12-1998"/>
+
+    <Spinner
+        android:id="@+id/spin_ca"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edt_datefrom">
+    </Spinner>
+
+    <Button
+        android:id="@+id/btn_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spin_ca"
+        android:layout_marginTop="40dp"
+        android:text="Apply" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spin_ca"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_toRightOf="@+id/btn_show"
+        android:text="CANCEL" />
+
+</RelativeLayout>
