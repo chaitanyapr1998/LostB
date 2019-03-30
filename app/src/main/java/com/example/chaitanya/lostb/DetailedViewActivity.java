@@ -12,6 +12,7 @@ public class DetailedViewActivity extends AppCompatActivity {
 
     TextView txtT, txtD, txtP, tVal, dVal, pVal;
     Button btnEmail, btnChat;
+    private String postedByEmail, uid, userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,9 @@ public class DetailedViewActivity extends AppCompatActivity {
             String t = (String) b.get("title");
             String d = (String) b.get("date");
             String p = (String) b.get("place");
+            postedByEmail = (String) b.get("email");
+            uid = (String) b.get("uid");
+            userid = (String) b.get("userid");
             tVal.setText(t);
             dVal.setText(d);
             pVal.setText(p);
@@ -47,7 +51,7 @@ public class DetailedViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto", "abc@gmail.com", null));
+                        "mailto", postedByEmail, null));
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Findingg App");
                 startActivity(Intent.createChooser(intent, "Choose one"));
             }
@@ -57,6 +61,9 @@ public class DetailedViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(DetailedViewActivity.this, ChatActivity.class);
+                i.putExtra("toEmail", postedByEmail);
+                i.putExtra("uid", uid);
+                i.putExtra("userid", userid);
                 startActivity(i);
             }
         });

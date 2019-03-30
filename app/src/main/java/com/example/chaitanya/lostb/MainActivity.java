@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     Button login, signup;
     EditText edtEmail, edtPassword;
     static FirebaseAuth mAuth;
-    static String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    //static String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

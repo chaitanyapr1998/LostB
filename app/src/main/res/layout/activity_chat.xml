@@ -9,7 +9,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/chat_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="660dp">
+        android:layout_height="500dp">
     </android.support.v7.widget.RecyclerView>
 
     <EditText
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/chat_recyclerview"
-        android:layout_toRightOf="@+id/edt_message"
+        android:layout_toEndOf="@+id/edt_message"
         android:text="Send"/>
 
 

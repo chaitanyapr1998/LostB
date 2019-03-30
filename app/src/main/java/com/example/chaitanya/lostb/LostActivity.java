@@ -38,6 +38,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -76,6 +77,8 @@ public class LostActivity extends AppCompatActivity
     private static int check = 1;
 
     PermissionManager permission;
+    FirebaseUser mUser;
+    String uid;
 
     EditText edtSearch;
     ImageButton btnSearch, btnFilter;
@@ -93,11 +96,17 @@ public class LostActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         mDialog = new Dialog(this);
 
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                if(mUser != null){
+//                    uid = mUser.getUid();
+//                }
                 Intent intent = new Intent(LostActivity.this, PostLostItems.class);
+                //intent.putExtra("uid", uid);
                 startActivity(intent);
             }
         });

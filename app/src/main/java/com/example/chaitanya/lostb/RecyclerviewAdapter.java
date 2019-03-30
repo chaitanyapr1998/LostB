@@ -55,9 +55,15 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
                 String title = mData.get(i).getTitle();
                 String date = mData.get(i).getDate();
                 String place = mData.get(i).getLocation();
+                String email = mData.get(i).getEmail();
+                String uid = mData.get(i).getId();
+                String userid = mData.get(i).getUserId();
                 intent.putExtra("title", title);
                 intent.putExtra("date", date);
                 intent.putExtra("place", place);
+                intent.putExtra("email", email);
+                intent.putExtra("uid", uid);
+                intent.putExtra("userid", userid);
                 v.getContext().startActivity(intent);
             }
         });

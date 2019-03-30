@@ -7,17 +7,19 @@ public class Post {
     private String Id;
     private String Email;
     private String Category;
+    private String UserId;
 
     public Post() {
     }
 
-    public Post(String title, String date, String location, String id, String email, String category) {
+    public Post(String title, String date, String location, String id, String email, String category, String userId) {
         Title = title;
         Date = date;
         Location = location;
         Id = id;
         Email = email;
         Category = category;
+        UserId = userId;
     }
 
     public String getTitle() {
@@ -66,5 +68,13 @@ public class Post {
 
     public void setCategory(String category) {
         Category = category;
+    }
+
+    public String getUserId() {
+        return UserId;
+    }
+
+    public void setUserId(String userId) {
+        UserId = userId;
     }
 }

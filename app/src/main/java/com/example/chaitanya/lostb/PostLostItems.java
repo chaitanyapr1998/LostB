@@ -45,7 +45,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
     String unique;
     ImageButton dateBtn, locBtn;
     private static int num = 0;
-    private static String userId = MainActivity.uid;
+    private static String userId;
     //private DatePickerDialog.OnDateSetListener mDate;
     private DatePickerDialog.OnDateSetListener dateSetListener;
 
@@ -81,6 +81,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
         category.setOnItemSelectedListener(this);
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
+        userId = mUser.getUid();
 
 
 // Create a new Places client instance.
@@ -96,6 +97,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 String e = mUser.getEmail();
                 String u = String.valueOf(System.currentTimeMillis()) + userId;
                 String ca = category.getSelectedItem().toString();
+                String uid = userId;
                 //String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
                 incrementingNumber();
@@ -132,6 +134,11 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
                 DatabaseReference childReference6 = mRootReference.child("Category");
                 childReference6.setValue(ca);
+
+                sleepThread();
+
+                DatabaseReference childReference8 = mRootReference.child("UserId");
+                childReference8.setValue(uid);
 
 
             }

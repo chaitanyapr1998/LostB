@@ -28,7 +28,7 @@ public class LostFragment extends Fragment {
     ListView listView;
     ArrayList<String> title = new ArrayList<>();
     ArrayList<Post> p = LostActivity.data;
-    ArrayAdapter<String> a;
+    //ArrayAdapter<String> a;
     Context c;
     FirebaseUser user;
 
