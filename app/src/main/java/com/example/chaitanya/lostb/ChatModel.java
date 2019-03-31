@@ -1,30 +1,40 @@
 package com.example.chaitanya.lostb;
 
 public class ChatModel {
-    private String Email;
-    private String Message;
+    private String from;
+    private String msg;
+    private String to;
 
     public ChatModel() {
     }
 
-    public ChatModel(String email, String message) {
-        Email = email;
-        Message = message;
+    public ChatModel(String from, String msg, String to) {
+        this.from = from;
+        this.msg = msg;
+        this.to = to;
     }
 
-    public String getEmail() {
-        return Email;
+    public String getFrom() {
+        return from;
     }
 
-    public void setEmail(String email) {
-        Email = email;
+    public void setFrom(String from) {
+        this.from = from;
     }
 
-    public String getMessage() {
-        return Message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        Message = message;
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
     }
 }

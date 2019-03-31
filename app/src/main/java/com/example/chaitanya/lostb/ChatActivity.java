@@ -1,6 +1,6 @@
 package com.example.chaitanya.lostb;
 
-        import android.content.Intent;
+    import android.content.Intent;
         import android.support.annotation.NonNull;
         import android.support.annotation.Nullable;
         import android.support.v7.app.AppCompatActivity;
@@ -21,6 +21,7 @@ package com.example.chaitanya.lostb;
         import com.google.firebase.database.ValueEventListener;
 
         import java.util.ArrayList;
+        import java.util.HashMap;
         import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
@@ -69,119 +70,43 @@ public class ChatActivity extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = mUser.getEmail();
-                String message = editMsg.getText().toString();
-                getRef();
-//                DatabaseReference childReference = mRef.child("Email");
-//                childReference.push().setValue(email);
-//
-//                sleepThread();
+                String from = mUser.getUid();
+                String to = toUserid;
+                String msg = editMsg.getText().toString();
 
-                DatabaseReference childReference2 = mRef;
-                childReference2.push().setValue(message);
-                updateDisplay();
+                send(from, to, msg);
+                displayMsg(from, to);
             }
         });
 
-        adapter = new ChatRecyclerviewAdapter(ChatActivity.this, mChatData);
-        v.setAdapter(adapter);
     }
 
-    private void getRef(){
-        String userId = toUserid;
-        String myId = mUser.getUid();
-        String us = userId+myId;
-//        String su = senderId+userId;
+    private void send(String f, String t, String m){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        mRef = FirebaseDatabase.getInstance()
-                .getReferenceFromUrl("https://lostb-48c7c.firebaseio.com/Chat/" + us);
+        HashMap<String, Object> hm = new HashMap<>();
+        hm.put("from", f);
+        hm.put("to", t);
+        hm.put("msg", m);
 
-
-
-//        for(int i=0; i < list.size(); i++){
-//            if(list.get(i) == us){
-//                mRef = FirebaseDatabase.getInstance().getReference().child("Chat").child(us);
-//                break;
-//            } else if (list.get(i) == su){
-//                mRef = FirebaseDatabase.getInstance().getReference().child("Chat").child(su);
-//                break;
-//            } else {
-//                String r = userEmail+senderEmail;
-//                list.add(r);
-//                mRef = FirebaseDatabase.getInstance().getReference().child("Chat").child(r);
-//                break;
-//            }
-//        }
-
-
-//        mCM = FirebaseDatabase.getInstance()
-//                .getReferenceFromUrl("https://lostb-48c7c.firebaseio.com/ChatMeta/");
-//        mCM.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.exists()){
-//                    for(DataSnapshot d : dataSnapshot.getChildren()){
-//                        list.clear();
-//                        ChatMeta m = d.getValue(ChatMeta.class);
-//                        list.add(m);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//        if(list.size() != 0){
-//            for(int i=0; i < list.size(); i++){
-//                if(su == list.get(i).getChatKey()){
-//                    check = true;
-//                }
-//            }
-//        }
-//
-//
-//        if(check){
-//            mRef = FirebaseDatabase.getInstance()
-//                    .getReferenceFromUrl("https://lostb-48c7c.firebaseio.com/Chat/" + su);
-//            check = false;
-//        } else {
-////            list.add(us);
-//            mCM = FirebaseDatabase.getInstance()
-//                    .getReferenceFromUrl("https://lostb-48c7c.firebaseio.com/ChatMeta/");
-//            DatabaseReference childReference = mCM.child("ChatKey");
-//            childReference.push().setValue(us);
-//            mRef = FirebaseDatabase.getInstance()
-//                    .getReferenceFromUrl("https://lostb-48c7c.firebaseio.com/Chat/" + us);
-//            check = false;
-//        }
-
+        databaseReference.child("Chat").push().setValue(hm);
     }
 
+    private void displayMsg(final String f, final String t){
+        mChatData = new ArrayList<>();
 
-
-    private void sleepThread(){
-        try {
-            Thread.sleep(700);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        }
-    }
-
-    private void updateDisplay(){
-        mRef = FirebaseDatabase.getInstance()
-                .getReferenceFromUrl("https://lostb-48c7c.firebaseio.com/Chat/");
+        mRef = FirebaseDatabase.getInstance().getReference().child("Chat");
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    for(DataSnapshot d : dataSnapshot.getChildren()){
-                        ChatModel cm = d.getValue(ChatModel.class);
+                mChatData.clear();
+                for(DataSnapshot d : dataSnapshot.getChildren()){
+                    ChatModel cm = d.getValue(ChatModel.class);
+                    if(cm.getTo().equals(f) && cm.getFrom().equals(t) || cm.getTo().equals(t) && cm.getFrom().equals(f)){
                         mChatData.add(cm);
                     }
-                    adapter.notifyDataSetChanged();
+                    adapter = new ChatRecyclerviewAdapter(ChatActivity.this, mChatData);
+                    v.setAdapter(adapter);
                 }
             }
 

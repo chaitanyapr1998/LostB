@@ -370,7 +370,8 @@ public class LostActivity extends AppCompatActivity
         } else if (id == R.id.nav_found) {
 
         } else if (id == R.id.nav_inbox) {
-
+            Intent intent = new Intent(LostActivity.this, InboxActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_settings) {
             Intent intent = new Intent(LostActivity.this, SettingsActivity.class);
             startActivity(intent);

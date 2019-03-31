@@ -39,8 +39,8 @@ public class ChatRecyclerviewAdapter extends RecyclerView.Adapter<ChatRecyclervi
 //                .asBitmap()
 //                .load(mImages.get(i))
 //                .into(viewHolder.image);
-        viewHolder.email.setText(mChat.get(i).getEmail());
-        viewHolder.msg.setText(mChat.get(i).getMessage());
+        viewHolder.email.setText(mChat.get(i).getFrom());
+        viewHolder.msg.setText(mChat.get(i).getMsg());
 //        viewHolder.layout.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
