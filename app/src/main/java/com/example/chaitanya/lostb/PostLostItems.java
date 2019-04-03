@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,11 +18,13 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,8 +36,10 @@ import com.google.firebase.storage.UploadTask;
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class PostLostItems extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -53,6 +58,9 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
     private int LOAD_IMAGE_CODE = 2;
 
     private StorageReference mStorage;
+    ArrayList<String> imageUrl;
+    ArrayList<Uri> imgUri;
+    ArrayList<String> uqFileName;
 
     //FirebaseAuth mAuth;
 
@@ -83,6 +91,10 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         userId = mUser.getUid();
 
+        imageUrl = new ArrayList<>();
+        imgUri = new ArrayList<>();
+        uqFileName = new ArrayList<>();
+
 
 // Create a new Places client instance.
         //PlacesClient placesClient = Places.createClient(this);
@@ -101,6 +113,10 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 //String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
                 incrementingNumber();
+
+                uploadingToFirebase(u);
+
+                sleepThread();
 
                 DatabaseReference childReference = mRootReference.child("Title");
                 childReference.setValue(t);
@@ -140,6 +156,11 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 DatabaseReference childReference8 = mRootReference.child("UserId");
                 childReference8.setValue(uid);
 
+                sleepThread();
+
+                imgMeta();
+
+                sleepThread();
 
             }
         });
@@ -229,16 +250,8 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 int itemCount = data.getClipData().getItemCount();
                 for (int i = 0; i < itemCount; i++){
                     Uri imageUri = data.getClipData().getItemAt(i).getUri();
-                    String uniqueFileName = uniqueFileName();
+                    imgUri.add(imageUri);
 
-                    StorageReference file = mStorage.child("UploadImages").child(uniqueFileName);
-                    file.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(PostLostItems.this, "Images Uploaded",
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    });
                 }
 
             } else if (data.getData() != null){
@@ -276,9 +289,66 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
     private void sleepThread(){
         try {
-            Thread.sleep(700);
+            Thread.sleep(1000);
         } catch (InterruptedException e1) {
             e1.printStackTrace();
         }
     }
+
+    private void getImgUrl(){
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("UploadImages");
+        //storageReference.
+        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                //imageURL = uri.toString();
+                //Glide.with(getApplicationContext()).load(imageURL).into(profilePic);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+
+            }
+        });
+    }
+
+    private void uploadingToFirebase(String u){
+        for(int i = 0; i < imgUri.size(); i++){
+            final String uniqueFileName = uniqueFileName();
+            uqFileName.add(uniqueFileName);
+            StorageReference file = mStorage.child("UploadImages").child(u).child(uniqueFileName);
+            file.putFile(imgUri.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    Toast.makeText(PostLostItems.this, "Images Uploaded",
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+        imgUri.clear();
+
+    }
+
+    private void imgMeta(){
+        mRootReference = FirebaseDatabase.getInstance()
+                .getReferenceFromUrl("https://lostb-48c7c.firebaseio.com/ImgMeta/" + unique);
+//        HashMap<Integer, String> hm = new HashMap<>();
+//        if(uqFileName.size() != 0){
+//            for(int i = 0; i < uqFileName.size(); i++){
+//                hm.put(i, uqFileName.get(i));
+//            }
+//        }
+        for(int i = 0; i < uqFileName.size(); i++){
+            int q = i;
+            String k = String.valueOf(q);
+            DatabaseReference childReference9 = mRootReference.child(k);
+            childReference9.setValue(uqFileName.get(i));
+        }
+
+        uqFileName.clear();
+    }
+
+
 }

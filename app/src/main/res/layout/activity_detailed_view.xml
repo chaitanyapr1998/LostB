@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".DetailedViewActivity">
 
-    <ImageView
-        android:id="@+id/images"
+
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/image_place_holder"/>
+        android:id="@+id/rec_images"
+        android:orientation="horizontal"></android.support.v7.widget.RecyclerView>
 
     <TextView
         android:id="@+id/txt_title"
@@ -18,13 +19,13 @@
         android:layout_height="wrap_content"
         android:text="Title -"
         android:textSize="30sp"
-        android:layout_below="@+id/images"/>
+        android:layout_below="@+id/rec_images"/>
 
     <TextView
         android:id="@+id/tit_val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/images"
+        android:layout_below="@+id/rec_images"
         android:layout_toRightOf="@+id/txt_title"
         android:text="Bag"
         android:textSize="30sp"/>
@@ -72,12 +73,21 @@
         android:paddingLeft="10dp"/>
 
     <Button
+        android:id="@+id/btn_dir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Direction"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/btn_email"
+        android:paddingLeft="10dp"/>
+
+    <Button
         android:id="@+id/btn_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Chat"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/btn_email"
+        android:layout_toRightOf="@+id/btn_dir"
         android:paddingLeft="10dp"/>
 
 </RelativeLayout>
