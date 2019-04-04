@@ -166,6 +166,9 @@ public class ProfileActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_remove) {
             removeProfilePic();
+        } else if(id == R.id.action_lochis) {
+            Intent intent = new Intent(ProfileActivity.this, LocationHistory.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

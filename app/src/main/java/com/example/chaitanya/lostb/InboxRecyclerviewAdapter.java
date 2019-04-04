@@ -32,25 +32,9 @@ public class InboxRecyclerviewAdapter extends RecyclerView.Adapter<InboxRecycler
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
-//        Glide.with(mContext)
-//                .asBitmap()
-//                .load(mImages.get(i))
-//                .into(viewHolder.image);
+
         viewHolder.email.setText(mChat.get(i).getFrom());
         viewHolder.msg.setText(mChat.get(i).getMsg());
-//        viewHolder.layout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), DetailedViewActivity.class);
-//                String email = mChat.get(i).getE();
-//                String date = mChat.get(i).getDate();
-//                String place = mChat.get(i).getLocation();
-//                intent.putExtra("title", title);
-//                intent.putExtra("date", date);
-//                intent.putExtra("place", place);
-//                v.getContext().startActivity(intent);
-//            }
-//        });
 
     }
 

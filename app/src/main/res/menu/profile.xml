@@ -7,4 +7,10 @@
         android:title="Remove Profile Pic"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_lochis"
+        android:orderInCategory="101"
+        android:title="Location History"
+        app:showAsAction="never" />
+
 </menu>
