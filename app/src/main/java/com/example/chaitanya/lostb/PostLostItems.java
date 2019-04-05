@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -66,6 +68,10 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
     DatabaseReference mRootReference;
     FirebaseUser mUser;
+
+    String address;
+    LatLng latlon;
+    //double lat, lon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +116,10 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 String u = String.valueOf(System.currentTimeMillis()) + userId;
                 String ca = category.getSelectedItem().toString();
                 String uid = userId;
-                //String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                String addrs = address;
+                String lat = String.valueOf(latlon.latitude);
+                String lon = String.valueOf(latlon.longitude);
 
                 incrementingNumber();
 
@@ -158,9 +167,30 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
                 sleepThread();
 
+                DatabaseReference childReference9 = mRootReference.child("PostedDate");
+                childReference9.setValue(date);
+
+                sleepThread();
+
+                DatabaseReference childReference10 = mRootReference.child("Address");
+                childReference10.setValue(addrs);
+
+                sleepThread();
+
+                DatabaseReference childReference11 = mRootReference.child("Latitude");
+                childReference11.setValue(lat);
+
+                sleepThread();
+
+                DatabaseReference childReference12 = mRootReference.child("Longitude");
+                childReference12.setValue(lon);
+
+                sleepThread();
+
                 imgMeta();
 
                 sleepThread();
+
 
             }
         });
@@ -239,6 +269,11 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 Place place = PlacePicker.getPlace(data, this);
 //                String toastMsg = String.format("Place: %s", place.getName());
                 String toastMsg = place.getName().toString();
+                address = place.getAddress().toString();
+                latlon = place.getLatLng();
+//                lat = latlon.latitude;
+//                lon = latlon.longitude;
+
                 location.setText(toastMsg);
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
             }
@@ -289,7 +324,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
     private void sleepThread(){
         try {
-            Thread.sleep(1000);
+            Thread.sleep(700);
         } catch (InterruptedException e1) {
             e1.printStackTrace();
         }
@@ -349,6 +384,21 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
         uqFileName.clear();
     }
+
+//    private void coordToAddress(){
+//        Geocoder geocoder;
+//        List<Address> addresses;
+//        geocoder = new Geocoder(this, Locale.getDefault());
+//
+//        addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+//
+//        String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+//        String city = addresses.get(0).getLocality();
+//        String state = addresses.get(0).getAdminArea();
+//        String country = addresses.get(0).getCountryName();
+//        String postalCode = addresses.get(0).getPostalCode();
+//        String knownName = addresses.get(0).getFeatureName();
+//    }
 
 
 }
