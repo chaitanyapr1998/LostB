@@ -29,6 +29,7 @@ public class InboxActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inbox);
+        setTitle("Inbox");
 
         v = (RecyclerView)findViewById(R.id.inbox_rec);
         v.setLayoutManager(new LinearLayoutManager(this));

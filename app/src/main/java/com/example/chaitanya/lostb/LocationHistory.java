@@ -62,14 +62,14 @@ public class LocationHistory extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startBroadCastReceiver();
+                startBroadCastReceiver();
             }
         });
 
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //killBroadCastReceiver();
+                killBroadCastReceiver();
             }
         });
 
@@ -134,21 +134,21 @@ public class LocationHistory extends AppCompatActivity {
         });
     }
 
-//    private void startBroadCastReceiver() {
-//        PackageManager pm = this.getPackageManager();
-//        ComponentName componentName = new ComponentName(this, LocationBroadcastReceiver.class);
-//        pm.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-////                PackageManager.DONT_KILL_APP);
-////        Toast.makeText(getApplicationContext(), "BroadCast Receiver Started", Toast.LENGTH_LONG).show();
-////    }
-////
-////    private void killBroadCastReceiver() {
-////        PackageManager pm = this.getPackageManager();
-////        ComponentName componentName = new ComponentName(this, LocationBroadcastReceiver.class);
-////        pm.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-////                PackageManager.DONT_KILL_APP);
-////        Toast.makeText(getApplicationContext(), "BroadCast Receiver Killed", Toast.LENGTH_LONG).show();
-////    }
+    private void startBroadCastReceiver() {
+        PackageManager pm = this.getPackageManager();
+        ComponentName componentName = new ComponentName(this, LocationBroadcastReceiver.class);
+        pm.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
+        Toast.makeText(getApplicationContext(), "BroadCast Receiver Started", Toast.LENGTH_LONG).show();
+    }
+
+    private void killBroadCastReceiver() {
+        PackageManager pm = this.getPackageManager();
+        ComponentName componentName = new ComponentName(this, LocationBroadcastReceiver.class);
+        pm.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
+        Toast.makeText(getApplicationContext(), "BroadCast Receiver Killed", Toast.LENGTH_LONG).show();
+    }
 
 
 }

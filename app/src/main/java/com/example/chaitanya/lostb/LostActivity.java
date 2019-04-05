@@ -380,6 +380,9 @@ public class LostActivity extends AppCompatActivity
             finish();
             Intent intent = new Intent(LostActivity.this, MainActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_map) {
+            Intent intent = new Intent(LostActivity.this, MapsActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

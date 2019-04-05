@@ -25,6 +25,10 @@
             android:icon="@drawable/ic_menu_manage"
             android:title="Settings" />
         <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Mapview" />
+        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_menu_manage"
             android:title="Logout" />
