@@ -1,6 +1,8 @@
 package com.example.chaitanya.lostb;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,14 +17,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class InboxActivity extends AppCompatActivity {
 
     RecyclerView v;
-    ChatRecyclerviewAdapter adapter;
-    ArrayList<String> mChats = new ArrayList<>();
+    InboxRecyclerviewAdapter adapter;
+    ArrayList<String> mChats;
     DatabaseReference mRef;
     FirebaseUser mUser;
+    List<Object> uqChatList;
+    ArrayList<Users> emails;
 
 
     @Override
@@ -33,11 +39,14 @@ public class InboxActivity extends AppCompatActivity {
 
         v = (RecyclerView)findViewById(R.id.inbox_rec);
         v.setLayoutManager(new LinearLayoutManager(this));
-
+        mChats = new ArrayList<>();
+        emails = new ArrayList<>();
+        //uqChatList = new List<Object>() ;
         mUser = FirebaseAuth.getInstance().getCurrentUser();
 
         mRef = FirebaseDatabase.getInstance().getReference("Chat");
         mRef.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mChats.clear();
@@ -53,6 +62,7 @@ public class InboxActivity extends AppCompatActivity {
                 }
 
                 chats();
+                getInfo();
             }
 
             @Override
@@ -63,9 +73,41 @@ public class InboxActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void chats(){
-        mChats = new ArrayList<>();
+        uqChatList = mChats.stream()
+                .distinct()
+                .collect(Collectors.toList());
 
-        mRef = FirebaseDatabase.getInstance().getReference("Chat");
+
+    }
+
+    private void getInfo(){
+        if(uqChatList != null){
+            for(int i = 0; i < uqChatList.size(); i++){
+                String a = uqChatList.get(i).toString();
+                mRef = FirebaseDatabase.getInstance().getReference().child("Users").child(a);
+                mRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()){
+                            //for(DataSnapshot d : dataSnapshot.getChildren()){
+                                Users p = dataSnapshot.getValue(Users.class);
+                                emails.add(p);
+                                adapter = new InboxRecyclerviewAdapter(InboxActivity.this, emails);
+                                v.setAdapter(adapter);
+                            //}
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        }
+
+
     }
 }

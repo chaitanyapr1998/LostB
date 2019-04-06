@@ -9,7 +9,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/chat_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="580dp">
     </android.support.v7.widget.RecyclerView>
 
     <EditText
@@ -18,7 +18,7 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="337dp"
-        android:layout_marginBottom="144dp"
+        android:layout_marginBottom="50dp"
         android:hint="Enter the message" />
 
     <Button
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/edt_message"
-        android:layout_marginStart="42dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="335dp"
         android:layout_marginBottom="12dp"
         android:layout_toEndOf="@+id/edt_message"

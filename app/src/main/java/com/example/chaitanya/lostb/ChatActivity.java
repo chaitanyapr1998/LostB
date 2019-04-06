@@ -63,7 +63,7 @@ public class ChatActivity extends AppCompatActivity {
         if(b!=null)
         {
             toEmail = (String) b.get("toEmail");
-            toUid = (String) b.get("uid");
+            //toUid = (String) b.get("uid");
             toUserid = (String) b.get("userid");
         }
 
@@ -120,5 +120,9 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void getData(){
+
     }
 }
