@@ -38,6 +38,7 @@ import java.util.Map;
 public class DetailedViewActivity extends AppCompatActivity {
 
     TextView txtT, txtD, txtP, tVal, dVal, pVal;
+    TextView txtDes, txtCat, txtPostby, desVal, catVal, postbyVal;
     Button btnEmail, btnChat, btnDir;
     ImageView img;
     private String postedByEmail, uid, userid;
@@ -59,6 +60,13 @@ public class DetailedViewActivity extends AppCompatActivity {
         tVal = (TextView)findViewById(R.id.tit_val);
         dVal = (TextView)findViewById(R.id.dat_val);
         pVal = (TextView)findViewById(R.id.pla_val);
+
+        txtDes = (TextView)findViewById(R.id.txt_des);
+        txtCat = (TextView)findViewById(R.id.txt_cat);
+        txtPostby = (TextView)findViewById(R.id.txt_postedby);
+        desVal = (TextView)findViewById(R.id.des_val);
+        catVal = (TextView)findViewById(R.id.cat_val);
+        postbyVal = (TextView)findViewById(R.id.postedby_val);
         //img = (ImageView)findViewById(R.id.images);
 
         btnEmail = (Button)findViewById(R.id.btn_email);
@@ -75,6 +83,8 @@ public class DetailedViewActivity extends AppCompatActivity {
         {
             String t = (String) b.get("title");
             String d = (String) b.get("date");
+            String des = (String) b.get("des");
+            String cat = (String) b.get("cat");
             p = (String) b.get("place");
             postedByEmail = (String) b.get("email");
             uid = (String) b.get("uid");
@@ -82,6 +92,9 @@ public class DetailedViewActivity extends AppCompatActivity {
             tVal.setText(t);
             dVal.setText(d);
             pVal.setText(p);
+            desVal.setText(des);
+            catVal.setText(cat);
+            postbyVal.setText(postedByEmail);
         }
 
         btnEmail.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +131,8 @@ public class DetailedViewActivity extends AppCompatActivity {
 
 
         displayItemImages();
+        //sleepThread();
+
 
 
     }
@@ -127,6 +142,7 @@ public class DetailedViewActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //dataSnapshot.getChildren();
                 Object value = dataSnapshot.getValue();
                 if(value instanceof List) {
                     List<Object> values = (List<Object>) value;
@@ -150,6 +166,8 @@ public class DetailedViewActivity extends AppCompatActivity {
 
 
     }
+
+
 
     private void getUri(){
         for(int h = 0; h < imgName.size(); h++){
@@ -179,5 +197,13 @@ public class DetailedViewActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(manager);
         ImagesRecyclerviewAdapter a = new ImagesRecyclerviewAdapter(this, disImg);
         recyclerView.setAdapter(a);
+    }
+
+    private void sleepThread(){
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
     }
 }

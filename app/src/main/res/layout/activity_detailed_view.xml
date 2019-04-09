@@ -13,81 +13,154 @@
         android:id="@+id/rec_images"
         android:orientation="horizontal"></android.support.v7.widget.RecyclerView>
 
-    <TextView
-        android:id="@+id/txt_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Title -"
-        android:textSize="30sp"
-        android:layout_below="@+id/rec_images"/>
 
-    <TextView
-        android:id="@+id/tit_val"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rec_images"
-        android:layout_toRightOf="@+id/txt_title"
-        android:text="Bag"
-        android:textSize="30sp"/>
+        <ScrollView
+            android:id="@+id/scrl_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rec_images">
 
-    <TextView
-        android:id="@+id/txt_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Date -"
-        android:textSize="30sp"
-        android:layout_below="@+id/txt_title"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/dat_val"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_title"
-        android:layout_toRightOf="@+id/txt_date"
-        android:text="20-06-2019"
-        android:textSize="30sp"/>
+                <TextView
+                    android:id="@+id/txt_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Title - "
+                    android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/txt_place"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Place -"
-        android:textSize="30sp"
-        android:layout_below="@+id/txt_date"/>
+                <TextView
+                    android:id="@+id/tit_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/txt_title"
+                    android:text="Bag"
+                    android:textSize="20sp"/>
 
-    <TextView
-        android:id="@+id/pla_val"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_date"
-        android:layout_toRightOf="@+id/txt_place"
-        android:text="Kaunas"
-        android:textSize="30sp"/>
+                <TextView
+                    android:id="@+id/txt_des"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Description - "
+                    android:textSize="20sp"
+                    android:layout_below="@+id/txt_title"/>
 
-    <Button
-        android:id="@+id/btn_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email"
-        android:layout_alignParentBottom="true"
-        android:paddingLeft="10dp"/>
+                <TextView
+                    android:id="@+id/des_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_title"
+                    android:layout_toRightOf="@+id/txt_des"
+                    android:text="It is a pink bag"
+                    android:textSize="20sp"/>
 
-    <Button
-        android:id="@+id/btn_dir"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Direction"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/btn_email"
-        android:paddingLeft="10dp"/>
 
-    <Button
-        android:id="@+id/btn_chat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Chat"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/btn_dir"
-        android:paddingLeft="10dp"/>
+                <TextView
+                    android:id="@+id/txt_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date - "
+                    android:textSize="20sp"
+                    android:layout_below="@+id/txt_des"/>
+
+                <TextView
+                    android:id="@+id/dat_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_des"
+                    android:layout_toRightOf="@+id/txt_date"
+                    android:text="20-06-2019"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/txt_place"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Place - "
+                    android:textSize="20sp"
+                    android:layout_below="@+id/txt_date"/>
+
+                <TextView
+                    android:id="@+id/pla_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_date"
+                    android:layout_toRightOf="@+id/txt_place"
+                    android:text="Kaunas"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/txt_cat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Category - "
+                    android:textSize="20sp"
+                    android:layout_below="@+id/txt_place"/>
+
+                <TextView
+                    android:id="@+id/cat_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_place"
+                    android:layout_toRightOf="@+id/txt_cat"
+                    android:text="Others"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/txt_postedby"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Posted By - "
+                    android:textSize="20sp"
+                    android:layout_below="@+id/txt_cat"/>
+
+                <TextView
+                    android:id="@+id/postedby_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_cat"
+                    android:layout_toRightOf="@+id/txt_postedby"
+                    android:text="chaitanyapr1998@gmail.com"
+                    android:textSize="20sp"/>
+
+                <Button
+                    android:id="@+id/btn_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/postedby_val"
+                    android:layout_marginStart="10dp"/>
+
+                <Button
+                    android:id="@+id/btn_dir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Direction"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/btn_email"
+                    android:layout_marginStart="10dp"/>
+
+                <Button
+                    android:id="@+id/btn_chat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chat"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/btn_dir"
+                    android:layout_marginStart="10dp"/>
+
+            </RelativeLayout>
+
+
+
+        </ScrollView>
+
+
+
+
+
 
 </RelativeLayout>

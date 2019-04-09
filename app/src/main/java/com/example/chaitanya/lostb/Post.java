@@ -1,130 +1,130 @@
 package com.example.chaitanya.lostb;
 
 public class Post {
-    private String Title;
-    private String Date;
-    private String Location;
-    private String Id;
-    private String Email;
-    private String Category;
-    private String UserId;
-    private String Description;
-    private String Address;
-    private String Latitude;
-    private String Longitude;
-    private String PostedDate;
+    private String title;
+    private String date;
+    private String location;
+    private String id;
+    private String email;
+    private String category;
+    private String userId;
+    private String description;
+    private String address;
+    private String latitude;
+    private String longitude;
+    private String postedDate;
 
     public Post() {
     }
 
-    public Post(String title, String date, String location, String id, String email, String category, String userId, String description, String address, String latitude, String longitude, String postedDate) {
-        Title = title;
-        Date = date;
-        Location = location;
-        Id = id;
-        Email = email;
-        Category = category;
-        UserId = userId;
-        Description = description;
-        Address = address;
-        Latitude = latitude;
-        Longitude = longitude;
-        PostedDate = postedDate;
+    public Post(String Title, String Date, String Location, String Id, String Email, String Category, String UserId, String Description, String Address, String Latitude, String Longitude, String PostedDate) {
+        title = Title;
+        date = Date;
+        location = Location;
+        id = Id;
+        email = Email;
+        category = Category;
+        userId = UserId;
+        description = Description;
+        address = Address;
+        latitude = Latitude;
+        longitude = Longitude;
+        postedDate = PostedDate;
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
     public void setTitle(String title) {
-        Title = title;
+        this.title = title;
     }
 
     public String getDate() {
-        return Date;
+        return date;
     }
 
     public void setDate(String date) {
-        Date = date;
+        this.date = date;
     }
 
     public String getLocation() {
-        return Location;
+        return location;
     }
 
     public void setLocation(String location) {
-        Location = location;
+        this.location = location;
     }
 
     public String getId() {
-        return Id;
+        return id;
     }
 
     public void setId(String id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public String getCategory() {
-        return Category;
+        return category;
     }
 
     public void setCategory(String category) {
-        Category = category;
+        this.category = category;
     }
 
     public String getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(String userId) {
-        UserId = userId;
+        this.userId = userId;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
     public void setAddress(String address) {
-        Address = address;
+        this.address = address;
     }
 
     public String getLatitude() {
-        return Latitude;
+        return latitude;
     }
 
     public void setLatitude(String latitude) {
-        Latitude = latitude;
+        this.latitude = latitude;
     }
 
     public String getLongitude() {
-        return Longitude;
+        return longitude;
     }
 
     public void setLongitude(String longitude) {
-        Longitude = longitude;
+        this.longitude = longitude;
     }
 
     public String getPostedDate() {
-        return PostedDate;
+        return postedDate;
     }
 
     public void setPostedDate(String postedDate) {
-        PostedDate = postedDate;
+        this.postedDate = postedDate;
     }
 }

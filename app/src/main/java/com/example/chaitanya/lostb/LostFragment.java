@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,10 +28,10 @@ public class LostFragment extends Fragment {
 
     ListView listView;
     ArrayList<String> title = new ArrayList<>();
-    ArrayList<Post> p = LostActivity.data;
-    //ArrayAdapter<String> a;
+    ArrayList<Post> p ;
+    FirebaseUser mUser;
     Context c;
-    FirebaseUser user;
+    DatabaseReference ref;
 
     @Nullable
     @Override
@@ -38,28 +39,12 @@ public class LostFragment extends Fragment {
         View view = inflater.inflate(R.layout.lost_fragment, container, false);
         listView = (ListView) view.findViewById(R.id.listView);
         c = container.getContext();
+        p = new ArrayList<>();
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        ref = FirebaseDatabase.getInstance().getReference();
 
-//        Query q = FirebaseDatabase.getInstance().getReference("Lost")
-//                .orderByChild("Email")
-//                .equalTo(user.getEmail());
-//        q.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.exists()){
-//
-//                    for(DataSnapshot d : dataSnapshot.getChildren()){
-//
-//                    }
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-        getTitleData();
+        getPostedByMe();
+
         ArrayAdapter<String> a = new ArrayAdapter<String>(c, android.R.layout.simple_list_item_1, title);
         listView.setAdapter(a);
         return view;
@@ -72,5 +57,28 @@ public class LostFragment extends Fragment {
                 title.add(p.get(i).getTitle());
             }
         }
+    }
+
+    private void getPostedByMe(){
+        ref = FirebaseDatabase.getInstance().getReference().child("Lost");
+        Query q = ref.orderByChild("userId").equalTo(mUser.getUid());
+        q.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot d : dataSnapshot.getChildren()){
+                        Post post = d.getValue(Post.class);
+                        p.add(post);
+                    }
+                    getTitleData();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

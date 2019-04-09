@@ -121,75 +121,81 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 String lat = String.valueOf(latlon.latitude);
                 String lon = String.valueOf(latlon.longitude);
 
-                incrementingNumber();
+                //incrementingNumber();
 
                 uploadingToFirebase(u);
 
                 sleepThread();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Lost").child(u);
+                Post p = new Post(t, da, l, u, e, ca, uid, d, addrs, lat, lon, date);
+                ref.setValue(p);
 
-                DatabaseReference childReference = mRootReference.child("Title");
-                childReference.setValue(t);
+//                DatabaseReference childReference = mRootReference.child("Title");
+//                childReference.setValue(t);
+//
+//                sleepThread();
+//
+//                DatabaseReference childReference2 = mRootReference.child("Description");
+//                childReference2.setValue(d);
+//
+//                sleepThread();
+//
+//                DatabaseReference childReference3 = mRootReference.child("Date");
+//                childReference3.setValue(da);
+//
+//                sleepThread();
+//
+//                DatabaseReference childReference4 = mRootReference.child("Location");
+//                childReference4.setValue(l);
+//
+//                sleepThread();
+//
+//                DatabaseReference childReference7 = mRootReference.child("Email");
+//                childReference7.setValue(e);
+//
+//                sleepThread();
+//
+//                DatabaseReference childReference5 = mRootReference.child("Id");
+//                childReference5.setValue(u);
+//
+//                sleepThread();
+//
+//                DatabaseReference childReference6 = mRootReference.child("Category");
+//                childReference6.setValue(ca);
+//
+//                sleepThread();
+//
+//                DatabaseReference childReference8 = mRootReference.child("UserId");
+//                childReference8.setValue(uid);
+//
+//                sleepThread();
+//
+//                DatabaseReference childReference9 = mRootReference.child("PostedDate");
+//                childReference9.setValue(date);
+//
+//                sleepThread();
+//
+//                DatabaseReference childReference10 = mRootReference.child("Address");
+//                childReference10.setValue(addrs);
+//
+//                sleepThread();
+//
+//                DatabaseReference childReference11 = mRootReference.child("Latitude");
+//                childReference11.setValue(lat);
+//
+//                sleepThread();
+//
+//                DatabaseReference childReference12 = mRootReference.child("Longitude");
+//                childReference12.setValue(lon);
+//
+//                sleepThread();
+
+                imgMeta(u);
 
                 sleepThread();
 
-                DatabaseReference childReference2 = mRootReference.child("Description");
-                childReference2.setValue(d);
-
-                sleepThread();
-
-                DatabaseReference childReference3 = mRootReference.child("Date");
-                childReference3.setValue(da);
-
-                sleepThread();
-
-                DatabaseReference childReference4 = mRootReference.child("Location");
-                childReference4.setValue(l);
-
-                sleepThread();
-
-                DatabaseReference childReference7 = mRootReference.child("Email");
-                childReference7.setValue(e);
-
-                sleepThread();
-
-                DatabaseReference childReference5 = mRootReference.child("Id");
-                childReference5.setValue(u);
-
-                sleepThread();
-
-                DatabaseReference childReference6 = mRootReference.child("Category");
-                childReference6.setValue(ca);
-
-                sleepThread();
-
-                DatabaseReference childReference8 = mRootReference.child("UserId");
-                childReference8.setValue(uid);
-
-                sleepThread();
-
-                DatabaseReference childReference9 = mRootReference.child("PostedDate");
-                childReference9.setValue(date);
-
-                sleepThread();
-
-                DatabaseReference childReference10 = mRootReference.child("Address");
-                childReference10.setValue(addrs);
-
-                sleepThread();
-
-                DatabaseReference childReference11 = mRootReference.child("Latitude");
-                childReference11.setValue(lat);
-
-                sleepThread();
-
-                DatabaseReference childReference12 = mRootReference.child("Longitude");
-                childReference12.setValue(lon);
-
-                sleepThread();
-
-                imgMeta();
-
-                sleepThread();
+                Toast.makeText(PostLostItems.this, "Submitted",
+                        Toast.LENGTH_LONG).show();
 
 
             }
@@ -303,13 +309,13 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
         return u;
     }
 
-    private void incrementingNumber(){
-//        num = num + 1;
-        String time = String.valueOf(System.currentTimeMillis());
-        unique = time + userId;
-        mRootReference = FirebaseDatabase.getInstance()
-                .getReferenceFromUrl("https://lostb-48c7c.firebaseio.com/Lost/" + unique);
-    }
+//    private void incrementingNumber(){
+////        num = num + 1;
+//        String time = String.valueOf(System.currentTimeMillis());
+//        unique = time + userId;
+//        mRootReference = FirebaseDatabase.getInstance()
+//                .getReferenceFromUrl("https://lostb-48c7c.firebaseio.com/Lost/" + unique);
+//    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -366,9 +372,9 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
     }
 
-    private void imgMeta(){
+    private void imgMeta(String u){
         mRootReference = FirebaseDatabase.getInstance()
-                .getReferenceFromUrl("https://lostb-48c7c.firebaseio.com/ImgMeta/" + unique);
+                .getReferenceFromUrl("https://lostb-48c7c.firebaseio.com/ImgMeta/" + u);
 //        HashMap<Integer, String> hm = new HashMap<>();
 //        if(uqFileName.size() != 0){
 //            for(int i = 0; i < uqFileName.size(); i++){

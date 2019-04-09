@@ -33,9 +33,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -58,18 +62,16 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class LostActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-//    ArrayList<String> mTitle = new ArrayList<>();
-//    ArrayList<String> mDate = new ArrayList<>();
-//    ArrayList<String> mLoc = new ArrayList<>();
-//    ArrayList<String> mImages = new ArrayList<>();
+
 
     static ArrayList<Post> data;
     ArrayList<Post> test;
     ArrayList<Post> search = new ArrayList<Post>();
-    ArrayList<String> uq = new ArrayList<String>();
     RecyclerView v;
     DatabaseReference ref;
     RecyclerviewAdapter adapter;
@@ -78,7 +80,6 @@ public class LostActivity extends AppCompatActivity
 
     PermissionManager permission;
     FirebaseUser mUser;
-    String uid;
 
     EditText edtSearch;
     ImageButton btnSearch, btnFilter;
@@ -88,6 +89,10 @@ public class LostActivity extends AppCompatActivity
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private DatePickerDialog.OnDateSetListener toDateSetListener;
 
+    CircleImageView ppImgView;
+    TextView emailTextView;
+    String imageURL;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,8 +100,6 @@ public class LostActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mDialog = new Dialog(this);
-
-        mUser = FirebaseAuth.getInstance().getCurrentUser();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -120,9 +123,19 @@ public class LostActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View nav = navigationView.getHeaderView(0);
+
+
         edtSearch = (EditText)findViewById(R.id.edt_search);
         btnSearch = (ImageButton)findViewById(R.id.btn_search);
         btnFilter = (ImageButton)findViewById(R.id.btn_filter);
+        ppImgView = (CircleImageView) nav.findViewById(R.id.propicImgView);
+        emailTextView = (TextView) nav.findViewById(R.id.emailTextView);
+
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        String email = mUser.getEmail();
+        emailTextView.setText(email);
+        displayProPicNav();
 
         data = new ArrayList<Post>();
         v = (RecyclerView)findViewById(R.id.lost_recyclerview);
@@ -132,7 +145,7 @@ public class LostActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 String text = edtSearch.getText().toString();
-                Query searchQuery = ref.orderByChild("Title").startAt(text).endAt(text + "\uf8ff");
+                Query searchQuery = ref.orderByChild("title").startAt(text).endAt(text + "\uf8ff");
                 searchQuery.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -342,12 +355,7 @@ public class LostActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh) {
             refreshData();
         }
@@ -388,5 +396,21 @@ public class LostActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void displayProPicNav(){
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("pp").child(mUser.getUid());
+        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                imageURL = uri.toString();
+                Glide.with(getApplicationContext()).load(imageURL).into(ppImgView);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+
+            }
+        });
     }
 }

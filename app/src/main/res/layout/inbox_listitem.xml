@@ -10,11 +10,5 @@
         android:layout_height="wrap_content"
         android:text="abc@gmail.com"/>
 
-    <TextView
-        android:id="@+id/chat_msg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/chat_email"
-        android:text="Hi"/>
 
 </RelativeLayout>
