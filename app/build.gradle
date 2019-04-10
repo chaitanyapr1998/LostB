@@ -45,7 +45,11 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
     implementation 'com.google.android.gms:play-services-location:15.0.1'
 
+    //permission manager
     implementation 'com.github.karanchuri:PermissionManager:0.1.0'
+
+    //swipe list view
+    implementation 'com.baoyz.swipemenulistview:library:1.3.0'
 
 
 }

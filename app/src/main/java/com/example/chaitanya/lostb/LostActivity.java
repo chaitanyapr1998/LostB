@@ -16,6 +16,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -211,6 +212,31 @@ public class LostActivity extends AppCompatActivity
 
         permission = new PermissionManager() {};
         permission.checkAndRequestPermissions(this);
+
+
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT ) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                Toast.makeText(LostActivity.this, "on Move", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                Toast.makeText(LostActivity.this, "on Swiped ", Toast.LENGTH_SHORT).show();
+                int position = viewHolder.getAdapterPosition();
+                String tit = data.get(position).getTitle();
+                String loc = data.get(position).getLocation();
+                String dat = data.get(position).getDate();
+                shareRecyclerViewItem(tit, dat, loc);
+                adapter.notifyDataSetChanged();
+
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(v);
 
     }
 
@@ -412,5 +438,15 @@ public class LostActivity extends AppCompatActivity
 
             }
         });
+    }
+
+    private void shareRecyclerViewItem(String t, String d, String l){
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Lost Item - " + t + "\n" + "Date - " + d + "\n" +"Location - " + l + "\n\n" + "Findingg App");
+//        sendIntent.putExtra(Intent.EXTRA_TEXT, "Date - " + d);
+//        sendIntent.putExtra(Intent.EXTRA_TEXT, "Location - " + l);
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
     }
 }

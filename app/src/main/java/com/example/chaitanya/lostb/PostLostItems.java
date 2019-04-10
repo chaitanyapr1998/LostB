@@ -1,9 +1,11 @@
 package com.example.chaitanya.lostb;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -37,11 +39,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 public class PostLostItems extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -64,14 +68,15 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
     ArrayList<Uri> imgUri;
     ArrayList<String> uqFileName;
 
-    //FirebaseAuth mAuth;
-
     DatabaseReference mRootReference;
     FirebaseUser mUser;
 
     String address;
     LatLng latlon;
-    //double lat, lon;
+
+    Intent i;
+    Bundle b;
+    String intentId, u;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +106,24 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
         imgUri = new ArrayList<>();
         uqFileName = new ArrayList<>();
 
+        i= getIntent();
+        b = i.getExtras();
 
-// Create a new Places client instance.
-        //PlacesClient placesClient = Places.createClient(this);
+        if(b!=null)
+        {
+            String t = (String) b.get("title");
+            String d = (String) b.get("date");
+            String des = (String) b.get("des");
+            String cat = (String) b.get("cat");
+            String loc = (String) b.get("loc");
+            intentId = (String) b.get("id");
+            title.setText(t);
+            description.setText(des);
+            location.setText(loc);
+            date.setText(d);
+            //mRootReference =
+        }
+
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,90 +133,36 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 String da = date.getText().toString();
                 String l = location.getText().toString();
                 String e = mUser.getEmail();
-                String u = String.valueOf(System.currentTimeMillis()) + userId;
+                if(b == null){
+                    u = String.valueOf(System.currentTimeMillis()) + userId;
+                } else {
+                    u = intentId;
+                }
+
                 String ca = category.getSelectedItem().toString();
                 String uid = userId;
                 String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
                 String addrs = address;
                 String lat = String.valueOf(latlon.latitude);
                 String lon = String.valueOf(latlon.longitude);
-
-                //incrementingNumber();
+                String country = getCountryName(getApplicationContext(), latlon.latitude, latlon.longitude);
+                //String check = "";
 
                 uploadingToFirebase(u);
 
                 sleepThread();
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Lost").child(u);
-                Post p = new Post(t, da, l, u, e, ca, uid, d, addrs, lat, lon, date);
+                Post p = new Post(t, da, l, u, e, ca, uid, d, addrs, lat, lon, date, country);
                 ref.setValue(p);
-
-//                DatabaseReference childReference = mRootReference.child("Title");
-//                childReference.setValue(t);
-//
-//                sleepThread();
-//
-//                DatabaseReference childReference2 = mRootReference.child("Description");
-//                childReference2.setValue(d);
-//
-//                sleepThread();
-//
-//                DatabaseReference childReference3 = mRootReference.child("Date");
-//                childReference3.setValue(da);
-//
-//                sleepThread();
-//
-//                DatabaseReference childReference4 = mRootReference.child("Location");
-//                childReference4.setValue(l);
-//
-//                sleepThread();
-//
-//                DatabaseReference childReference7 = mRootReference.child("Email");
-//                childReference7.setValue(e);
-//
-//                sleepThread();
-//
-//                DatabaseReference childReference5 = mRootReference.child("Id");
-//                childReference5.setValue(u);
-//
-//                sleepThread();
-//
-//                DatabaseReference childReference6 = mRootReference.child("Category");
-//                childReference6.setValue(ca);
-//
-//                sleepThread();
-//
-//                DatabaseReference childReference8 = mRootReference.child("UserId");
-//                childReference8.setValue(uid);
-//
-//                sleepThread();
-//
-//                DatabaseReference childReference9 = mRootReference.child("PostedDate");
-//                childReference9.setValue(date);
-//
-//                sleepThread();
-//
-//                DatabaseReference childReference10 = mRootReference.child("Address");
-//                childReference10.setValue(addrs);
-//
-//                sleepThread();
-//
-//                DatabaseReference childReference11 = mRootReference.child("Latitude");
-//                childReference11.setValue(lat);
-//
-//                sleepThread();
-//
-//                DatabaseReference childReference12 = mRootReference.child("Longitude");
-//                childReference12.setValue(lon);
-//
-//                sleepThread();
 
                 imgMeta(u);
 
                 sleepThread();
 
+                b = null;
+
                 Toast.makeText(PostLostItems.this, "Submitted",
                         Toast.LENGTH_LONG).show();
-
 
             }
         });
@@ -277,6 +243,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 String toastMsg = place.getName().toString();
                 address = place.getAddress().toString();
                 latlon = place.getLatLng();
+
 //                lat = latlon.latitude;
 //                lon = latlon.longitude;
 
@@ -309,14 +276,6 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
         return u;
     }
 
-//    private void incrementingNumber(){
-////        num = num + 1;
-//        String time = String.valueOf(System.currentTimeMillis());
-//        unique = time + userId;
-//        mRootReference = FirebaseDatabase.getInstance()
-//                .getReferenceFromUrl("https://lostb-48c7c.firebaseio.com/Lost/" + unique);
-//    }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String cat = parent.getItemAtPosition(position).toString();
@@ -334,23 +293,6 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
         } catch (InterruptedException e1) {
             e1.printStackTrace();
         }
-    }
-
-    private void getImgUrl(){
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("UploadImages");
-        //storageReference.
-        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                //imageURL = uri.toString();
-                //Glide.with(getApplicationContext()).load(imageURL).into(profilePic);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-
-            }
-        });
     }
 
     private void uploadingToFirebase(String u){
@@ -375,12 +317,6 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
     private void imgMeta(String u){
         mRootReference = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl("https://lostb-48c7c.firebaseio.com/ImgMeta/" + u);
-//        HashMap<Integer, String> hm = new HashMap<>();
-//        if(uqFileName.size() != 0){
-//            for(int i = 0; i < uqFileName.size(); i++){
-//                hm.put(i, uqFileName.get(i));
-//            }
-//        }
         for(int i = 0; i < uqFileName.size(); i++){
             int q = i;
             String k = String.valueOf(q);
@@ -391,20 +327,21 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
         uqFileName.clear();
     }
 
-//    private void coordToAddress(){
-//        Geocoder geocoder;
-//        List<Address> addresses;
-//        geocoder = new Geocoder(this, Locale.getDefault());
-//
-//        addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-//
-//        String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-//        String city = addresses.get(0).getLocality();
-//        String state = addresses.get(0).getAdminArea();
-//        String country = addresses.get(0).getCountryName();
-//        String postalCode = addresses.get(0).getPostalCode();
-//        String knownName = addresses.get(0).getFeatureName();
-//    }
+    //cc
+    public static String getCountryName(Context context, double latitude, double longitude) {
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            Address result;
 
+            if (addresses != null && !addresses.isEmpty()) {
+                return addresses.get(0).getCountryName();
+            }
 
+        } catch (IOException ignored) {
+            //do something
+        }
+        return null;
+    }
 }

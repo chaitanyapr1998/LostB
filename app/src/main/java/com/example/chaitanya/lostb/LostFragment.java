@@ -1,6 +1,8 @@
 package com.example.chaitanya.lostb;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,8 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,21 +32,23 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LostFragment extends Fragment {
 
-    ListView listView;
+    SwipeMenuListView listView;
     ArrayList<String> title = new ArrayList<>();
     ArrayList<Post> p ;
     FirebaseUser mUser;
     Context c;
     DatabaseReference ref;
+    private CustomAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.lost_fragment, container, false);
-        listView = (ListView) view.findViewById(R.id.listView);
+        listView = (SwipeMenuListView) view.findViewById(R.id.listView);
         c = container.getContext();
         p = new ArrayList<>();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -45,8 +56,8 @@ public class LostFragment extends Fragment {
 
         getPostedByMe();
 
-        ArrayAdapter<String> a = new ArrayAdapter<String>(c, android.R.layout.simple_list_item_1, title);
-        listView.setAdapter(a);
+        adapter = new CustomAdapter(getContext(), p);
+        listView.setAdapter(adapter);
         return view;
 
     }
@@ -65,6 +76,7 @@ public class LostFragment extends Fragment {
         q.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                p.clear();
                 if(dataSnapshot.exists()){
                     for(DataSnapshot d : dataSnapshot.getChildren()){
                         Post post = d.getValue(Post.class);
@@ -81,4 +93,5 @@ public class LostFragment extends Fragment {
             }
         });
     }
+
 }
