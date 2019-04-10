@@ -181,24 +181,13 @@ public class LostActivity extends AppCompatActivity
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                check = check + 1;
-
-                for(DataSnapshot d : dataSnapshot.getChildren()){
-                    //data.clear();
-                    if(ij == 0){
+                data.clear();
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot d : dataSnapshot.getChildren()){
                         Post p = d.getValue(Post.class);
                         data.add(p);
                     }
-                    if(check == 6){
-                        //data.clear();
-                        Post p = d.getValue(Post.class);
-                        test.add(p);
-                        data.addAll(test);
-                    }
-
                 }
-                ij = ij + 1;
-
             }
 
             @Override
@@ -206,6 +195,34 @@ public class LostActivity extends AppCompatActivity
 
             }
         });
+//        ref.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                check = check + 1;
+//
+//                for(DataSnapshot d : dataSnapshot.getChildren()){
+//                    //data.clear();
+//                    if(ij == 0){
+//                        Post p = d.getValue(Post.class);
+//                        data.add(p);
+//                    }
+//                    if(check == 6){
+//                        //data.clear();
+//                        Post p = d.getValue(Post.class);
+//                        test.add(p);
+//                        data.addAll(test);
+//                    }
+//
+//                }
+//                ij = ij + 1;
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
         adapter = new RecyclerviewAdapter(LostActivity.this, data);
         v.setAdapter(adapter);
@@ -351,7 +368,7 @@ public class LostActivity extends AppCompatActivity
 
 
     private void refreshData(){
-        System.out.print("Hello");
+        //System.out.print("Hello");
         adapter = new RecyclerviewAdapter(LostActivity.this, data);
         v.setAdapter(adapter);
     }
