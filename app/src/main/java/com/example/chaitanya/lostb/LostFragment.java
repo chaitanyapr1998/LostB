@@ -36,7 +36,7 @@ import java.util.List;
 
 public class LostFragment extends Fragment {
 
-    SwipeMenuListView listView;
+    ListView listView;
     ArrayList<String> title = new ArrayList<>();
     ArrayList<Post> p ;
     FirebaseUser mUser;
@@ -48,7 +48,7 @@ public class LostFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.lost_fragment, container, false);
-        listView = (SwipeMenuListView) view.findViewById(R.id.listView);
+        listView = (ListView) view.findViewById(R.id.listView);
         c = container.getContext();
         p = new ArrayList<>();
         mUser = FirebaseAuth.getInstance().getCurrentUser();

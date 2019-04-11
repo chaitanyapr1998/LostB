@@ -76,11 +76,16 @@ public class CustomAdapter extends BaseAdapter {
                 ref.removeValue();
                 Toast.makeText(context, "Deleted",
                         Toast.LENGTH_LONG).show();
-                Intent i = new Intent(context, ProfileActivity.class);
-                context.startActivity(i);
+                refreshItems(items);
             }
         });
         v.setTag(items.get(position).getId());
         return v;
+    }
+
+    public void refreshItems(List<Post> items) {
+        this.items.clear();
+        this.items.addAll(items);
+        notifyDataSetChanged();
     }
 }

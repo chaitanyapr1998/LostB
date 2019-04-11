@@ -125,6 +125,7 @@ public class LostActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         View nav = navigationView.getHeaderView(0);
+        setTitle("Lost Items");
 
 
         edtSearch = (EditText)findViewById(R.id.edt_search);
@@ -419,7 +420,8 @@ public class LostActivity extends AppCompatActivity
             Intent intent = new Intent(LostActivity.this, LostActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_found) {
-
+            Intent intent = new Intent(LostActivity.this, FoundActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_inbox) {
             Intent intent = new Intent(LostActivity.this, InboxActivity.class);
             startActivity(intent);

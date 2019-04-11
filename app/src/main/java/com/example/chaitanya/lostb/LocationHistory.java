@@ -47,6 +47,7 @@ public class LocationHistory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_history);
+        setTitle("Location History");
 
         instance = this;
 

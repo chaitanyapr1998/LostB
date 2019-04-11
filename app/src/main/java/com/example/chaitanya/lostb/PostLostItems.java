@@ -82,6 +82,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_lost_items);
+        setTitle("Post Lost Item");
 
         title = (EditText)findViewById(R.id.edt_title);
         description = (EditText)findViewById(R.id.edt_description);
@@ -264,6 +265,12 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
             } else if (data.getData() != null){
                 //one image
+                int itemCount = data.getClipData().getItemCount();
+                for (int i = 0; i < itemCount; i++){
+                    Uri imageUri = data.getClipData().getItemAt(i).getUri();
+                    imgUri.add(imageUri);
+
+                }
             } else {
                 //no image
             }
