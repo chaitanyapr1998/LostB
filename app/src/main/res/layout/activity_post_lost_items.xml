@@ -32,7 +32,8 @@
         android:layout_width="221dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edt_date"
-        android:hint="Location*"/>
+        android:hint="Location*"
+        android:inputType="none"/>
 
     <Spinner
         android:id="@+id/spin_cat"

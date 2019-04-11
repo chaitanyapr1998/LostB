@@ -1,5 +1,6 @@
 package com.example.chaitanya.lostb;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -76,8 +78,9 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
     Intent i;
     Bundle b;
-    String intentId, u;
+    String intentId, u, l;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +110,9 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
         imgUri = new ArrayList<>();
         uqFileName = new ArrayList<>();
 
+        date.setEnabled(false);
+        location.setEnabled(false);
+
         i= getIntent();
         b = i.getExtras();
 
@@ -130,9 +136,31 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
             @Override
             public void onClick(View v) {
                 String t = title.getText().toString();
+                if(t.isEmpty()){
+                    title.setError("Please enter name of an item");
+                    return;
+                } else {
+                    title.setError(null);//removes error
+                    title.clearFocus();
+                }
                 String d = description.getText().toString();
                 String da = date.getText().toString();
-                String l = location.getText().toString();
+                if(da.isEmpty()){
+                    date.setError("Please pick a date");
+                    return;
+                } else {
+                    date.setError(null);//removes error
+                    date.clearFocus();
+                }
+                String loc = location.getText().toString();
+                if(loc.isEmpty()){
+                    location.setError("Please pick a location");
+                    return;
+                } else {
+                    location.setError(null);//removes error
+                    location.clearFocus();
+                }
+
                 String e = mUser.getEmail();
                 if(b == null){
                     u = String.valueOf(System.currentTimeMillis()) + userId;
@@ -153,7 +181,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
                 sleepThread();
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Lost").child(u);
-                Post p = new Post(t, da, l, u, e, ca, uid, d, addrs, lat, lon, date, country);
+                Post p = new Post(t, da, loc, u, e, ca, uid, d, addrs, lat, lon, date, country);
                 ref.setValue(p);
 
                 imgMeta(u);
@@ -161,6 +189,8 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 sleepThread();
 
                 b = null;
+
+                clearEditText();
 
                 Toast.makeText(PostLostItems.this, "Submitted",
                         Toast.LENGTH_LONG).show();
@@ -171,10 +201,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                title.setText("");
-                description.setText("");
-                date.setText("");
-                location.setText("");
+                clearEditText();
             }
         });
 
@@ -204,6 +231,8 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 date.setText(dateSet);
             }
         };
+
+
 
         locBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,14 +269,9 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
-//                String toastMsg = String.format("Place: %s", place.getName());
                 String toastMsg = place.getName().toString();
                 address = place.getAddress().toString();
                 latlon = place.getLatLng();
-
-//                lat = latlon.latitude;
-//                lon = latlon.longitude;
-
                 location.setText(toastMsg);
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
             }
@@ -350,5 +374,18 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
             //do something
         }
         return null;
+    }
+
+    private void clearEditText(){
+        description.setText("");
+        title.setText("");
+        title.setError(null);//removes error
+        title.clearFocus();
+        date.setText("");
+        date.setError(null);//removes error
+        date.clearFocus();
+        location.setText("");
+        location.setError(null);//removes error
+        location.clearFocus();
     }
 }
