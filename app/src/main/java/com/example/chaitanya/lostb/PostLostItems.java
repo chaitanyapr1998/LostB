@@ -135,7 +135,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String t = title.getText().toString();
+                String t = title.getText().toString().toLowerCase();
                 if(t.isEmpty()){
                     title.setError("Please enter name of an item");
                     return;

@@ -81,7 +81,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-
+        displayMsg(mUser.getUid(), toUserid);
 
 
     }

@@ -24,8 +24,12 @@
 
         <activity android:name=".MapsActivity" />
         <activity android:name=".LocationHistory" />
-        <activity android:name=".ChatActivity" />
-        <activity android:name=".InboxActivity" />
+        <activity
+            android:name=".ChatActivity"
+            android:parentActivityName=".InboxActivity"/>
+        <activity
+            android:name=".InboxActivity"
+            android:parentActivityName=".LostActivity"/>
         <activity
             android:name=".DetailedViewActivity"
             android:parentActivityName=".LostActivity" />

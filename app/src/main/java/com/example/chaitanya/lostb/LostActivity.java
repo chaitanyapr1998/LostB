@@ -146,7 +146,7 @@ public class LostActivity extends AppCompatActivity
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = edtSearch.getText().toString();
+                String text = edtSearch.getText().toString().toLowerCase();
                 Query searchQuery = ref.orderByChild("title").startAt(text).endAt(text + "\uf8ff");
                 searchQuery.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -196,34 +196,6 @@ public class LostActivity extends AppCompatActivity
 
             }
         });
-//        ref.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                check = check + 1;
-//
-//                for(DataSnapshot d : dataSnapshot.getChildren()){
-//                    //data.clear();
-//                    if(ij == 0){
-//                        Post p = d.getValue(Post.class);
-//                        data.add(p);
-//                    }
-//                    if(check == 6){
-//                        //data.clear();
-//                        Post p = d.getValue(Post.class);
-//                        test.add(p);
-//                        data.addAll(test);
-//                    }
-//
-//                }
-//                ij = ij + 1;
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
 
         adapter = new RecyclerviewAdapter(LostActivity.this, data);
         v.setAdapter(adapter);
