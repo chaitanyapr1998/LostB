@@ -32,7 +32,9 @@
         <activity
             android:name=".SettingsActivity"
             android:parentActivityName=".LostActivity" />
-        <activity android:name=".PostLostItems" />
+        <activity
+            android:name=".PostLostItems"
+            android:parentActivityName=".LostActivity"/>
         <activity
             android:name=".ProfileActivity"
             android:parentActivityName=".LostActivity" />

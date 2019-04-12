@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,12 +44,14 @@ public class LostFragment extends Fragment {
     Context c;
     DatabaseReference ref;
     private CustomAdapter adapter;
+    private ProgressBar progressBar;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.lost_fragment, container, false);
         listView = (ListView) view.findViewById(R.id.listView);
+        progressBar = (ProgressBar) view.findViewById(R.id.prog_lost);
+        progressBar.setVisibility(View.VISIBLE);
         c = container.getContext();
         p = new ArrayList<>();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -58,6 +61,7 @@ public class LostFragment extends Fragment {
 
         adapter = new CustomAdapter(getContext(), p);
         listView.setAdapter(adapter);
+        progressBar.setVisibility(View.GONE);
         return view;
 
     }

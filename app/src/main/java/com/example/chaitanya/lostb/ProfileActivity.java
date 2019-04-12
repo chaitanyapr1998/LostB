@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
     Uri proPicUri;
     StorageReference mSRef;
     String imageURL;
+    private ProgressBar progressBar;
 
 
 
@@ -64,6 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
         profilePic = (CircleImageView) findViewById(R.id.cir_pic);
         id = (TextView)findViewById(R.id.txt_email);
         his = (TextView)findViewById(R.id.txt_his);
+        progressBar = (ProgressBar) findViewById(R.id.prog_profile);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
@@ -135,6 +138,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void displayProfilePic(){
+        progressBar.setVisibility(View.VISIBLE);
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("pp").child(user.getUid());
         storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -148,6 +152,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override

@@ -19,6 +19,7 @@ public class CustomAdapter extends BaseAdapter {
     private Context context;
     private List<Post> items;
     DatabaseReference ref;
+    int pos;
 
     public CustomAdapter(Context context, List<Post> items) {
         this.context = context;
@@ -74,18 +75,18 @@ public class CustomAdapter extends BaseAdapter {
             public void onClick(View v) {
                 ref = FirebaseDatabase.getInstance().getReference().child("Lost").child(items.get(position).getId());
                 ref.removeValue();
+                pos = position;
+                refreshItems();
                 Toast.makeText(context, "Deleted",
                         Toast.LENGTH_LONG).show();
-                refreshItems(items);
             }
         });
         v.setTag(items.get(position).getId());
         return v;
     }
 
-    public void refreshItems(List<Post> items) {
-        this.items.clear();
-        this.items.addAll(items);
+    public void refreshItems() {
+        this.items.remove(pos);
         notifyDataSetChanged();
     }
 }
