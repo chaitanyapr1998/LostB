@@ -20,12 +20,18 @@
         android:layout_toRightOf="@+id/btn_stop"
         android:text="Start"/>
 
-    <TextView
-        android:id="@+id/txt_loc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Location"
-        android:layout_below="@+id/btn_stop"/>
+    <!--<TextView-->
+        <!--android:id="@+id/txt_loc"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Location"-->
+        <!--android:layout_below="@+id/btn_stop"/>-->
+
+    <ListView
+        android:id="@+id/lv_lochis"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/btn_stop"></ListView>
 
 
 

@@ -19,9 +19,11 @@ public class LocationBroadcastReceiver extends BroadcastReceiver {
                 LocationResult r = LocationResult.extractResult(intent);
                 if(r != null){
                     Location location = r.getLastLocation();
+                    String lat = String.valueOf(location.getLatitude());
+                    String lon = String.valueOf(location.getLongitude());
                     String b = new StringBuilder(""+location.getLatitude()).append("/").append(location.getLongitude()).toString();
                     try {
-                        LocationHistory.getInstance().updateTextview(b);
+                        LocationHistory.getInstance().updateTextview(location.getLatitude(), location.getLongitude());
                     } catch (Exception e){
 
                     }

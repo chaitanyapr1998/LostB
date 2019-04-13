@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -17,6 +19,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,20 +27,27 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class LocationHistory extends AppCompatActivity {
 
     Button btnStart, btnStop;
-    TextView txtLoc;
+    //TextView txtLoc;
     private BroadcastReceiver receiver;
     ArrayList<String> mMyLocation;
     LocationRequest req;
     FusedLocationProviderClient fusedLocationProviderClient;
+    ArrayList<String> locHis;
 
     static LocationHistory instance;
+
+    private LocCustomAdapter adapter;
+    ListView lhListView;
 
     public static LocationHistory getInstance() {
         return instance;
@@ -51,10 +61,13 @@ public class LocationHistory extends AppCompatActivity {
 
         instance = this;
 
-        txtLoc = (TextView) findViewById(R.id.txt_loc);
+        //txtLoc = (TextView) findViewById(R.id.txt_loc);
         btnStart = (Button) findViewById(R.id.btn_start);
         btnStop = (Button) findViewById(R.id.btn_stop);
+        lhListView = (ListView) findViewById(R.id.lv_lochis);
+
         mMyLocation = new ArrayList<>();
+        locHis = new ArrayList<>();
 
         if (!checkForPermission()) {
             btnClickable();
@@ -73,6 +86,9 @@ public class LocationHistory extends AppCompatActivity {
                 killBroadCastReceiver();
             }
         });
+
+        adapter = new LocCustomAdapter(getApplicationContext(), locHis);
+        lhListView.setAdapter(adapter);
 
     }
 
@@ -118,18 +134,27 @@ public class LocationHistory extends AppCompatActivity {
     private void locationRequest(){
         req = new LocationRequest();
         req.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        req.setInterval(5000);
+        req.setInterval(3600000);
         req.setFastestInterval(3000);
         req.setSmallestDisplacement(0);
     }
 
-    public void updateTextview(final String v){
+    public void updateTextview(final double lat, final double lon){
         LocationHistory.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                txtLoc.append(v);
-                Log.i("MyLocation", v);
-                Toast.makeText(LocationHistory.this, v,
+                String res = getCountryName(getApplicationContext(), lat, lon);
+                if(locHis.size() < 24){
+                    locHis.add(res);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    locHis.clear();
+                    locHis.add(res);
+                    adapter.notifyDataSetChanged();
+                }
+                //txtLoc.append(res);
+                Log.i("MyLocation", res);
+                Toast.makeText(LocationHistory.this, res,
                         Toast.LENGTH_LONG).show();
             }
         });
@@ -149,6 +174,27 @@ public class LocationHistory extends AppCompatActivity {
         pm.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
         Toast.makeText(getApplicationContext(), "BroadCast Receiver Killed", Toast.LENGTH_LONG).show();
+    }
+
+    //cc
+    public static String getCountryName(Context context, double latitude, double longitude) {
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            //geocoder.getFromLocation()
+            //addresses = geocoder.getFromLocationName(latitude, latitude, 1)
+
+            Address result;
+
+            if (addresses != null && !addresses.isEmpty()) {
+                return addresses.get(0).getAddressLine(0);
+            }
+
+        } catch (IOException ignored) {
+            //do something
+        }
+        return null;
     }
 
 
