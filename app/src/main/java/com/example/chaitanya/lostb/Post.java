@@ -14,11 +14,12 @@ public class Post {
     private String longitude;
     private String postedDate;
     private String country;
+    private String tit_cou_cat;
 
     public Post() {
     }
 
-    public Post(String Title, String Date, String Location, String Id, String Email, String Category, String UserId, String Description, String Address, String Latitude, String Longitude, String PostedDate, String Country) {
+    public Post(String Title, String Date, String Location, String Id, String Email, String Category, String UserId, String Description, String Address, String Latitude, String Longitude, String PostedDate, String Country, String Tit_Cou_Cat) {
         title = Title;
         date = Date;
         location = Location;
@@ -32,6 +33,7 @@ public class Post {
         longitude = Longitude;
         postedDate = PostedDate;
         country = Country;
+        tit_cou_cat = Tit_Cou_Cat;
     }
 
     public String getTitle() {
@@ -136,5 +138,13 @@ public class Post {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getTit_cou_cat() {
+        return tit_cou_cat;
+    }
+
+    public void setTit_cou_cat(String tit_cou_cat) {
+        this.tit_cou_cat = tit_cou_cat;
     }
 }

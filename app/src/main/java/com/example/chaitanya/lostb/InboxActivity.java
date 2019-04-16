@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,7 @@ public class InboxActivity extends AppCompatActivity {
     FirebaseUser mUser;
     List<Object> uqChatList;
     ArrayList<Users> emails;
+    ArrayList<Users> uqEmails;
 
 
     @Override
@@ -41,6 +43,7 @@ public class InboxActivity extends AppCompatActivity {
         v.setLayoutManager(new LinearLayoutManager(this));
         mChats = new ArrayList<>();
         emails = new ArrayList<>();
+        uqEmails = new ArrayList<>();
         //uqChatList = new List<Object>() ;
         mUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -90,11 +93,13 @@ public class InboxActivity extends AppCompatActivity {
                 mRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        //emails.clear();
                         if(dataSnapshot.exists()){
                             //for(DataSnapshot d : dataSnapshot.getChildren()){
                                 Users p = dataSnapshot.getValue(Users.class);
                                 emails.add(p);
-                                adapter = new InboxRecyclerviewAdapter(InboxActivity.this, emails);
+                                makeEmailsUnique();
+                                adapter = new InboxRecyclerviewAdapter(InboxActivity.this, uqEmails);
                                 v.setAdapter(adapter);
                             //}
                         }
@@ -107,7 +112,23 @@ public class InboxActivity extends AppCompatActivity {
                 });
             }
         }
+    }
 
+
+
+    private void makeEmailsUnique(){
+        uqEmails.clear();
+
+        for (Users u : emails) {
+            boolean check = false;
+            for (Users e : uqEmails) {
+                if (e.getUserId().equals(u.getUserId()) || (e.equals(u))) {
+                    check = true;
+                    break;
+                }
+            }
+            if (!check) uqEmails.add(u);
+        }
 
     }
 }

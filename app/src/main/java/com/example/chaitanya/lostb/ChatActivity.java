@@ -78,6 +78,7 @@ public class ChatActivity extends AppCompatActivity {
 
                 send(from, to, msg);
                 displayMsg(from, to);
+                editMsg.setText("");
             }
         });
 

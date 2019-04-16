@@ -135,7 +135,7 @@ public class LocationHistory extends AppCompatActivity {
         req = new LocationRequest();
         req.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         req.setInterval(3600000);
-        req.setFastestInterval(3000);
+        req.setFastestInterval(3600000);
         req.setSmallestDisplacement(0);
     }
 
@@ -182,8 +182,6 @@ public class LocationHistory extends AppCompatActivity {
         List<Address> addresses = null;
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            //geocoder.getFromLocation()
-            //addresses = geocoder.getFromLocationName(latitude, latitude, 1)
 
             Address result;
 

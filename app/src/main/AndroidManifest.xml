@@ -22,8 +22,12 @@
 
         <receiver android:name=".LocationBroadcastReceiver" />
 
-        <activity android:name=".MapsActivity" />
-        <activity android:name=".LocationHistory" />
+        <activity
+            android:name=".MapsActivity"
+            android:parentActivityName=".LostActivity"/>
+        <activity
+            android:name=".LocationHistory"
+            android:parentActivityName=".ProfileActivity"/>
         <activity
             android:name=".ChatActivity"
             android:parentActivityName=".InboxActivity"/>

@@ -1,5 +1,6 @@
 package com.example.chaitanya.lostb;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -17,6 +18,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -58,9 +60,14 @@ import com.google.firebase.storage.UploadTask;
 import com.karan.churi.PermissionManager.PermissionManager;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -93,6 +100,10 @@ public class LostActivity extends AppCompatActivity
     CircleImageView ppImgView;
     TextView emailTextView;
     String imageURL;
+
+    ArrayList<Post> filteredData;
+
+    Date datadate, datefrom, dateto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +151,7 @@ public class LostActivity extends AppCompatActivity
         displayProPicNav();
 
         data = new ArrayList<Post>();
+        filteredData = new ArrayList<>();
         v = (RecyclerView)findViewById(R.id.lost_recyclerview);
         v.setLayoutManager(new LinearLayoutManager(this));
 
@@ -230,10 +242,12 @@ public class LostActivity extends AppCompatActivity
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void popUpView(View v){
         final EditText ti, lo, from, to;
-        final Spinner ca;
-        Button show, cancel;
+        final Spinner ca, countriesspinner;
+        Button apply, cancel;
+        ImageButton imgFrom, imgTo;
         mDialog.setContentView(R.layout.layout_popupview);
 
         ti = (EditText) mDialog.findViewById(R.id.edt_ti);
@@ -241,10 +255,32 @@ public class LostActivity extends AppCompatActivity
         from = (EditText) mDialog.findViewById(R.id.edt_datefrom);
         to = (EditText) mDialog.findViewById(R.id.edt_dateto);
         ca = (Spinner) mDialog.findViewById(R.id.spin_ca);
-        show = (Button) mDialog.findViewById(R.id.btn_show);
+        apply = (Button) mDialog.findViewById(R.id.btn_show);
         cancel = (Button) mDialog.findViewById(R.id.btn_cancel);
+        imgFrom = (ImageButton) mDialog.findViewById(R.id.from_date);
+        imgTo = (ImageButton) mDialog.findViewById(R.id.to_date);
+        countriesspinner = (Spinner) mDialog.findViewById(R.id.spin_countries);
 
-        from.setOnClickListener(new View.OnClickListener() {
+        from.setEnabled(false);
+        to.setEnabled(false);
+
+        Locale[] loc = Locale.getAvailableLocales();
+        ArrayList<String> listOfCountries = new ArrayList<String>();
+        String country;
+        for( Locale l : loc ){
+            country = l.getDisplayCountry();
+            if( country.length() > 0 && !listOfCountries.contains(country) ){
+                listOfCountries.add( country );
+            }
+        }
+        Collections.sort(listOfCountries, String.CASE_INSENSITIVE_ORDER);
+
+        ArrayAdapter<String> countriesAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, listOfCountries);
+        countriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        countriesspinner.setAdapter(countriesAdapter);
+
+        imgFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar cal = Calendar.getInstance();
@@ -268,10 +304,12 @@ public class LostActivity extends AppCompatActivity
                 int m = month + 1;
                 String dateSet = dayOfMonth + "-" + m + "-" + year;
                 from.setText(dateSet);
+                from.setError(null);
+                to.setError(null);
             }
         };
 
-        to.setOnClickListener(new View.OnClickListener() {
+        imgTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar cal = Calendar.getInstance();
@@ -295,17 +333,20 @@ public class LostActivity extends AppCompatActivity
                 int m = month + 1;
                 String dateSet = dayOfMonth + "-" + m + "-" + year;
                 to.setText(dateSet);
+                from.setError(null);
+                to.setError(null);
+
             }
         };
 
 
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories_array, android.R.layout.simple_spinner_item);
+        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ca.setAdapter(adapter);
-//        ca.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
 
-        show.setOnClickListener(new View.OnClickListener() {
+
+        apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String t = ti.getText().toString();
@@ -313,6 +354,54 @@ public class LostActivity extends AppCompatActivity
                 String df = from.getText().toString();
                 String dt = to.getText().toString();
                 String c = ca.getSelectedItem().toString();
+                String country = countriesspinner.getSelectedItem().toString();
+
+                if(dt.length() != 0 && df.length() == 0){
+                    from.setError("Please enter From date");
+                    Toast.makeText(getApplicationContext(), "Enter from date", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+//                if(dt.length() == 0 && df.length() != 0){
+//                    to.setError("Please enter To date");
+//                    Toast.makeText(getApplicationContext(), "Enter to date", Toast.LENGTH_LONG).show();
+//                }
+
+                if(df.length() != 0){
+                    if(dt.compareTo(df) < 0 || dt.compareTo(df) == 0){
+                        to.setError("Please check To date");
+                        Toast.makeText(getApplicationContext(), "To date should be after from date", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                }
+
+                ref = FirebaseDatabase.getInstance().getReference().child("Lost");
+//                Query q = ref.orderByChild("tit_cou_cat").equalTo(t+"_"+country+"_"+c);
+//                //q.orderByChild("country").equalTo(country);
+//                q.addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        data.clear();
+//                        if(dataSnapshot.exists()){
+//                            for(DataSnapshot d : dataSnapshot.getChildren()){
+//                                Post p = d.getValue(Post.class);
+//                                data.add(p);
+//                            }
+//                        }
+//                        refreshData();
+//                        Toast.makeText(getApplicationContext(), "Filter applied", Toast.LENGTH_LONG).show();
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                    }
+//                });
+                filterData(t, l, df, dt, c, country);
+                refreshFilterData();
+
+                mDialog.dismiss();
+
             }
         });
 
@@ -439,5 +528,230 @@ public class LostActivity extends AppCompatActivity
 //        sendIntent.putExtra(Intent.EXTRA_TEXT, "Location - " + l);
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
+    }
+
+    private void filterData(String tit, String loc, String datef, String datet, String cat, String cou){
+        String t = tit;
+        String l = loc;
+        String df = datef;
+        String dt = datet;
+        String c = cat;
+        String country = cou;
+        filteredData.clear();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+
+        //All empty
+        if(t.length() == 0 && country.length() == 0 && c.length() == 0){
+            for(int i = 0; i < data.size(); i++){
+                filteredData.add(data.get(i));
+            }
+        }
+
+        //only title
+        if(t.length() != 0 && country.length() == 0 && c.length() == 0 && df.length() == 0){
+            for(int i = 0; i < data.size(); i++){
+                if(data.get(i).getTitle().equals(t)){
+                    filteredData.add(data.get(i));
+                }
+            }
+        }
+
+        //only country
+        if(t.length() == 0 && country.length() != 0 && c.length() == 0 && df.length() == 0){
+            for(int i = 0; i < data.size(); i++){
+                if(data.get(i).getCountry().equals(country)){
+                    filteredData.add(data.get(i));
+                }
+            }
+        }
+
+        //only category
+        if(t.length() == 0 && country.length() == 0 && c.length() != 0 && df.length() == 0){
+            for(int i = 0; i < data.size(); i++){
+                if(data.get(i).getCategory().equals(c)){
+                    filteredData.add(data.get(i));
+                }
+            }
+        }
+
+        //only date
+        if(t.length() == 0 && country.length() == 0 && c.length() == 0 && df.length() != 0 && dt.length() != 0){
+            for(int i = 0; i < data.size(); i++){
+                String dateeee = data.get(i).getDate();
+                try {
+                    datefrom = dateFormat.parse(df);
+                    dateto = dateFormat.parse(dt);
+                    datadate = dateFormat.parse(dateeee);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if(datadate.compareTo(datefrom) >= 0 && datadate.compareTo(dateto) <= 0){
+                    filteredData.add(data.get(i));
+                }
+            }
+        }
+
+        //title and country
+        if(t.length() != 0 && country.length() != 0 && c.length() == 0 && df.length() == 0){
+            for(int i = 0; i < data.size(); i++){
+                if(data.get(i).getTitle().equals(t) && data.get(i).getCountry().equals(country)){
+                    filteredData.add(data.get(i));
+                }
+            }
+        }
+
+        //title and category
+        if(t.length() != 0 && country.length() == 0 && c.length() != 0 && df.length() == 0){
+            for(int i = 0; i < data.size(); i++){
+                if(data.get(i).getCategory().equals(c) && data.get(i).getTitle().equals(t)){
+                    filteredData.add(data.get(i));
+                }
+            }
+        }
+
+        //title, date
+        if(t.length() != 0 && country.length() == 0 && c.length() == 0 && df.length() != 0){
+            for(int i = 0; i < data.size(); i++){
+                String dateeee = data.get(i).getDate();
+                try {
+                    datefrom = dateFormat.parse(df);
+                    dateto = dateFormat.parse(dt);
+                    datadate = dateFormat.parse(dateeee);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if(data.get(i).getTitle().equals(t) && datadate.compareTo(datefrom) >= 0 && datadate.compareTo(dateto) <= 0){
+                    filteredData.add(data.get(i));
+                }
+            }
+        }
+
+        //country, category
+        if(t.length() == 0 && country.length() != 0 && c.length() != 0 && df.length() == 0){
+            for(int i = 0; i < data.size(); i++){
+                if(data.get(i).getCategory().equals(c) && data.get(i).getCountry().equals(country)){
+                    filteredData.add(data.get(i));
+                }
+            }
+        }
+
+        //country, date
+        if(t.length() == 0 && country.length() != 0 && c.length() == 0 && df.length() != 0){
+            for(int i = 0; i < data.size(); i++){
+                String dateeee = data.get(i).getDate();
+                try {
+                    datefrom = dateFormat.parse(df);
+                    dateto = dateFormat.parse(dt);
+                    datadate = dateFormat.parse(dateeee);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if(data.get(i).getCountry().equals(country) && data.get(i).getTitle().equals(t) && datadate.compareTo(datefrom) >= 0 && datadate.compareTo(dateto) <= 0){
+                    filteredData.add(data.get(i));
+                }
+            }
+        }
+
+        //category, date
+        if(t.length() == 0 && country.length() == 0 && c.length() != 0 && df.length() != 0){
+            for(int i = 0; i < data.size(); i++){
+                String dateeee = data.get(i).getDate();
+                try {
+                    datefrom = dateFormat.parse(df);
+                    dateto = dateFormat.parse(dt);
+                    datadate = dateFormat.parse(dateeee);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if(data.get(i).getCategory().equals(c) && datadate.compareTo(datefrom) >= 0 && datadate.compareTo(dateto) <= 0){
+                    filteredData.add(data.get(i));
+                }
+            }
+        }
+
+        //title, country, category
+        if(t.length() != 0 && country.length() != 0 && c.length() != 0 && df.length() == 0){
+            for(int i = 0; i < data.size(); i++){
+                if(data.get(i).getTitle().equals(t) && data.get(i).getCountry().equals(country) && data.get(i).getCategory().equals(c)){
+                    filteredData.add(data.get(i));
+                }
+            }
+        }
+
+        //title, country, date
+        if(t.length() != 0 && country.length() != 0 && c.length() == 0 && df.length() != 0){
+            for(int i = 0; i < data.size(); i++){
+                String dateeee = data.get(i).getDate();
+                try {
+                    datefrom = dateFormat.parse(df);
+                    dateto = dateFormat.parse(dt);
+                    datadate = dateFormat.parse(dateeee);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if(data.get(i).getTitle().equals(t) && data.get(i).getCountry().equals(country) && datadate.compareTo(datefrom) >= 0 && datadate.compareTo(dateto) <= 0){
+                    filteredData.add(data.get(i));
+                }
+            }
+        }
+
+        //title, category, date
+        if(t.length() != 0 && country.length() == 0 && c.length() != 0 && df.length() != 0){
+            for(int i = 0; i < data.size(); i++){
+                String dateeee = data.get(i).getDate();
+                try {
+                    datefrom = dateFormat.parse(df);
+                    dateto = dateFormat.parse(dt);
+                    datadate = dateFormat.parse(dateeee);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if(data.get(i).getTitle().equals(t) && data.get(i).getCategory().equals(c) && datadate.compareTo(datefrom) >= 0 && datadate.compareTo(dateto) <= 0){
+                    filteredData.add(data.get(i));
+                }
+            }
+        }
+
+
+        //country, category, date
+        if(t.length() == 0 && country.length() != 0 && c.length() != 0 && df.length() != 0){
+            for(int i = 0; i < data.size(); i++){
+                String dateeee = data.get(i).getDate();
+                try {
+                    datefrom = dateFormat.parse(df);
+                    dateto = dateFormat.parse(dt);
+                    datadate = dateFormat.parse(dateeee);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if(data.get(i).getCategory().equals(c) && data.get(i).getCountry().equals(country) && datadate.compareTo(datefrom) >= 0 && datadate.compareTo(dateto) <= 0){
+                    filteredData.add(data.get(i));
+                }
+            }
+        }
+
+        //title, country, category and date
+        if(t.length() != 0 && country.length() != 0 && c.length() != 0 && df.length() != 0){
+            for(int i = 0; i < data.size(); i++){
+                String dateeee = data.get(i).getDate();
+                try {
+                    datefrom = dateFormat.parse(df);
+                    dateto = dateFormat.parse(dt);
+                    datadate = dateFormat.parse(dateeee);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if(data.get(i).getTitle().equals(t) && data.get(i).getCategory().equals(c) && data.get(i).getCountry().equals(country) && datadate.compareTo(datefrom) >= 0 && datadate.compareTo(dateto) <= 0){
+                    filteredData.add(data.get(i));
+                }
+            }
+        }
+    }
+
+    private void refreshFilterData(){
+        //System.out.print("Hello");
+        adapter = new RecyclerviewAdapter(LostActivity.this, filteredData);
+        v.setAdapter(adapter);
     }
 }

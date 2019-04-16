@@ -175,13 +175,14 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 String lat = String.valueOf(latlon.latitude);
                 String lon = String.valueOf(latlon.longitude);
                 String country = getCountryName(getApplicationContext(), latlon.latitude, latlon.longitude);
+                String tit_cou_cat = t +"_"+ country +"_"+ ca;
                 //String check = "";
 
                 uploadingToFirebase(u);
 
                 sleepThread();
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Lost").child(u);
-                Post p = new Post(t, da, loc, u, e, ca, uid, d, addrs, lat, lon, date, country);
+                Post p = new Post(t, da, loc, u, e, ca, uid, d, addrs, lat, lon, date, country, tit_cou_cat);
                 ref.setValue(p);
 
                 imgMeta(u);
