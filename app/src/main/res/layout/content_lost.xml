@@ -38,6 +38,4 @@
         android:layout_below="@+id/edt_search">
     </android.support.v7.widget.RecyclerView>
 
-
-
 </RelativeLayout>

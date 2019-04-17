@@ -56,6 +56,8 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
                 String userid = mData.get(i).getUserId();
                 String des = mData.get(i).getDescription();
                 String cat = mData.get(i).getCategory();
+                String country = mData.get(i).getCountry();
+                String address = mData.get(i).getAddress();
                 intent.putExtra("title", title);
                 intent.putExtra("date", date);
                 intent.putExtra("place", place);
@@ -64,6 +66,8 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
                 intent.putExtra("userid", userid);
                 intent.putExtra("des", des);
                 intent.putExtra("cat", cat);
+                intent.putExtra("country", country);
+                intent.putExtra("address", address);
                 v.getContext().startActivity(intent);
             }
         });

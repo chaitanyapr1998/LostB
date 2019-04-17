@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="#a09484"
     android:layout_width="300dp"
-    android:layout_height="350dp"
+    android:layout_height="300dp"
     android:padding="5dp"
     android:layout_gravity="center">
 
@@ -13,25 +13,25 @@
         android:layout_height="wrap_content"
         android:hint="Enter lost item name"/>
 
-    <EditText
-        android:id="@+id/edt_lo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edt_ti"
-        android:hint="Address - where you lost item"/>
+    <!--<EditText-->
+        <!--android:id="@+id/edt_lo"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/edt_ti"-->
+        <!--android:hint="Address - where you lost item"/>-->
 
     <EditText
         android:id="@+id/edt_datefrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edt_lo"
+        android:layout_below="@+id/edt_ti"
         android:hint="From"/>
 
     <EditText
         android:id="@+id/edt_dateto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edt_lo"
+        android:layout_below="@+id/edt_ti"
         android:layout_toRightOf="@+id/from_date"
         android:hint="To" />
 
@@ -92,7 +92,7 @@
         android:id="@+id/from_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edt_lo"
+        android:layout_below="@+id/edt_ti"
         android:layout_toRightOf="@+id/edt_datefrom"
         android:src="@drawable/ic_date_range_black_24dp" />
 
@@ -100,7 +100,7 @@
         android:id="@+id/to_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edt_lo"
+        android:layout_below="@+id/edt_ti"
         android:layout_toRightOf="@+id/edt_dateto"
         android:src="@drawable/ic_date_range_black_24dp" />
 

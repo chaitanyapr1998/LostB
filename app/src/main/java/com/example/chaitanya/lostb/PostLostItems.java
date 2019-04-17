@@ -285,19 +285,16 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 for (int i = 0; i < itemCount; i++){
                     Uri imageUri = data.getClipData().getItemAt(i).getUri();
                     imgUri.add(imageUri);
-
                 }
 
             } else if (data.getData() != null){
                 //one image
-                int itemCount = data.getClipData().getItemCount();
-                for (int i = 0; i < itemCount; i++){
-                    Uri imageUri = data.getClipData().getItemAt(i).getUri();
-                    imgUri.add(imageUri);
+                Uri imageUri = data.getData();
+                imgUri.add(imageUri);
 
-                }
             } else {
                 //no image
+                Toast.makeText(this, "No images selected", Toast.LENGTH_LONG).show();
             }
         }
     }

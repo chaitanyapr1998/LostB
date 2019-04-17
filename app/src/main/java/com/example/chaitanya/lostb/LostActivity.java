@@ -251,7 +251,7 @@ public class LostActivity extends AppCompatActivity
         mDialog.setContentView(R.layout.layout_popupview);
 
         ti = (EditText) mDialog.findViewById(R.id.edt_ti);
-        lo = (EditText) mDialog.findViewById(R.id.edt_lo);
+        //lo = (EditText) mDialog.findViewById(R.id.edt_lo);
         from = (EditText) mDialog.findViewById(R.id.edt_datefrom);
         to = (EditText) mDialog.findViewById(R.id.edt_dateto);
         ca = (Spinner) mDialog.findViewById(R.id.spin_ca);
@@ -350,7 +350,8 @@ public class LostActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 String t = ti.getText().toString();
-                String l = lo.getText().toString();
+                //String l = lo.getText().toString();
+                String l = "";
                 String df = from.getText().toString();
                 String dt = to.getText().toString();
                 String c = ca.getSelectedItem().toString();
@@ -362,11 +363,6 @@ public class LostActivity extends AppCompatActivity
                     return;
                 }
 
-//                if(dt.length() == 0 && df.length() != 0){
-//                    to.setError("Please enter To date");
-//                    Toast.makeText(getApplicationContext(), "Enter to date", Toast.LENGTH_LONG).show();
-//                }
-
                 if(df.length() != 0){
                     if(dt.compareTo(df) < 0 || dt.compareTo(df) == 0){
                         to.setError("Please check To date");
@@ -376,27 +372,6 @@ public class LostActivity extends AppCompatActivity
                 }
 
                 ref = FirebaseDatabase.getInstance().getReference().child("Lost");
-//                Query q = ref.orderByChild("tit_cou_cat").equalTo(t+"_"+country+"_"+c);
-//                //q.orderByChild("country").equalTo(country);
-//                q.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        data.clear();
-//                        if(dataSnapshot.exists()){
-//                            for(DataSnapshot d : dataSnapshot.getChildren()){
-//                                Post p = d.getValue(Post.class);
-//                                data.add(p);
-//                            }
-//                        }
-//                        refreshData();
-//                        Toast.makeText(getApplicationContext(), "Filter applied", Toast.LENGTH_LONG).show();
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                    }
-//                });
                 filterData(t, l, df, dt, c, country);
                 refreshFilterData();
 

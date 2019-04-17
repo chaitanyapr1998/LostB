@@ -76,9 +76,14 @@ public class ChatActivity extends AppCompatActivity {
                 String to = toUserid;
                 String msg = editMsg.getText().toString();
 
-                send(from, to, msg);
-                displayMsg(from, to);
-                editMsg.setText("");
+                if(msg.isEmpty()){
+                   //Empty message
+                } else {
+                    send(from, to, msg);
+                    displayMsg(from, to);
+                    editMsg.setText("");
+                }
+
             }
         });
 

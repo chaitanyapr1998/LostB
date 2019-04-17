@@ -20,6 +20,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,8 +39,8 @@ import java.util.Map;
 
 public class DetailedViewActivity extends AppCompatActivity {
 
-    TextView txtT, txtD, txtP, tVal, dVal, pVal;
-    TextView txtDes, txtCat, txtPostby, desVal, catVal, postbyVal;
+    TextView txtT, txtD, txtP, tVal, dVal, pVal, cVal;
+    TextView txtDes, txtCat, txtPostby, desVal, catVal, postbyVal, txtCou;
     Button btnEmail, btnChat, btnDir;
     ImageView img;
     private String postedByEmail, uid, userid;
@@ -46,6 +48,7 @@ public class DetailedViewActivity extends AppCompatActivity {
     ArrayList<String> disImg;
     DatabaseReference ref;
     ArrayList<String> imgName;
+    FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,8 @@ public class DetailedViewActivity extends AppCompatActivity {
         tVal = (TextView)findViewById(R.id.tit_val);
         dVal = (TextView)findViewById(R.id.dat_val);
         pVal = (TextView)findViewById(R.id.pla_val);
-
+        txtCou = (TextView)findViewById(R.id.txt_country);
+        cVal = (TextView)findViewById(R.id.country_val);
         txtDes = (TextView)findViewById(R.id.txt_des);
         txtCat = (TextView)findViewById(R.id.txt_cat);
         txtPostby = (TextView)findViewById(R.id.txt_postedby);
@@ -72,6 +76,8 @@ public class DetailedViewActivity extends AppCompatActivity {
         btnEmail = (Button)findViewById(R.id.btn_email);
         btnChat = (Button)findViewById(R.id.btn_chat);
         btnDir = (Button)findViewById(R.id.btn_dir);
+
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
 
         disImg = new ArrayList<>();
         imgName = new ArrayList<>();
@@ -89,12 +95,19 @@ public class DetailedViewActivity extends AppCompatActivity {
             postedByEmail = (String) b.get("email");
             uid = (String) b.get("uid");
             userid = (String) b.get("userid");
+            String country = (String) b.get("country");
+            String address = (String) b.get("address");
             tVal.setText(t);
             dVal.setText(d);
             pVal.setText(p);
             desVal.setText(des);
             catVal.setText(cat);
-            postbyVal.setText(postedByEmail);
+            cVal.setText(country);
+            if(mUser.getEmail().equals(postedByEmail)){
+                postbyVal.setText("You");
+            } else {
+                postbyVal.setText(postedByEmail);
+            }
         }
 
         btnEmail.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +119,11 @@ public class DetailedViewActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(intent, "Choose one"));
             }
         });
+
+        //Disable button so user won't chat with himself
+        if(mUser.getEmail().equals(postedByEmail)){
+            btnChat.setEnabled(false);
+        }
 
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override

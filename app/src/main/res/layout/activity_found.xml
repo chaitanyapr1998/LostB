@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FoundActivity">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".FoundActivity"
+    tools:showIn="@layout/app_bar_lost">
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/edt_search"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content" />
+
+    <ImageButton
+        android:id="@+id/btn_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/edt_search"
+        android:src="@drawable/ic_search_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/btn_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/btn_search"
+        android:src="@drawable/ic_filter_list_black_24dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lost_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/edt_search">
+    </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

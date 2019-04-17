@@ -45,13 +45,13 @@
                     android:layout_height="wrap_content"
                     android:text="Description - "
                     android:textSize="20sp"
-                    android:layout_below="@+id/txt_title"/>
+                    android:layout_below="@+id/tit_val"/>
 
                 <TextView
                     android:id="@+id/des_val"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_title"
+                    android:layout_below="@+id/tit_val"
                     android:layout_toRightOf="@+id/txt_des"
                     android:text="It is a pink bag"
                     android:textSize="20sp"/>
@@ -63,13 +63,13 @@
                     android:layout_height="wrap_content"
                     android:text="Date - "
                     android:textSize="20sp"
-                    android:layout_below="@+id/txt_des"/>
+                    android:layout_below="@+id/des_val"/>
 
                 <TextView
                     android:id="@+id/dat_val"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_des"
+                    android:layout_below="@+id/des_val"
                     android:layout_toRightOf="@+id/txt_date"
                     android:text="20-06-2019"
                     android:textSize="20sp"/>
@@ -80,16 +80,35 @@
                     android:layout_height="wrap_content"
                     android:text="Place - "
                     android:textSize="20sp"
-                    android:layout_below="@+id/txt_date"/>
+                    android:layout_below="@+id/dat_val"/>
 
                 <TextView
                     android:id="@+id/pla_val"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_date"
+                    android:layout_below="@+id/dat_val"
                     android:layout_toRightOf="@+id/txt_place"
                     android:text="Kaunas"
                     android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/txt_country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Country - "
+                    android:textSize="20sp"
+                    android:layout_below="@+id/pla_val"/>
+
+                <TextView
+                    android:id="@+id/country_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/pla_val"
+                    android:layout_toRightOf="@+id/txt_country"
+                    android:text="Lithuania"
+                    android:textSize="20sp"/>
+
+
 
                 <TextView
                     android:id="@+id/txt_cat"
@@ -97,13 +116,13 @@
                     android:layout_height="wrap_content"
                     android:text="Category - "
                     android:textSize="20sp"
-                    android:layout_below="@+id/txt_place"/>
+                    android:layout_below="@+id/country_val"/>
 
                 <TextView
                     android:id="@+id/cat_val"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_place"
+                    android:layout_below="@+id/country_val"
                     android:layout_toRightOf="@+id/txt_cat"
                     android:text="Others"
                     android:textSize="20sp"/>
@@ -114,13 +133,13 @@
                     android:layout_height="wrap_content"
                     android:text="Posted By - "
                     android:textSize="20sp"
-                    android:layout_below="@+id/txt_cat"/>
+                    android:layout_below="@+id/cat_val"/>
 
                 <TextView
                     android:id="@+id/postedby_val"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_cat"
+                    android:layout_below="@+id/cat_val"
                     android:layout_toRightOf="@+id/txt_postedby"
                     android:text="chaitanyapr1998@gmail.com"
                     android:textSize="20sp"/>
