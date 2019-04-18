@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -22,21 +23,28 @@
         <receiver android:name=".LocationBroadcastReceiver" />
 
         <activity
-            android:name=".FoundActivity"
-            android:parentActivityName=".LostActivity"></activity>
+            android:name=".PostFoundItems"
+            android:parentActivityName=".FoundActivity" />
 
         <activity
+            android:name=".FoundDetailedViewActivity"
+            android:parentActivityName=".FoundActivity" />
+
+        <activity
+            android:name=".FoundActivity"
+            android:parentActivityName=".LostActivity" />
+        <activity
             android:name=".MapsActivity"
-            android:parentActivityName=".LostActivity"/>
+            android:parentActivityName=".LostActivity" />
         <activity
             android:name=".LocationHistory"
-            android:parentActivityName=".ProfileActivity"/>
+            android:parentActivityName=".ProfileActivity" />
         <activity
             android:name=".ChatActivity"
-            android:parentActivityName=".InboxActivity"/>
+            android:parentActivityName=".InboxActivity" />
         <activity
             android:name=".InboxActivity"
-            android:parentActivityName=".LostActivity"/>
+            android:parentActivityName=".LostActivity" />
         <activity
             android:name=".DetailedViewActivity"
             android:parentActivityName=".LostActivity" />
@@ -45,7 +53,7 @@
             android:parentActivityName=".LostActivity" />
         <activity
             android:name=".PostLostItems"
-            android:parentActivityName=".LostActivity"/>
+            android:parentActivityName=".LostActivity" />
         <activity
             android:name=".ProfileActivity"
             android:parentActivityName=".LostActivity" />
@@ -59,6 +67,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
     </application>

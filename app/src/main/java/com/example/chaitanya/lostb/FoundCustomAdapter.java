@@ -14,14 +14,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
-public class CustomAdapter extends BaseAdapter {
+public class FoundCustomAdapter extends BaseAdapter {
 
     private Context context;
     private List<Post> items;
     DatabaseReference ref;
     int pos;
 
-    public CustomAdapter(Context context, List<Post> items) {
+    public FoundCustomAdapter(Context context, List<Post> items) {
         this.context = context;
         this.items = items;
     }
@@ -51,7 +51,7 @@ public class CustomAdapter extends BaseAdapter {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, PostLostItems.class);
+                Intent i = new Intent(context, PostFoundItems.class);
                 String tit = items.get(position).getTitle();
                 String des = items.get(position).getDescription();
                 String date = items.get(position).getDate();
@@ -79,7 +79,7 @@ public class CustomAdapter extends BaseAdapter {
         del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ref = FirebaseDatabase.getInstance().getReference().child("Lost").child(items.get(position).getId());
+                ref = FirebaseDatabase.getInstance().getReference().child("Found").child(items.get(position).getId());
                 ref.removeValue();
                 pos = position;
                 refreshItems();

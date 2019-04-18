@@ -78,13 +78,10 @@ public class LostActivity extends AppCompatActivity
 
 
     static ArrayList<Post> data;
-    ArrayList<Post> test;
     ArrayList<Post> search = new ArrayList<Post>();
     RecyclerView v;
     DatabaseReference ref;
     RecyclerviewAdapter adapter;
-    private static int ij = 0;
-    private static int check = 1;
 
     PermissionManager permission;
     FirebaseUser mUser;
@@ -117,11 +114,7 @@ public class LostActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if(mUser != null){
-//                    uid = mUser.getUid();
-//                }
                 Intent intent = new Intent(LostActivity.this, PostLostItems.class);
-                //intent.putExtra("uid", uid);
                 startActivity(intent);
             }
         });

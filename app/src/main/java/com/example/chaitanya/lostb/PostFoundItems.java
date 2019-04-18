@@ -1,5 +1,8 @@
 package com.example.chaitanya.lostb;
 
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -50,7 +53,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class PostLostItems extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class PostFoundItems extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     EditText title, description, date, location;
     Spinner category;
@@ -85,8 +88,8 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_lost_items);
-        setTitle("Post Lost Item");
+        setContentView(R.layout.activity_post_found_items);
+        setTitle("Post Found Item");
 
         title = (EditText)findViewById(R.id.edt_title);
         description = (EditText)findViewById(R.id.edt_description);
@@ -185,14 +188,13 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                     lon = longitude;
                     country = cou;
                 }
-
                 String tit_cou_cat = t +"_"+ country +"_"+ ca;
                 //String check = "";
 
                 uploadingToFirebase(u);
 
                 sleepThread();
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Lost").child(u);
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Found").child(u);
                 Post p = new Post(t, da, loc, u, e, ca, uid, d, addrs, lat, lon, date, country, tit_cou_cat);
                 ref.setValue(p);
 
@@ -204,7 +206,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
                 clearEditText();
 
-                Toast.makeText(PostLostItems.this, "Submitted",
+                Toast.makeText(PostFoundItems.this, "Submitted",
                         Toast.LENGTH_LONG).show();
 
             }
@@ -226,7 +228,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 int da = cal.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog d = new DatePickerDialog(
-                        PostLostItems.this,
+                        PostFoundItems.this,
                         android.R.style.Theme_Holo_Light,
                         dateSetListener,
                         y,m,da);
@@ -252,7 +254,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
                 Intent intent;
                 try {
-                    intent =builder.build(PostLostItems.this);
+                    intent =builder.build(PostFoundItems.this);
                     startActivityForResult(intent, PLACE_PICKER_REQUEST);
                 } catch (GooglePlayServicesRepairableException e) {
                     e.printStackTrace();
@@ -344,7 +346,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                    Toast.makeText(PostLostItems.this, "Images Uploaded",
+                    Toast.makeText(PostFoundItems.this, "Images Uploaded",
                             Toast.LENGTH_LONG).show();
                 }
             });
@@ -356,7 +358,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
     private void imgMeta(String u){
         mRootReference = FirebaseDatabase.getInstance()
-                .getReferenceFromUrl("https://lostb-48c7c.firebaseio.com/ImgMeta/" + u);
+                .getReferenceFromUrl("https://lostb-48c7c.firebaseio.com/FoundImgMeta/" + u);
         for(int i = 0; i < uqFileName.size(); i++){
             int q = i;
             String k = String.valueOf(q);
