@@ -38,7 +38,7 @@
             android:parentActivityName=".LostActivity" />
         <activity
             android:name=".LocationHistory"
-            android:parentActivityName=".ProfileActivity" />
+            android:parentActivityName=".LostActivity" />
         <activity
             android:name=".ChatActivity"
             android:parentActivityName=".InboxActivity" />
