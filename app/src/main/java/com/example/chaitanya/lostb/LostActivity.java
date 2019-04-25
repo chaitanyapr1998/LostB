@@ -67,6 +67,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -102,6 +103,7 @@ public class LostActivity extends AppCompatActivity
 
     Date datadate, datefrom, dateto;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,7 +136,7 @@ public class LostActivity extends AppCompatActivity
 
         edtSearch = (EditText)findViewById(R.id.edt_search);
         btnSearch = (ImageButton)findViewById(R.id.btn_search);
-        btnFilter = (ImageButton)findViewById(R.id.btn_filter);
+//        btnFilter = (ImageButton)findViewById(R.id.btn_filter);
         ppImgView = (CircleImageView) nav.findViewById(R.id.propicImgView);
         emailTextView = (TextView) nav.findViewById(R.id.emailTextView);
 
@@ -147,6 +149,7 @@ public class LostActivity extends AppCompatActivity
         filteredData = new ArrayList<>();
         v = (RecyclerView)findViewById(R.id.lost_recyclerview);
         v.setLayoutManager(new LinearLayoutManager(this));
+
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,12 +178,12 @@ public class LostActivity extends AppCompatActivity
             }
         });
 
-        btnFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popUpView(v);
-            }
-        });
+//        btnFilter.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
 
         ref = FirebaseDatabase.getInstance().getReference().child("Lost");
@@ -395,6 +398,60 @@ public class LostActivity extends AppCompatActivity
         }
     }
 
+//    private void displayItemImages(){
+//        ref = FirebaseDatabase.getInstance().getReference().child("ImgMeta").child(uid);
+//        ref.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                //dataSnapshot.getChildren();
+//                Object value = dataSnapshot.getValue();
+//                if(value instanceof List) {
+//                    List<Object> values = (List<Object>) value;
+//                    // do your magic with values
+//                    for(int i = 0; i < values.size(); i++){
+//                        imgName.add(values.get(i).toString());
+//                    }
+//
+//                }
+//                else {
+//                    // handle other possible types
+//                }
+//                getUri();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//
+//    }
+//
+//
+//
+//    private void getUri(){
+//        for(int h = 0; h < imgName.size(); h++){
+//            String abc = imgName.get(h);
+//            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("UploadImages").child(uid).child(abc);
+//            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                @Override
+//                public void onSuccess(Uri uri) {
+//                    // Got the download URL for 'users/me/profile.png'
+//                    //Uri u = uri;
+//                    disImg.add(uri.toString());
+//                    //recView();
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception exception) {
+//                    // Handle any errors
+//                }
+//            });
+//        }
+//    }
+
+
 
 
     private void refreshData(){
@@ -431,6 +488,8 @@ public class LostActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
             refreshData();
+        } else if (id == R.id.action_filter){
+            popUpView(v);
         }
 
         return super.onOptionsItemSelected(item);

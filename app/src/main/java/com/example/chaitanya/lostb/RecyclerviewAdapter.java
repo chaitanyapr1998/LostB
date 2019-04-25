@@ -2,17 +2,30 @@ package com.example.chaitanya.lostb;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -21,6 +34,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     private Context mContext;
 
     private ArrayList<Post> mData ;
+
 
     public RecyclerviewAdapter(Context mContext, ArrayList<Post> mData) {
         this.mContext = mContext;
@@ -37,13 +51,33 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
-//        Glide.with(mContext)
-//                .asBitmap()
-//                .load(mImages.get(i))
-//                .into(viewHolder.image);
+
+//
+//        if(disImg.size() != 0){
+
+//        }
         viewHolder.title.setText(mData.get(i).getTitle());
         viewHolder.date.setText(mData.get(i).getDate());
         viewHolder.place.setText(mData.get(i).getLocation());
+        viewHolder.country.setText(mData.get(i).getCountry());
+        if(mData.get(i).getCategory().equals("Automobile")){
+            viewHolder.image.setImageResource(R.drawable.baseline_directions_car_black_18);
+        }
+        if(mData.get(i).getCategory().equals("Electronics")){
+            viewHolder.image.setImageResource(R.drawable.baseline_phone_iphone_black_18);
+        }
+        if(mData.get(i).getCategory().equals("People")){
+            viewHolder.image.setImageResource(R.drawable.baseline_people_black_18);
+        }
+        if(mData.get(i).getCategory().equals("Pets")){
+            viewHolder.image.setImageResource(R.drawable.baseline_pets_black_18);
+        }
+        if(mData.get(i).getCategory().equals("Jewellery")){
+            viewHolder.image.setImageResource(R.drawable.baseline_euro_symbol_black_18);
+        }
+        if(mData.get(i).getCategory().equals("Others")){
+            viewHolder.image.setImageResource(R.drawable.baseline_panorama_fish_eye_black_18);
+        }
         viewHolder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,11 +113,20 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
         return mData.size();
     }
 
+
+    private void sleepThread(){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        CircleImageView image;
-        TextView title, date, place;
-        RelativeLayout layout;
+        ImageView image;
+        TextView title, date, place, country;
+        ConstraintLayout layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -92,6 +135,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
             title = itemView.findViewById(R.id.txt_ltitle);
             date = itemView.findViewById(R.id.txt_ldate);
             place = itemView.findViewById(R.id.txt_lloc);
+            country = itemView.findViewById(R.id.txt_country);
             layout = itemView.findViewById(R.id.layout_listitem);
         }
     }

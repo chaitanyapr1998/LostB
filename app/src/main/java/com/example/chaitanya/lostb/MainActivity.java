@@ -8,6 +8,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     Button login, signup;
     EditText edtEmail, edtPassword;
     static FirebaseAuth mAuth;
+    ImageView imgLogo;
     //static String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
         login = (Button) findViewById(R.id.btn_login);
         signup = (Button) findViewById(R.id.btn_newuser);
+
+        imgLogo = (ImageView) findViewById(R.id.img_logo);
         edtEmail = (EditText) findViewById(R.id.edt_email);
         edtPassword = (EditText) findViewById(R.id.edt_pass);
 

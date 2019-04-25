@@ -8,6 +8,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,6 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
     Button btnacc, btnSignup;
     private FirebaseAuth mAuth;
     DatabaseReference reference;
+    ImageView imgLogo;
 
 
     @Override
@@ -39,7 +41,8 @@ public class SignUpActivity extends AppCompatActivity {
         edtEmail = (EditText)findViewById(R.id.edt_email);
         edtPassword = (EditText)findViewById(R.id.edt_pass);
         btnacc = (Button)findViewById(R.id.btn_acc);
-        btnSignup = (Button)findViewById(R.id.btn_signup);
+        btnSignup = (Button)findViewById(R.id.btn_login);
+        imgLogo = (ImageView) findViewById(R.id.img_logo);
 
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
