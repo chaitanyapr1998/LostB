@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:scaleType="fitXY"
-        android:src="@drawable/logo"
+        android:background="@drawable/logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

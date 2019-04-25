@@ -3,10 +3,12 @@ package com.example.chaitanya.lostb;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -42,6 +44,25 @@ public class FoundRecyclerviewAdapter extends RecyclerView.Adapter<FoundRecycler
         viewHolder.title.setText(mData.get(i).getTitle());
         viewHolder.date.setText(mData.get(i).getDate());
         viewHolder.place.setText(mData.get(i).getLocation());
+        viewHolder.country.setText(mData.get(i).getCountry());
+        if(mData.get(i).getCategory().equals("Automobile")){
+            viewHolder.image.setImageResource(R.drawable.baseline_directions_car_black_18);
+        }
+        if(mData.get(i).getCategory().equals("Electronics")){
+            viewHolder.image.setImageResource(R.drawable.baseline_phone_iphone_black_18);
+        }
+        if(mData.get(i).getCategory().equals("People")){
+            viewHolder.image.setImageResource(R.drawable.baseline_people_black_18);
+        }
+        if(mData.get(i).getCategory().equals("Pets")){
+            viewHolder.image.setImageResource(R.drawable.baseline_pets_black_18);
+        }
+        if(mData.get(i).getCategory().equals("Jewellery")){
+            viewHolder.image.setImageResource(R.drawable.baseline_euro_symbol_black_18);
+        }
+        if(mData.get(i).getCategory().equals("Others")){
+            viewHolder.image.setImageResource(R.drawable.baseline_panorama_fish_eye_black_18);
+        }
         viewHolder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,9 +100,9 @@ public class FoundRecyclerviewAdapter extends RecyclerView.Adapter<FoundRecycler
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        CircleImageView image;
-        TextView title, date, place;
-        RelativeLayout layout;
+        ImageView image;
+        TextView title, date, place, country;
+        ConstraintLayout layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,6 +111,7 @@ public class FoundRecyclerviewAdapter extends RecyclerView.Adapter<FoundRecycler
             title = itemView.findViewById(R.id.txt_ltitle);
             date = itemView.findViewById(R.id.txt_ldate);
             place = itemView.findViewById(R.id.txt_lloc);
+            country = itemView.findViewById(R.id.txt_country);
             layout = itemView.findViewById(R.id.layout_listitem);
         }
     }

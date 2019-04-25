@@ -78,6 +78,7 @@ public class FoundActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_found);
         setTitle("Found Items");
+        //setTitleColor(@color/black);
 
         mDialog = new Dialog(this);
 
@@ -92,7 +93,7 @@ public class FoundActivity extends AppCompatActivity {
 
         edtSearch = (EditText)findViewById(R.id.edt_search);
         btnSearch = (ImageButton)findViewById(R.id.btn_search);
-        btnFilter = (ImageButton)findViewById(R.id.btn_filter);
+//        btnFilter = (ImageButton)findViewById(R.id.btn_filter);
 
         data = new ArrayList<Post>();
         filteredData = new ArrayList<>();
@@ -148,12 +149,6 @@ public class FoundActivity extends AppCompatActivity {
             }
         });
 
-        btnFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popUpView(v);
-            }
-        });
 
 
         permission = new PermissionManager() {};
@@ -197,6 +192,8 @@ public class FoundActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
             refreshData();
+        } else if (id == R.id.action_filter) {
+            popUpView(v);
         }
 
         return super.onOptionsItemSelected(item);
