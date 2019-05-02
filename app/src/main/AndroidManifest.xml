@@ -13,7 +13,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".MyFoundActivity"
+            android:parentActivityName=".ProfileActivity"/>
+        <activity android:name=".MyLostActivity"
+            android:parentActivityName=".ProfileActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -24,11 +27,9 @@
         <activity
             android:name=".PostFoundItems"
             android:parentActivityName=".FoundActivity" />
-
         <activity
             android:name=".FoundDetailedViewActivity"
             android:parentActivityName=".FoundActivity" />
-
         <activity
             android:name=".FoundActivity"
             android:parentActivityName=".LostActivity" />
@@ -59,14 +60,17 @@
         <activity
             android:name=".LostActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SignUpActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".SignUpActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>

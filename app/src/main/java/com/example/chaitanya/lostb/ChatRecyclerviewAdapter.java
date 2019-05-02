@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -19,6 +22,10 @@ public class ChatRecyclerviewAdapter extends RecyclerView.Adapter<ChatRecyclervi
     private Context mContext;
 
     private ArrayList<ChatModel> mChat;
+    FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+    View view;
+    ViewHolder holder;
+    int checkfromorto;
 
     public ChatRecyclerviewAdapter(Context mContext, ArrayList<ChatModel> mChat) {
         this.mContext = mContext;
@@ -28,8 +35,15 @@ public class ChatRecyclerviewAdapter extends RecyclerView.Adapter<ChatRecyclervi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.chat_listitem, viewGroup, false);
-        ViewHolder holder = new ViewHolder(view);
+        if(checkfromorto == 0){
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.chat_listitem, viewGroup, false);
+            holder = new ViewHolder(view);
+        } else {
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.chat_listitemto, viewGroup, false);
+            holder = new ViewHolder(view);
+        }
+
+
         return holder;
     }
 
@@ -39,7 +53,7 @@ public class ChatRecyclerviewAdapter extends RecyclerView.Adapter<ChatRecyclervi
 //                .asBitmap()
 //                .load(mImages.get(i))
 //                .into(viewHolder.image);
-        viewHolder.email.setText(mChat.get(i).getFrom());
+        //viewHolder.email.setText(mChat.get(i).getFrom());
         viewHolder.msg.setText(mChat.get(i).getMsg());
 //        viewHolder.layout.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -62,6 +76,16 @@ public class ChatRecyclerviewAdapter extends RecyclerView.Adapter<ChatRecyclervi
         return mChat.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if(mChat.get(position).getFrom().equals(mUser.getUid())){
+            checkfromorto = 0;
+        } else {
+            checkfromorto = 1;
+        }
+        return checkfromorto;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView email, msg;
@@ -70,9 +94,9 @@ public class ChatRecyclerviewAdapter extends RecyclerView.Adapter<ChatRecyclervi
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            email = itemView.findViewById(R.id.chat_email);
+            //email = itemView.findViewById(R.id.chat_email);
             msg = itemView.findViewById(R.id.chat_msg);
-            layout = itemView.findViewById(R.id.layout_chatlistitem);
+            //layout = itemView.findViewById(R.id.layout_chatlistitem);
         }
     }
 }

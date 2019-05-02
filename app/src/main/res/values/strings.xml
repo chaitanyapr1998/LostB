@@ -21,6 +21,12 @@
         <item>Others</item>
     </string-array>
 
+    <string-array name="chooseitems_array">
+        <item>Lost</item>
+        <item>Found</item>
+        <item>Both</item>
+    </string-array>
+
     <!--<string-array name="countries_array">-->
     <!--<item>Afghanistan</item>-->
     <!--<item>Albania</item>-->

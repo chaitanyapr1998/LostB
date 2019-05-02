@@ -3,13 +3,15 @@ package com.example.chaitanya.lostb;
 public class Users {
     private String Email;
     private String UserId;
+    private String Link;
 
     public Users() {
     }
 
-    public Users(String email, String userId) {
+    public Users(String email, String userId, String link) {
         Email = email;
         UserId = userId;
+        Link = link;
     }
 
     public String getEmail() {
@@ -26,5 +28,13 @@ public class Users {
 
     public void setUserId(String userId) {
         UserId = userId;
+    }
+
+    public String getLink() {
+        return Link;
+    }
+
+    public void setLink(String link) {
+        Link = link;
     }
 }

@@ -2,6 +2,7 @@ package com.example.chaitanya.lostb;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +11,11 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class InboxRecyclerviewAdapter extends RecyclerView.Adapter<InboxRecyclerviewAdapter.ViewHolder>{
 
@@ -34,6 +39,13 @@ public class InboxRecyclerviewAdapter extends RecyclerView.Adapter<InboxRecycler
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
 
+//        Uri uri = Uri.parse(mChat.get(i).getLink());
+//        viewHolder.img.setImageURI(uri);
+//        Glide.with(mContext).load(mChat.get(i).getLink()).into(img);
+        Glide.with(mContext)
+                .asBitmap()
+                .load(mChat.get(i).getLink())
+                .into(viewHolder.img);
         viewHolder.email.setText(mChat.get(i).getEmail());
         //viewHolder.msg.setText(mChat.get(i).getMsg());
         viewHolder.layout.setOnClickListener(new View.OnClickListener() {
@@ -59,10 +71,12 @@ public class InboxRecyclerviewAdapter extends RecyclerView.Adapter<InboxRecycler
 
         TextView email, msg;
         RelativeLayout layout;
+        CircleImageView img;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            img = itemView.findViewById(R.id.img_pp);
             email = itemView.findViewById(R.id.chat_email);
             msg = itemView.findViewById(R.id.chat_msg);
             layout = itemView.findViewById(R.id.layout_inboxlistitem);

@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,6 +29,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -52,6 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
     StorageReference mSRef;
     String imageURL;
     private ProgressBar progressBar;
+    Button myLost, myFound;
 
 
 
@@ -63,10 +67,12 @@ public class ProfileActivity extends AppCompatActivity {
 
         mSRef = FirebaseStorage.getInstance().getReference();
 
-        profilePic = (CircleImageView) findViewById(R.id.cir_pic);
+        profilePic = (CircleImageView)findViewById(R.id.cir_pic);
         id = (TextView)findViewById(R.id.txt_email);
         his = (TextView)findViewById(R.id.txt_his);
-        progressBar = (ProgressBar) findViewById(R.id.prog_profile);
+        progressBar = (ProgressBar)findViewById(R.id.prog_profile);
+        myLost = (Button)findViewById(R.id.btnmylostitems);
+        myFound = (Button)findViewById(R.id.btnmyfounditems);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
@@ -74,16 +80,32 @@ public class ProfileActivity extends AppCompatActivity {
             id.setText(email);
         }
 
-        mViewPager = (ViewPager)findViewById(R.id.container);
-        viewPager(mViewPager);
+//        mViewPager = (ViewPager)findViewById(R.id.container);
+//        viewPager(mViewPager);
 
-        TabLayout tab = (TabLayout)findViewById(R.id.tab_layout);
-        tab.setupWithViewPager(mViewPager);
+//        TabLayout tab = (TabLayout)findViewById(R.id.tab_layout);
+//        tab.setupWithViewPager(mViewPager);
 
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 profilePicChooser();
+            }
+        });
+
+        myLost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, MyLostActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        myFound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, MyFoundActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -130,9 +152,28 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                 if(task.isSuccessful()){
+                    getUploadedProPicLink();
                     Toast.makeText(ProfileActivity.this, "Profile Pic Uploaded",
                             Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+    }
+
+    private void getUploadedProPicLink(){
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("pp").child(user.getUid());
+        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                imageURL = uri.toString();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("Link");
+                ref.setValue(imageURL);
+                //Glide.with(getApplicationContext()).load(imageURL).into(profilePic);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+
             }
         });
     }

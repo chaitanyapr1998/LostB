@@ -44,20 +44,33 @@
         android:text="History"
         android:layout_centerHorizontal="true"/>
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout"
+    <!--<android.support.design.widget.TabLayout-->
+        <!--android:id="@+id/tab_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/txt_his"/>-->
+
+    <!--<android.support.v4.view.ViewPager-->
+        <!--android:id="@+id/container"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@+id/tab_layout"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
+
+    <!--</android.support.v4.view.ViewPager>-->
+    <Button
+        android:id="@+id/btnmylostitems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="My Lost Items"
         android:layout_below="@+id/txt_his"/>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/container"
+    <Button
+        android:id="@+id/btnmyfounditems"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tab_layout"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-    </android.support.v4.view.ViewPager>
+        android:layout_height="wrap_content"
+        android:text="My Found Items"
+        android:layout_below="@+id/btnmylostitems"/>
 
     <ProgressBar
         android:id="@+id/prog_profile"
