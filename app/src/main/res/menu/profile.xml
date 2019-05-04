@@ -13,4 +13,10 @@
         android:title="Location History"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_lochisnew"
+        android:orderInCategory="102"
+        android:title="Location History New"
+        app:showAsAction="never" />
+
 </menu>

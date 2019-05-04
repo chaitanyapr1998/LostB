@@ -14,26 +14,28 @@ public class Post {
     private String longitude;
     private String postedDate;
     private String country;
+    private String street;
     private String tit_cou_cat;
 
     public Post() {
     }
 
-    public Post(String Title, String Date, String Location, String Id, String Email, String Category, String UserId, String Description, String Address, String Latitude, String Longitude, String PostedDate, String Country, String Tit_Cou_Cat) {
-        title = Title;
-        date = Date;
-        location = Location;
-        id = Id;
-        email = Email;
-        category = Category;
-        userId = UserId;
-        description = Description;
-        address = Address;
-        latitude = Latitude;
-        longitude = Longitude;
-        postedDate = PostedDate;
-        country = Country;
-        tit_cou_cat = Tit_Cou_Cat;
+    public Post(String title, String date, String location, String id, String email, String category, String userId, String description, String address, String latitude, String longitude, String postedDate, String country, String street, String tit_cou_cat) {
+        this.title = title;
+        this.date = date;
+        this.location = location;
+        this.id = id;
+        this.email = email;
+        this.category = category;
+        this.userId = userId;
+        this.description = description;
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.postedDate = postedDate;
+        this.country = country;
+        this.street = street;
+        this.tit_cou_cat = tit_cou_cat;
     }
 
     public String getTitle() {
@@ -146,5 +148,13 @@ public class Post {
 
     public void setTit_cou_cat(String tit_cou_cat) {
         this.tit_cou_cat = tit_cou_cat;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 }

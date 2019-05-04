@@ -4,22 +4,13 @@ import android.app.Application;
 import android.app.NotificationManager;
 import android.os.Build;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.FirebaseDatabase;
-
-
-public class FirebaseApplication extends Application {
+public class NotificationChannel extends Application {
 
     public static final String CHANNEL_1_ID = "LocationMatch";
 
     @Override
-    public void onCreate(){
+    public void onCreate() {
         super.onCreate();
-
-        if(!FirebaseApp.getApps(this).isEmpty()) {
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        }
-
         createNotificationChannels();
 
     }

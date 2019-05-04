@@ -216,6 +216,9 @@ public class ProfileActivity extends AppCompatActivity {
         } else if(id == R.id.action_lochis) {
             Intent intent = new Intent(ProfileActivity.this, LocationHistory.class);
             startActivity(intent);
+        } else if(id == R.id.action_lochisnew){
+            Intent intent = new Intent(ProfileActivity.this, LocationHistory.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

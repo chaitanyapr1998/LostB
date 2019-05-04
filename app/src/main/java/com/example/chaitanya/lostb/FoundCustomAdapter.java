@@ -61,6 +61,7 @@ public class FoundCustomAdapter extends BaseAdapter {
                 String lat = items.get(position).getLatitude();
                 String lon = items.get(position).getLongitude();
                 String country = items.get(position).getCountry();
+                String street = items.get(position).getStreet();
                 i.putExtra("title", tit);
                 i.putExtra("date", date);
                 i.putExtra("loc", loc);
@@ -70,6 +71,7 @@ public class FoundCustomAdapter extends BaseAdapter {
                 i.putExtra("lat", lat);
                 i.putExtra("lon", lon);
                 i.putExtra("cou", country);
+                i.putExtra("strt", street);
                 context.startActivity(i);
 
                 Toast.makeText(context, "Edit",

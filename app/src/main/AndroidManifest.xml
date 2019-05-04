@@ -13,10 +13,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MyFoundActivity"
-            android:parentActivityName=".ProfileActivity"/>
-        <activity android:name=".MyLostActivity"
-            android:parentActivityName=".ProfileActivity"/>
+        <activity android:name=".LocationHistoryNewActivity"></activity>
+        <activity
+            android:name=".MyFoundActivity"
+            android:parentActivityName=".ProfileActivity" />
+        <activity
+            android:name=".MyLostActivity"
+            android:parentActivityName=".ProfileActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

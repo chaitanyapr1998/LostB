@@ -78,8 +78,8 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
     Intent i;
     Bundle b;
-    String intentId, u, latitude, longitude, cou;
-    String lat, lon, country;
+    String intentId, u, latitude, longitude, cou, strt;
+    String lat, lon, country, street;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -128,6 +128,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
             latitude = (String) b.get("lat");
             longitude = (String) b.get("lon");
             cou = (String) b.get("cou");
+            strt = (String) b.get("strt");
             title.setText(t);
             description.setText(des);
             location.setText(loc);
@@ -180,10 +181,12 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                     lat = String.valueOf(latlon.latitude);
                     lon = String.valueOf(latlon.longitude);
                     country = getCountryName(getApplicationContext(), latlon.latitude, latlon.longitude);
+                    street = getStreetName(getApplicationContext(), latlon.latitude, latlon.longitude);
                 } else {
                     lat = latitude;
                     lon = longitude;
                     country = cou;
+                    street = strt;
                 }
 
                 String tit_cou_cat = t +"_"+ country +"_"+ ca;
@@ -193,7 +196,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
                 sleepThread();
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Lost").child(u);
-                Post p = new Post(t, da, loc, u, e, ca, uid, d, addrs, lat, lon, date, country, tit_cou_cat);
+                Post p = new Post(t, da, loc, u, e, ca, uid, d, addrs, lat, lon, date, country, street, tit_cou_cat);
                 ref.setValue(p);
 
                 imgMeta(u);
@@ -377,6 +380,23 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
             if (addresses != null && !addresses.isEmpty()) {
                 return addresses.get(0).getCountryName();
+            }
+
+        } catch (IOException ignored) {
+            //do something
+        }
+        return null;
+    }
+
+    public static String getStreetName(Context context, double latitude, double longitude) {
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            Address result;
+
+            if (addresses != null && !addresses.isEmpty()) {
+                return addresses.get(0).getAdminArea();
             }
 
         } catch (IOException ignored) {
