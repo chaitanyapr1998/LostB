@@ -82,8 +82,8 @@ public class CustomAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 ref = FirebaseDatabase.getInstance().getReference().child("Lost").child(items.get(position).getId());
-                ref.removeValue();
-                pos = position;
+                ref.removeValue(); //removes item from the database
+                pos = position; //used to remove item from the recycler view
                 refreshItems();
                 Toast.makeText(context, "Deleted",
                         Toast.LENGTH_LONG).show();

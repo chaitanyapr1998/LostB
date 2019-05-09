@@ -54,31 +54,25 @@ public class LocationBroadcastReceiver extends BroadcastReceiver {
             double lon = loc.getLongitude();
             getCountryName(context, lat, lon);
             uploadLocation();
-            //sleepThread();
             checkForLocationMatch();
-            //sleepThread();
-
-
-            //String lat = String.valueOf(loc.getLatitude());
-            //Log.i("MyLocation", lat);
         }
-        if(intent != null){
-            final String action = intent.getAction();
-            if(ACTION_PROCESS_UPDATE.equals(action)){
-                LocationResult r = LocationResult.extractResult(intent);
-                if(r != null){
-                    Location location = r.getLastLocation();
-                    String lat = String.valueOf(location.getLatitude());
-                    String lon = String.valueOf(location.getLongitude());
-                    String b = new StringBuilder(""+location.getLatitude()).append("/").append(location.getLongitude()).toString();
-                    try {
-                        LocationHistory.getInstance().updateTextview(location.getLatitude(), location.getLongitude());
-                    } catch (Exception e){
-
-                    }
-                }
-            }
-        }
+//        if(intent != null){
+//            final String action = intent.getAction();
+//            if(ACTION_PROCESS_UPDATE.equals(action)){
+//                LocationResult r = LocationResult.extractResult(intent);
+//                if(r != null){
+//                    Location location = r.getLastLocation();
+//                    String lat = String.valueOf(location.getLatitude());
+//                    String lon = String.valueOf(location.getLongitude());
+//                    String b = new StringBuilder(""+location.getLatitude()).append("/").append(location.getLongitude()).toString();
+//                    try {
+//                        LocationHistory.getInstance().updateTextview(location.getLatitude(), location.getLongitude());
+//                    } catch (Exception e){
+//
+//                    }
+//                }
+//            }
+//        }
 
 
     }

@@ -9,7 +9,12 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="Bag"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:fontFamily="@font/lato_bold"
+        android:paddingTop="5dp"
+        android:layout_marginStart="10dp"/>
 
     <ImageButton
         android:id="@+id/btn_edit"

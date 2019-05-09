@@ -63,6 +63,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="My Lost Items"
+        android:textColor="@color/white"
+        android:background="@drawable/prof_btn"
+        android:layout_margin="10dp"
         android:layout_below="@+id/txt_his"/>
 
     <Button
@@ -70,6 +73,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="My Found Items"
+        android:textColor="@color/white"
+        android:background="@drawable/prof_btnfound"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_below="@+id/btnmylostitems"/>
 
     <ProgressBar

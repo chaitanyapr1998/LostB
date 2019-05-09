@@ -4,82 +4,125 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="5dp"
     tools:context=".PostLostItems">
 
-    <EditText
-        android:id="@+id/edt_title"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Title*"/>
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/edt_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edt_title"
-        android:hint="Description"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/edt_date"
-        android:layout_width="221dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edt_description"
-        android:hint="Date*" />
+            <EditText
+                android:id="@+id/edt_title"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:fontFamily="@font/lato_bold"
+                android:background="@drawable/tit_edt_box"
+                android:paddingTop="15dp" />
 
-    <EditText
-        android:id="@+id/edt_loc"
-        android:layout_width="221dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edt_date"
-        android:hint="Location*"
-        android:inputType="none"/>
+            <EditText
+                android:id="@+id/edt_description"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_below="@+id/edt_title"
+                android:fontFamily="@font/lato_light"
+                android:layout_marginTop="10dp"
+                android:paddingTop="10dp"
+                android:background="@drawable/des_edt_box"/>
 
-    <Spinner
-        android:id="@+id/spin_cat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edt_loc">
-    </Spinner>
+            <EditText
+                android:id="@+id/edt_date"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:fontFamily="@font/lato_light"
+                android:background="@drawable/date_edt_box"
+                android:layout_below="@+id/edt_description" />
 
-    <Button
-        android:id="@+id/btn_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_upload"
-        android:text="SUBMIT"/>
+            <EditText
+                android:id="@+id/edt_loc"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:fontFamily="@font/lato_light"
+                android:layout_below="@+id/edt_date"
+                android:background="@drawable/loc_edt_box"
+                android:inputType="none"/>
 
-    <Button
-        android:id="@+id/btn_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_submit"
-        android:text="CLEAR"/>
+            <Spinner
+                android:id="@+id/spin_cat"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:fontFamily="@font/lato_light"
+                android:background="@drawable/cat_edt_box"
+                android:layout_below="@+id/edt_loc">
+            </Spinner>
 
-    <ImageButton
-        android:id="@+id/dateBtn"
-        android:layout_width="86dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edt_description"
-        android:layout_marginLeft="104dp"
-        android:layout_marginTop="0dp"
-        android:layout_toRightOf="@+id/edt_date"
-        app:srcCompat="@drawable/ic_date_range_black_24dp" />
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_upload"
+                android:background="@drawable/prof_btnfound"
+                android:textColor="@color/white"
+                android:layout_marginStart="10dp"
+                android:text="SUBMIT"/>
 
-    <ImageButton
-        android:id="@+id/locBtn"
-        android:layout_width="86dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/dateBtn"
-        android:layout_marginLeft="104dp"
-        android:layout_marginTop="2dp"
-        android:layout_toRightOf="@+id/edt_loc"
-        app:srcCompat="@drawable/ic_edit_location_black_24dp" />
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_upload"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/prof_btn"
+                android:textColor="@color/white"
+                android:layout_marginEnd="10dp"
+                android:text="CLEAR"/>
 
-    <Button
-        android:id="@+id/btn_upload"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Upload Images"
-        android:layout_below="@+id/spin_cat"/>
+            <ImageButton
+                android:id="@+id/dateBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edt_description"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/date_btn" />
+
+            <ImageButton
+                android:id="@+id/locBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edt_date"
+                android:layout_marginTop="30dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/loc_btn" />
+
+            <Button
+                android:id="@+id/btn_upload"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Upload Images"
+                android:textColor="@color/white"
+                android:fontFamily="@font/lato_bold"
+                android:background="@drawable/upld_img"
+                android:layout_margin="10dp"
+                android:layout_below="@+id/spin_cat"/>
+
+
+        </RelativeLayout>
+
+
+
+
+    </ScrollView>
+
+
 
 </RelativeLayout>

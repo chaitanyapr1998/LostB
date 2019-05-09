@@ -7,9 +7,12 @@
         android:id="@+id/chat_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/chat_email"
         android:text="Helllo"
         android:textColor="@color/white"
-        android:background="@color/chatto"/>
+        android:textSize="20sp"
+        android:padding="5dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/to_msg"/>
 
 </RelativeLayout>

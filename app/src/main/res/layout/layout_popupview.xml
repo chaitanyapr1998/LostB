@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#a09484"
+    android:background="@color/filbg"
     android:layout_width="300dp"
     android:layout_height="300dp"
     android:padding="5dp"
@@ -11,28 +11,33 @@
         android:id="@+id/edt_ti"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter lost item name"/>
-
-    <!--<EditText-->
-        <!--android:id="@+id/edt_lo"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/edt_ti"-->
-        <!--android:hint="Address - where you lost item"/>-->
+        android:hint="Enter lost item name"
+        android:background="@drawable/edtbox"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/lato_bold"/>
 
     <EditText
         android:id="@+id/edt_datefrom"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edt_ti"
+        android:paddingLeft="10dp"
+        android:fontFamily="@font/lato_light"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/edtbox"
         android:hint="From"/>
 
     <EditText
         android:id="@+id/edt_dateto"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edt_ti"
-        android:layout_toRightOf="@+id/from_date"
+        android:layout_below="@+id/edt_datefrom"
+        android:paddingLeft="10dp"
+        android:fontFamily="@font/lato_light"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/edtbox"
         android:hint="To" />
 
     <TextView
@@ -40,8 +45,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Category"
+        android:fontFamily="@font/lato_bold"
         android:textSize="17sp"
-        android:layout_below="@+id/edt_datefrom"/>
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/edt_dateto"/>
 
     <TextView
         android:id="@+id/txt_country"
@@ -49,59 +57,72 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_category"
         android:text="Country"
+        android:fontFamily="@font/lato_bold"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="10dp"
         android:textSize="17sp" />
 
     <Spinner
         android:id="@+id/spin_ca"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edt_datefrom"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="3dp"
-        android:layout_toRightOf="@+id/txt_category"></Spinner>
+        android:layout_below="@+id/edt_dateto"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/txt_category"></Spinner>
 
     <Spinner
         android:id="@+id/spin_countries"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/spin_ca"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="0dp"
-        android:layout_toRightOf="@+id/txt_category"></Spinner>
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/txt_category"></Spinner>
 
     <Button
         android:id="@+id/btn_show"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/spin_countries"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="20dp"
+        android:layout_below="@id/txt_country"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/lato_bold"
+        android:background="@drawable/apply_btn"
+        android:textColor="@color/white"
         android:text="Apply" />
 
     <Button
         android:id="@+id/btn_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/spin_countries"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="40dp"
-        android:layout_toRightOf="@+id/btn_show"
+        android:layout_below="@+id/txt_country"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentEnd="true"
+        android:fontFamily="@font/lato_bold"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/fil_cancel"
+        android:textColor="@color/white"
         android:text="CANCEL" />
 
     <ImageButton
         android:id="@+id/from_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_below="@+id/edt_ti"
-        android:layout_toRightOf="@+id/edt_datefrom"
-        android:src="@drawable/ic_date_range_black_24dp" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/date_btn" />
 
     <ImageButton
         android:id="@+id/to_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edt_ti"
-        android:layout_toRightOf="@+id/edt_dateto"
-        android:src="@drawable/ic_date_range_black_24dp" />
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/edt_datefrom"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/date_btn" />
 
 </RelativeLayout>

@@ -149,6 +149,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Email"
+                    android:background="@drawable/email_btn"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/lato_bold"
                     android:layout_alignParentBottom="true"
                     android:layout_below="@+id/postedby_val"
                     android:layout_marginStart="10dp"/>
@@ -158,6 +161,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Direction"
+                    android:background="@drawable/direction_btn"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/lato_bold"
                     android:layout_alignParentBottom="true"
                     android:layout_toRightOf="@+id/btn_email"
                     android:layout_marginStart="10dp"/>
@@ -167,6 +173,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Chat"
+                    android:background="@drawable/chat_btn"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/lato_bold"
                     android:layout_alignParentBottom="true"
                     android:layout_toRightOf="@+id/btn_dir"
                     android:layout_marginStart="10dp"/>

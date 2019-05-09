@@ -7,4 +7,13 @@
     <color name="black">#000000</color>
     <color name="chatfrom">#ff6347</color>
     <color name="chatto">#9932cc</color>
+    <color name="red">#E11725</color>
+    <color name="purple">#6741E9</color>
+    <color name="label">#181743</color>
+    <color name="lightgreen">#6BD13D</color>
+    <color name="light">#8b8378</color>
+    <color name="filbg">#eee9e9</color>
+    <color name="direction">#5b39c6</color>
+    <color name="email">#ba160c</color>
+    <color name="chat">#329c1e</color>
 </resources>

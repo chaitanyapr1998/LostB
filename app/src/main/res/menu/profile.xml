@@ -14,9 +14,15 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_lochisnew"
+        android:id="@+id/action_geofence"
         android:orderInCategory="102"
-        android:title="Location History New"
+        android:title="Geofence"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_geofencepost"
+        android:orderInCategory="103"
+        android:title="GeofencePost"
         app:showAsAction="never" />
 
 </menu>

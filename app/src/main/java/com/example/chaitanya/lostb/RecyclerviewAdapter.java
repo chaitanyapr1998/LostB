@@ -126,7 +126,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
 
         ImageView image;
         TextView title, date, place, country;
-        ConstraintLayout layout;
+        RelativeLayout layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -26,6 +26,11 @@ import android.widget.Toast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,6 +58,9 @@ public class LocationHistory extends AppCompatActivity {
         return instance;
     }
 
+    DatabaseReference ref;
+    ArrayList<LocationModel> locHisData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +76,7 @@ public class LocationHistory extends AppCompatActivity {
 
         mMyLocation = new ArrayList<>();
         locHis = new ArrayList<>();
+        locHisData = new ArrayList<>();
 
         if (!checkForPermission()) {
             btnClickable();
@@ -87,8 +96,9 @@ public class LocationHistory extends AppCompatActivity {
             }
         });
 
-        adapter = new LocCustomAdapter(getApplicationContext(), locHis);
-        lhListView.setAdapter(adapter);
+        loadLocHis();
+
+
 
     }
 
@@ -193,6 +203,33 @@ public class LocationHistory extends AppCompatActivity {
             //do something
         }
         return null;
+    }
+
+    private void loadLocHis(){
+        ref = FirebaseDatabase.getInstance().getReference().child("LocationHistory");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                locHisData.clear();
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot d : dataSnapshot.getChildren()){
+                        LocationModel p = d.getValue(LocationModel.class);
+                        locHisData.add(p);
+                    }
+                    refreshLocHis();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void refreshLocHis(){
+        adapter = new LocCustomAdapter(this, locHisData);
+        lhListView.setAdapter(adapter);
     }
 
 

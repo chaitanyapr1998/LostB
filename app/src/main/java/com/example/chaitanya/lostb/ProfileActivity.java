@@ -216,8 +216,11 @@ public class ProfileActivity extends AppCompatActivity {
         } else if(id == R.id.action_lochis) {
             Intent intent = new Intent(ProfileActivity.this, LocationHistory.class);
             startActivity(intent);
-        } else if(id == R.id.action_lochisnew){
-            Intent intent = new Intent(ProfileActivity.this, LocationHistory.class);
+        } else if(id == R.id.action_geofence){
+            Intent intent = new Intent(ProfileActivity.this, GeofenceActivity.class);
+            startActivity(intent);
+        } else if(id == R.id.action_geofencepost){
+            Intent intent = new Intent(ProfileActivity.this, LocationPostActivity.class);
             startActivity(intent);
         }
 

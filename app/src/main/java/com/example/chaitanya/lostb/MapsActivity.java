@@ -3,6 +3,7 @@ package com.example.chaitanya.lostb;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -47,7 +48,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     DatabaseReference ref;
     ArrayList<String> lat, lon, tit;
     ArrayList<String> flat, flon, ftit;
-    ImageButton filter;
+    ImageButton filter, backBtn;
     Dialog mDialog;
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private DatePickerDialog.OnDateSetListener toDateSetListener;
@@ -94,6 +95,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         filter = (ImageButton)findViewById(R.id.filterBtn);
+        backBtn = (ImageButton)findViewById(R.id.backBtn) ;
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MapsActivity.this, LostActivity.class);
+                startActivity(intent);
+            }
+        });
 
         filter.setOnClickListener(new View.OnClickListener() {
             @Override

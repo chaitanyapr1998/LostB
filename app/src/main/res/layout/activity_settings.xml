@@ -4,14 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="5dp"
     tools:context=".SettingsActivity">
-
-    <Switch
-        android:id="@+id/switch_loc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
-        android:layout_toRightOf="@+id/settings_loc" />
 
     <TextView
         android:id="@+id/settings_loc"
@@ -19,6 +13,34 @@
         android:layout_height="wrap_content"
         android:text="Location"
         android:textSize="25sp"/>
+
+    <Switch
+        android:id="@+id/switch_loc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:padding="10dp"
+        android:layout_toRightOf="@+id/settings_loc" />
+
+
+    <TextView
+        android:id="@+id/settings_locmatch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notifications"
+        android:textSize="25sp"
+        android:layout_below="@+id/settings_loc"/>
+
+    <Switch
+        android:id="@+id/switch_locmatch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:padding="10dp"
+        android:layout_toRightOf="@+id/settings_locmatch"
+        android:layout_below="@+id/settings_loc"/>
+
+
 
 
 
