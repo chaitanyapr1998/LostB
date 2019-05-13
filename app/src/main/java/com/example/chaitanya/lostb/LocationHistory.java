@@ -175,7 +175,7 @@ public class LocationHistory extends AppCompatActivity {
         ComponentName componentName = new ComponentName(this, LocationBroadcastReceiver.class);
         pm.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);
-        Toast.makeText(getApplicationContext(), "BroadCast Receiver Started", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Location history is turned on", Toast.LENGTH_SHORT).show();
     }
 
     private void killBroadCastReceiver() {
@@ -183,7 +183,7 @@ public class LocationHistory extends AppCompatActivity {
         ComponentName componentName = new ComponentName(this, LocationBroadcastReceiver.class);
         pm.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
-        Toast.makeText(getApplicationContext(), "BroadCast Receiver Killed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Location history is turned off", Toast.LENGTH_SHORT).show();
     }
 
     //cc

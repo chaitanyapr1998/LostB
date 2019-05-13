@@ -64,18 +64,22 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if(email.isEmpty()){
                     edtEmail.setError("Please enter email address");
+                    return;
                 }
 
                 if(password.isEmpty()){
                     edtPassword.setError("Please enter password");
+                    return;
                 }
 
                 if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
                     edtEmail.setError("Please enter valid email address");
+                    return;
                 }
 
                 if(password.length() < 6){
                     edtPassword.setError("Password should be more than 6 characters");
+                    return;
                 }
 
                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
