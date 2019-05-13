@@ -10,6 +10,9 @@
         android:id="@+id/btn_locpost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Set Location Post Notification"/>
+        android:text="Set Location Post Notification"
+        android:background="@drawable/geo_btn"
+        android:textColor="@color/white"
+        android:fontFamily="@font/lato_bold"/>
 
 </RelativeLayout>

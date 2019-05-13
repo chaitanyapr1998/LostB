@@ -31,7 +31,7 @@ public class FirebaseApplication extends Application {
             channel.setDescription("Can you help someone to find their lost item?");
 
             android.app.NotificationChannel channel2 = new android.app.NotificationChannel(CHANNEL_2_ID, "Geofence Match", NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription("Geofencing");
+            channel2.setDescription("Location Reminder");
 
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);

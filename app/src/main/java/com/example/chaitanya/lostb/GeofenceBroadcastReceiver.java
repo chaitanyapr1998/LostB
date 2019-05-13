@@ -58,7 +58,7 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
             Notification n = new NotificationCompat.Builder(c, id)
                     .setSmallIcon(R.mipmap.ic_launcher_round)
                     .setContentTitle("Geofence")
-                    .setContentText("Help someone")
+                    .setContentText("Location Reminder")
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                     .build();

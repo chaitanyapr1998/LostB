@@ -49,6 +49,8 @@
                 android:layout_height="70dp"
                 android:layout_marginTop="10dp"
                 android:paddingTop="15dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="40dp"
                 android:fontFamily="@font/lato_light"
                 android:layout_below="@+id/edt_date"
                 android:background="@drawable/loc_edt_box"

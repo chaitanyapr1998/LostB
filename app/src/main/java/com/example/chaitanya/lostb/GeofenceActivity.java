@@ -60,6 +60,7 @@ public class GeofenceActivity extends AppCompatActivity implements GoogleApiClie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_geofence);
+        setTitle("Geofence");
 
         btnAddGeofence = (Button) findViewById(R.id.btn_addgeo);
         mUser = FirebaseAuth.getInstance().getCurrentUser();

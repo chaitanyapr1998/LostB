@@ -184,8 +184,8 @@ public class LocationBroadcastReceiver extends BroadcastReceiver {
                         if(!lostData.get(i).getUserId().equals(mUser.getUid())){
                             Notification n = new NotificationCompat.Builder(c, FirebaseApplication.CHANNEL_1_ID)
                                     .setSmallIcon(R.mipmap.logoicon)
-                                    .setContentTitle("Findingg")
-                                    .setContentText("Help someone")
+                                    .setContentTitle("Location Match")
+                                    .setContentText("Can you help someone to find their lost item?")
                                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                                     .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                                     .build();

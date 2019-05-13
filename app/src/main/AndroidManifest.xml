@@ -13,8 +13,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LocationPostActivity"></activity>
-        <activity android:name=".GeofenceActivity" />
+        <activity android:name=".LocationPostActivity"
+            android:parentActivityName=".ProfileActivity"/>
+        <activity android:name=".GeofenceActivity"
+            android:parentActivityName=".ProfileActivity"/>
         <activity
             android:name=".MyFoundActivity"
             android:parentActivityName=".ProfileActivity" />

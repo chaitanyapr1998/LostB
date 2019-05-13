@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -123,6 +124,7 @@ public class DetailedViewActivity extends AppCompatActivity {
         //Disable button so user won't chat with himself
         if(mUser.getEmail().equals(postedByEmail)){
             btnChat.setEnabled(false);
+            btnChat.getBackground().setAlpha(128);
         }
 
         btnChat.setOnClickListener(new View.OnClickListener() {

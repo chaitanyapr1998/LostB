@@ -10,6 +10,10 @@
         android:id="@+id/btn_addgeo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/geo_btn"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/lato_bold"
+        android:textColor="@color/white"
         android:text="Add New Location"/>
 
     <TextView

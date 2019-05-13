@@ -47,6 +47,7 @@ public class LocationPostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_post);
+        setTitle("Geofence for Post");
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         geofencePostData = new ArrayList<>();
