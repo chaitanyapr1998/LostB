@@ -27,6 +27,7 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.i(TAG, "Inside geofence onReceive");
         notificationManagerCompat = NotificationManagerCompat.from(context);
         c = context;
 
@@ -47,11 +48,6 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
         SharedPreferences ss = getSharedPreferences(context);
         boolean switchNot = ss.getBoolean(NOTIFICATION_SWITCH, false);
         Log.i(TAG, String.valueOf(switchNot));
-
-
-        //boolean switchNot = SettingsActivity.getPref();
-
-        //Log.e(TAG, String.valueOf(switchNot));
 
         if(switchNot){
             String id = CHANNEL_2_ID;

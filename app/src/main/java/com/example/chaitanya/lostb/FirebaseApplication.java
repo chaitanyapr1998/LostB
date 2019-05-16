@@ -12,6 +12,7 @@ public class FirebaseApplication extends Application {
 
     public static final String CHANNEL_1_ID = "LocationMatch";
     public static final String CHANNEL_2_ID = "GeofenceMatch";
+    public static final String CHANNEL_3_ID = "PostMatch";
 
     @Override
     public void onCreate(){
@@ -33,9 +34,13 @@ public class FirebaseApplication extends Application {
             android.app.NotificationChannel channel2 = new android.app.NotificationChannel(CHANNEL_2_ID, "Geofence Match", NotificationManager.IMPORTANCE_HIGH);
             channel2.setDescription("Location Reminder");
 
+            android.app.NotificationChannel channel3 = new android.app.NotificationChannel(CHANNEL_3_ID, "Post Match", NotificationManager.IMPORTANCE_HIGH);
+            channel3.setDescription("Post Reminder");
+
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
             manager.createNotificationChannel(channel2);
+            manager.createNotificationChannel(channel3);
 
         }
     }

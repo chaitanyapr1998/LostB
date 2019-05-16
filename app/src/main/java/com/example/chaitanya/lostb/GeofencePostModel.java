@@ -2,13 +2,15 @@ package com.example.chaitanya.lostb;
 
 public class GeofencePostModel {
 
+    private String placeId;
     private String lat;
     private String lon;
 
     public GeofencePostModel() {
     }
 
-    public GeofencePostModel(String lat, String lon) {
+    public GeofencePostModel(String placeId, String lat, String lon) {
+        this.placeId = placeId;
         this.lat = lat;
         this.lon = lon;
     }
@@ -27,5 +29,13 @@ public class GeofencePostModel {
 
     public void setLon(String lon) {
         this.lon = lon;
+    }
+
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
     }
 }
