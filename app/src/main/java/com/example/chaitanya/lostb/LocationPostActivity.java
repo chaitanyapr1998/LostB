@@ -179,6 +179,7 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 lostData.clear();
                 if(dataSnapshot.exists()){
+                    Log.i("LocationPostActivity", "Fired");
                     Post p = dataSnapshot.getValue(Post.class);
                     lostData.add(p);
                 }

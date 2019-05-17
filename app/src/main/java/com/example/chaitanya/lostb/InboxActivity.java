@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -74,6 +75,8 @@ public class InboxActivity extends AppCompatActivity {
             }
         });
 
+        updateToken(FirebaseInstanceId.getInstance().getToken());
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -114,7 +117,11 @@ public class InboxActivity extends AppCompatActivity {
         }
     }
 
-
+    private void updateToken(String token){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
+        NTokens token1 = new NTokens(token);
+        reference.child(mUser.getUid()).setValue(token1);
+    }
 
     private void makeEmailsUnique(){
         uqEmails.clear();
