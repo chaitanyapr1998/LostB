@@ -54,14 +54,15 @@ public class InboxActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mChats.clear();
-
-                for(DataSnapshot d : dataSnapshot.getChildren()){
-                    ChatModel cm = d.getValue(ChatModel.class);
-                    if(cm.getFrom().equals(mUser.getUid())){
-                        mChats.add(cm.getTo());
-                    }
-                    if(cm.getTo().equals(mUser.getUid())){
-                        mChats.add(cm.getFrom());
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot d : dataSnapshot.getChildren()){
+                        ChatModel cm = d.getValue(ChatModel.class);
+                        if(cm.getFrom().equals(mUser.getUid())){
+                            mChats.add(cm.getTo());
+                        }
+                        if(cm.getTo().equals(mUser.getUid())){
+                            mChats.add(cm.getFrom());
+                        }
                     }
                 }
 

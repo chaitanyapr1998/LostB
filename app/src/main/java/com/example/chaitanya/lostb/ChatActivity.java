@@ -76,8 +76,11 @@ public class ChatActivity extends AppCompatActivity {
             toUserid = (String) b.get("userid");
         }
 
-        setTitle(toEmail);
+        String email = toEmail;
+        String uid = toUserid;
 
+        setTitle(toEmail);
+//        setTitle(toUserid);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,7 +114,7 @@ public class ChatActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     NTokens token = snapshot.getValue(NTokens.class);
                     NData data = new NData(mUser.getUid(), username+": "+message, "New Message",
-                            toUserid);
+                            toUserid, username);
 
                     NSender sender = new NSender(data, token.getToken());
 

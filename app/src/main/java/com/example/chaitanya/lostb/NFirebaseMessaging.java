@@ -27,9 +27,11 @@ public class NFirebaseMessaging extends FirebaseMessagingService {
 
         String sented = remoteMessage.getData().get("sent");
         String user = remoteMessage.getData().get("user");
+        String toEmail = remoteMessage.getData().get("toEmail");
 
         Log.i("NFMESSAGING", sented);
         Log.i("NFMESSAGING", user);
+        Log.i("NFMESSAGING", toEmail);
 
         SharedPreferences preferences = getSharedPreferences("PREFS", MODE_PRIVATE);
         String currentUser = preferences.getString("currentuser", "none");
@@ -52,12 +54,14 @@ public class NFirebaseMessaging extends FirebaseMessagingService {
         //String icon = remoteMessage.getData().get("icon");
         String title = remoteMessage.getData().get("title");
         String body = remoteMessage.getData().get("msg");
+        String toEmail = remoteMessage.getData().get("toEmail");
 
         RemoteMessage.Notification notification = remoteMessage.getNotification();
         int j = Integer.parseInt(user.replaceAll("[\\D]", ""));
         Intent intent = new Intent(this, ChatActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("userid", user);
+        bundle.putString("toEmail", toEmail);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, j, intent, PendingIntent.FLAG_ONE_SHOT);
@@ -82,12 +86,14 @@ public class NFirebaseMessaging extends FirebaseMessagingService {
         //String icon = remoteMessage.getData().get("icon");
         String title = remoteMessage.getData().get("title");
         String body = remoteMessage.getData().get("body");
+        String toEmail = remoteMessage.getData().get("toEmail");
 
         RemoteMessage.Notification notification = remoteMessage.getNotification();
         int j = Integer.parseInt(user.replaceAll("[\\D]", ""));
         Intent intent = new Intent(this, ChatActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("userid", user);
+        bundle.putString("toEmail", toEmail);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, j, intent, PendingIntent.FLAG_ONE_SHOT);
