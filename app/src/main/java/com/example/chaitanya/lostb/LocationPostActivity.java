@@ -1,9 +1,11 @@
 package com.example.chaitanya.lostb;
 
 import android.app.Notification;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
@@ -17,6 +19,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.firebase.jobdispatcher.Constraint;
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
+import com.firebase.jobdispatcher.Job;
+import com.firebase.jobdispatcher.Lifetime;
+import com.firebase.jobdispatcher.RetryStrategy;
+import com.firebase.jobdispatcher.Trigger;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -73,6 +82,10 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
     APIService apiService;
     boolean notify;
 
+    //
+    Button st, sp;
+    private FirebaseJobDispatcher jb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +105,25 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
             }
         });
 
+        st = (Button) findViewById(R.id.btn_startt);
+        sp = (Button) findViewById(R.id.btn_stopp);
+
+        jb = new FirebaseJobDispatcher(new GooglePlayDriver(this));
+
+        st.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startJob(v);
+            }
+        });
+
+        sp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stopJob(v);
+            }
+        });
+
         mRecyclerView = (RecyclerView) findViewById(R.id.listofplaces);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new PostPlaceAdapter(this, null);
@@ -104,6 +136,30 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
                 .addApi(Places.GEO_DATA_API)
                 .enableAutoManage(this, this)
                 .build();
+    }
+
+    private void startJob(View v){
+
+        Job job = jb.newJobBuilder()
+                .setService(JobServiceExample.class)
+                .setLifetime(Lifetime.FOREVER)
+                .setRecurring(true)
+                .setTag("My job")
+                .setTrigger(Trigger.executionWindow(0, 10))
+                .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
+                .setReplaceCurrent(false)
+                .setConstraints(Constraint.ON_ANY_NETWORK)
+                .build();
+        jb.mustSchedule(job);
+
+        Log.i("Job service", "Schedulled");
+
+
+    }
+
+    private void stopJob(View v){
+        jb.cancel("My job");
+        Log.i("Job service", "Cancel");
     }
 
     private void onLocBtnClicked(){
@@ -273,15 +329,15 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
                         Log.i(TAG, String.valueOf(switchNot));
 
                         if(switchNot){
-                            String id = CHANNEL_3_ID;
-                            Notification n = new NotificationCompat.Builder(this, id)
-                                    .setSmallIcon(R.mipmap.ic_launcher_round)
-                                    .setContentTitle("Post Match")
-                                    .setContentText("Post Reminder")
-                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                                    .build();
-                            notificationManagerCompat.notify(1, n);
+//                            String id = CHANNEL_3_ID;
+//                            Notification n = new NotificationCompat.Builder(this, id)
+//                                    .setSmallIcon(R.mipmap.ic_launcher_round)
+//                                    .setContentTitle("Post Match")
+//                                    .setContentText("Post Reminder")
+//                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+//                                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+//                                    .build();
+//                            notificationManagerCompat.notify(1, n);
                         }
                         Toast.makeText(LocationPostActivity.this, "Matchhhhhhh..........",
                                 Toast.LENGTH_SHORT).show();

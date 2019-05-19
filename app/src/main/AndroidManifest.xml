@@ -105,6 +105,14 @@
             </intent-filter>
         </service>
 
+        <service
+            android:exported="false"
+            android:name=".JobServiceExample">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

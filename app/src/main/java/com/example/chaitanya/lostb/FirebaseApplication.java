@@ -2,6 +2,7 @@ package com.example.chaitanya.lostb;
 
 import android.app.Application;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Build;
 
 import com.google.firebase.FirebaseApp;
@@ -14,6 +15,8 @@ public class FirebaseApplication extends Application {
     public static final String CHANNEL_2_ID = "GeofenceMatch";
     public static final String CHANNEL_3_ID = "PostMatch";
 
+    private static Context context;
+
     @Override
     public void onCreate(){
         super.onCreate();
@@ -21,7 +24,7 @@ public class FirebaseApplication extends Application {
         if(!FirebaseApp.getApps(this).isEmpty()) {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         }
-
+        FirebaseApplication.context = getApplicationContext();
         createNotificationChannels();
 
     }
@@ -43,5 +46,9 @@ public class FirebaseApplication extends Application {
             manager.createNotificationChannel(channel3);
 
         }
+    }
+
+    public static Context getAppContext() {
+        return FirebaseApplication.context;
     }
 }
