@@ -26,10 +26,13 @@ import android.widget.Toast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
@@ -60,6 +63,8 @@ public class LocationHistory extends AppCompatActivity {
 
     DatabaseReference ref;
     ArrayList<LocationModel> locHisData;
+    FirebaseUser mUser;
+    ArrayList<LocationModel> filLocHisData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +73,7 @@ public class LocationHistory extends AppCompatActivity {
         setTitle("Location History");
 
         instance = this;
-
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
         //txtLoc = (TextView) findViewById(R.id.txt_loc);
         btnStart = (Button) findViewById(R.id.btn_start);
         btnStop = (Button) findViewById(R.id.btn_stop);
@@ -77,6 +82,7 @@ public class LocationHistory extends AppCompatActivity {
         mMyLocation = new ArrayList<>();
         locHis = new ArrayList<>();
         locHisData = new ArrayList<>();
+        filLocHisData = new ArrayList<>();
 
         if (!checkForPermission()) {
             btnClickable();
@@ -216,6 +222,7 @@ public class LocationHistory extends AppCompatActivity {
                         LocationModel p = d.getValue(LocationModel.class);
                         locHisData.add(p);
                     }
+                    filtering();
                     refreshLocHis();
                 }
             }
@@ -225,10 +232,46 @@ public class LocationHistory extends AppCompatActivity {
 
             }
         });
+//        String c = mUser.getUid();
+//        ref = FirebaseDatabase.getInstance().getReference().child("LocationHistory");
+//        Query q = ref.child("LocationHistory").orderByChild("Uid").equalTo(mUser.getUid());
+//        q.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                locHisData.clear();
+//                if(dataSnapshot.exists()){
+//                    for(DataSnapshot d : dataSnapshot.getChildren()){
+//                        LocationModel p = d.getValue(LocationModel.class);
+//                        locHisData.add(p);
+//                    }
+//                    refreshLocHis();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+
+
     }
 
+    private void filtering(){
+        filLocHisData.clear();
+        if(locHisData.size() != 0){
+            for(int i = 0; i < locHisData.size(); i++){
+                if(locHisData.get(i).getUid().equals(mUser.getUid())){
+                    filLocHisData.add(locHisData.get(i));
+                }
+            }
+        }
+    }
+
+
     private void refreshLocHis(){
-        adapter = new LocCustomAdapter(this, locHisData);
+        //int a = locHisData.size();
+        adapter = new LocCustomAdapter(this, filLocHisData);
         lhListView.setAdapter(adapter);
     }
 

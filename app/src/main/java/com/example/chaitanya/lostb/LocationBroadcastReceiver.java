@@ -38,13 +38,17 @@ public class LocationBroadcastReceiver extends BroadcastReceiver {
     ArrayList<Post> lostData;
     Context c;
     private NotificationManagerCompat notificationManagerCompat;
-
+    ArrayList<LocationModel> locHisData;
+    ArrayList<LocationModel> filLocHisData;
+    public static final long DAY_IN_MILLI = 86400000; //86400000
 
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i("MyLocation", "Doingg job");
         locMatch = new ArrayList<>();
         lostData = new ArrayList<>();
+        locHisData = new ArrayList<>();
+        filLocHisData = new ArrayList<>();
         notificationManagerCompat = NotificationManagerCompat.from(context);
         c = context;
         LocationResult res = LocationResult.extractResult(intent);
@@ -54,37 +58,72 @@ public class LocationBroadcastReceiver extends BroadcastReceiver {
             double lon = loc.getLongitude();
             getCountryName(context, lat, lon);
             uploadLocation();
+            getLocData();
             checkForLocationMatch();
         }
-//        if(intent != null){
-//            final String action = intent.getAction();
-//            if(ACTION_PROCESS_UPDATE.equals(action)){
-//                LocationResult r = LocationResult.extractResult(intent);
-//                if(r != null){
-//                    Location location = r.getLastLocation();
-//                    String lat = String.valueOf(location.getLatitude());
-//                    String lon = String.valueOf(location.getLongitude());
-//                    String b = new StringBuilder(""+location.getLatitude()).append("/").append(location.getLongitude()).toString();
-//                    try {
-//                        LocationHistory.getInstance().updateTextview(location.getLatitude(), location.getLongitude());
-//                    } catch (Exception e){
-//
-//                    }
-//                }
-//            }
-//        }
-
-
     }
 
-    public void uploadLocation(){
+    private void getLocData(){
+        ref = FirebaseDatabase.getInstance().getReference().child("LocationHistory");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                locHisData.clear();
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot d : dataSnapshot.getChildren()){
+                        LocationModel p = d.getValue(LocationModel.class);
+                        locHisData.add(p);
+                    }
+                    filtering();
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void filtering(){
+        filLocHisData.clear();
+        if(locHisData.size() != 0){
+            for(int i = 0; i < locHisData.size(); i++){
+                if(locHisData.get(i).getUid().equals(mUser.getUid())){
+                    filLocHisData.add(locHisData.get(i));
+                }
+            }
+        }
+        deleteExpiredLocation();
+    }
+
+    private void deleteExpiredLocation(){
+        long time = System.currentTimeMillis();
+        if(filLocHisData.size() != 0){
+            for(int i = 0; i < filLocHisData.size(); i++){
+                long dataTime = Long.parseLong(filLocHisData.get(i).getTime());
+                if(time - dataTime > DAY_IN_MILLI){
+                    ref = FirebaseDatabase.getInstance().getReference().child("LocationHistory").child(filLocHisData.get(i).getKey());
+                    ref.removeValue();
+                }
+            }
+        }
+    }
+
+//    private void query(){
+//
+//    }
+
+    public void uploadLocation(){
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         ref = FirebaseDatabase.getInstance().getReference().child("LocationHistory");
+        String key = ref.push().getKey();
         String time = String.valueOf(System.currentTimeMillis());
         String uid = mUser.getUid();
-        LocationModel lm = new LocationModel(time, address, uid, country, street);
-        ref.push().setValue(lm);
+        ref = FirebaseDatabase.getInstance().getReference().child("LocationHistory").child(key);
+        LocationModel lm = new LocationModel(time, address, uid, country, street, key);
+        ref.setValue(lm);
+        //Log.i("LocationReceiver", ref.getKey());
     }
 
     public static void getCountryName(Context context, double latitude, double longitude) {
@@ -99,8 +138,6 @@ public class LocationBroadcastReceiver extends BroadcastReceiver {
                 country = addresses.get(0).getCountryName();
                 address = addresses.get(0).getAddressLine(0);
                 street = addresses.get(0).getAdminArea();
-
-                //return addresses.get(0).getAddressLine(0);
             }
 
         } catch (IOException ignored) {
@@ -197,13 +234,5 @@ public class LocationBroadcastReceiver extends BroadcastReceiver {
             }
         }
 
-    }
-
-    private void sleepThread(){
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        }
     }
 }

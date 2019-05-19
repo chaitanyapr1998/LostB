@@ -6,16 +6,18 @@ public class LocationModel {
     private String Uid;
     private String Country;
     private String Street;
+    private String Key;
 
     public LocationModel() {
     }
 
-    public LocationModel(String time, String address, String uid, String country, String street) {
+    public LocationModel(String time, String address, String uid, String country, String street, String key) {
         Time = time;
         Address = address;
         Uid = uid;
         Country = country;
         Street = street;
+        Key = key;
     }
 
     public String getTime() {
@@ -56,5 +58,13 @@ public class LocationModel {
 
     public void setStreet(String street) {
         Street = street;
+    }
+
+    public String getKey() {
+        return Key;
+    }
+
+    public void setKey(String key) {
+        Key = key;
     }
 }

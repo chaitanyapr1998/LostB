@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,6 +27,9 @@ public class NFirebaseMessaging extends FirebaseMessagingService {
 
         String sented = remoteMessage.getData().get("sent");
         String user = remoteMessage.getData().get("user");
+
+        Log.i("NFMESSAGING", sented);
+        Log.i("NFMESSAGING", user);
 
         SharedPreferences preferences = getSharedPreferences("PREFS", MODE_PRIVATE);
         String currentUser = preferences.getString("currentuser", "none");

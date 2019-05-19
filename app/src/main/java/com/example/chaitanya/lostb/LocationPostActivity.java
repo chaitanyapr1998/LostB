@@ -36,10 +36,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.example.chaitanya.lostb.FirebaseApplication.CHANNEL_2_ID;
 import static com.example.chaitanya.lostb.FirebaseApplication.CHANNEL_3_ID;
@@ -64,13 +69,17 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
     private RecyclerView mRecyclerView;
     private GoogleApiClient mClient;
 
+
+    APIService apiService;
+    boolean notify;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_post);
         setTitle("Geofence for Post");
         notificationManagerCompat = NotificationManagerCompat.from(this);
-
+        apiService = NClient.getClient("https://fcm.googleapis.com/").create(APIService.class);
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         geofencePostData = new ArrayList<>();
         lostData = new ArrayList<>();
@@ -230,6 +239,7 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
         }
 
     }
+
 
     private void check(){
         double latL = 0;
