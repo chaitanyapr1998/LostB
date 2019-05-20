@@ -44,6 +44,9 @@ public class MyLostActivity extends AppCompatActivity {
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         ref = FirebaseDatabase.getInstance().getReference();
 
+        View emptyView = findViewById(R.id.empty_view);
+        listView.setEmptyView(emptyView);
+
         getPostedByMe();
         //sleepThread();
         adapter = new CustomAdapter(this, p);
@@ -74,7 +77,7 @@ public class MyLostActivity extends AppCompatActivity {
                     }
 //                    getTitleData();
                     listView.setAdapter(adapter);
-                    progressBar.setVisibility(View.GONE);
+
                 }
 
             }
@@ -84,6 +87,7 @@ public class MyLostActivity extends AppCompatActivity {
 
             }
         });
+        progressBar.setVisibility(View.GONE);
     }
 
     private void sleepThread(){

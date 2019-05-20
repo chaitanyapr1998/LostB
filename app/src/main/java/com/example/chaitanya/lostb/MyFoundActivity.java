@@ -43,6 +43,9 @@ public class MyFoundActivity extends AppCompatActivity {
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         ref = FirebaseDatabase.getInstance().getReference();
 
+        View emptyView = findViewById(R.id.empty_view);
+        listView.setEmptyView(emptyView);
+
         getPostedByMe();
 
         adapter = new FoundCustomAdapter(this, p);
@@ -62,7 +65,7 @@ public class MyFoundActivity extends AppCompatActivity {
                         p.add(post);
                     }
                     listView.setAdapter(adapter);
-                    progressBar.setVisibility(View.GONE);
+
                 }
 
             }
@@ -72,5 +75,6 @@ public class MyFoundActivity extends AppCompatActivity {
 
             }
         });
+        progressBar.setVisibility(View.GONE);
     }
 }

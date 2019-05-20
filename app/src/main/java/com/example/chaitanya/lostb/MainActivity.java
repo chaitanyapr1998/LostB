@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     EditText edtEmail, edtPassword;
     static FirebaseAuth mAuth;
     ImageView imgLogo;
+    TextView txtForgotPass;
     //static String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         imgLogo = (ImageView) findViewById(R.id.img_logo);
         edtEmail = (EditText) findViewById(R.id.edt_email);
         edtPassword = (EditText) findViewById(R.id.edt_pass);
+        txtForgotPass = (TextView) findViewById(R.id.txt_forgotpass);
 
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
@@ -46,6 +49,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        txtForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ForgotPasswordActivity.class);
                 startActivity(intent);
             }
         });

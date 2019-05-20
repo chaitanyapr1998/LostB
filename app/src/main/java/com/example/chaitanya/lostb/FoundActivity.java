@@ -165,7 +165,7 @@ public class FoundActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                Toast.makeText(FoundActivity.this, "on Swiped ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FoundActivity.this, "Share", Toast.LENGTH_SHORT).show();
                 int position = viewHolder.getAdapterPosition();
                 String tit = data.get(position).getTitle();
                 String loc = data.get(position).getLocation();
