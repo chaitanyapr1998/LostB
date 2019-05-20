@@ -70,7 +70,8 @@
             android:parentActivityName=".LostActivity" />
         <activity
             android:name=".ProfileActivity"
-            android:parentActivityName=".LostActivity" />
+            android:parentActivityName=".LostActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LostActivity"
             android:theme="@style/AppTheme.NoActionBar" />

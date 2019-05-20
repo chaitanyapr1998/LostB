@@ -145,7 +145,7 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
                 .setLifetime(Lifetime.FOREVER)
                 .setRecurring(true)
                 .setTag("My job")
-                .setTrigger(Trigger.executionWindow(0, 10))
+                .setTrigger(Trigger.executionWindow(0, 60))
                 .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
                 .setReplaceCurrent(false)
                 .setConstraints(Constraint.ON_ANY_NETWORK)
@@ -248,7 +248,8 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
                     Post p = dataSnapshot.getValue(Post.class);
                     lostData.add(p);
                 }
-                check();
+                //check();
+                //makePrevPostMarked();
             }
 
             @Override
@@ -271,6 +272,52 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
 
             }
         });
+    }
+
+    private void makePrevPostMarked(){
+//        double latL = 0;
+//        double latR = 0;
+//        double lonL = 0;
+//        double lonR = 0;
+//        double val = 0.001;
+//        if(geofencePostData.size() != 0){
+//            for(int i = 0; i < lostData.size(); i++){
+//                double latLost = Double.parseDouble(lostData.get(i).getLatitude()); //25
+//                double lonLost = Double.parseDouble(lostData.get(i).getLongitude()); //25
+//                double latMat = Double.parseDouble(geofencePostData.get(i).getLat()); //28
+//                double lonMat = Double.parseDouble(geofencePostData.get(i).getLon()); //25
+//                latL = latMat - val; //18
+//                latR = latMat + val; //38
+//                lonL = lonMat - val; //15
+//                lonR = lonMat + val; //35
+//                Log.i("latLost", String.valueOf(latLost));
+//                Log.i("lonLost", String.valueOf(lonLost));
+//                Log.i("latMat", String.valueOf(latMat));
+//                Log.i("lonMat", String.valueOf(lonMat));
+//                Log.i("latL", String.valueOf(latL));
+//                Log.i("latR", String.valueOf(latR));
+//                Log.i("lonL", String.valueOf(lonL));
+//                Log.i("lonR", String.valueOf(lonR));
+//                if(latL < latLost && latR > latLost){
+//                    if(lonL < lonLost && lonR > lonLost){
+//                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("GeoPostMark").child(mUser.getUid());
+//                        String key = ref.push().getKey();
+//                        GeoPostMarkModel g = new GeoPostMarkModel(key, lostData.get(i).getId(), mUser.getUid());
+//                        ref = FirebaseDatabase.getInstance().getReference().child("GeoPostMark").child(mUser.getUid()).child(lostData.get(i).getId());
+//                        ref.setValue(g);
+//                    }
+//                }
+//            }
+//        }
+        if(lostData.size() != 0){
+            for(int i = 0; i < lostData.size(); i++){
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("GeoPostMark").child(mUser.getUid());
+                String key = ref.push().getKey();
+                GeoPostMarkModel g = new GeoPostMarkModel(key, lostData.get(i).getId(), mUser.getUid());
+                ref = FirebaseDatabase.getInstance().getReference().child("GeoPostMark").child(mUser.getUid()).child(lostData.get(i).getId());
+                ref.setValue(g);
+            }
+        }
     }
 
     private void refreshData(){

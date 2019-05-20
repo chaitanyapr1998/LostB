@@ -290,7 +290,7 @@ public class PostFoundItems extends AppCompatActivity implements AdapterView.OnI
                 address = place.getAddress().toString();
                 latlon = place.getLatLng();
                 location.setText(toastMsg);
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
             }
         }
 

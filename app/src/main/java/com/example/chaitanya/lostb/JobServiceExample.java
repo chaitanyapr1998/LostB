@@ -22,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.example.chaitanya.lostb.FirebaseApplication.CHANNEL_3_ID;
 import static com.example.chaitanya.lostb.FirebaseApplication.getAppContext;
@@ -59,10 +61,12 @@ public class JobServiceExample extends JobService {
         DatabaseReference ref;
         ArrayList<GeofencePostModel> geofencePostData;
         ArrayList<Post> lostData;
+        ArrayList<Post> lostTempData;
         private NotificationManagerCompat notificationManagerCompat;
         Context c;
         FirebaseUser mUser;
 
+        ArrayList<GeoPostMarkModel> markData;
 
         @Override
         protected String doInBackground(Void... voids) {
@@ -70,10 +74,22 @@ public class JobServiceExample extends JobService {
 
             geofencePostData = new ArrayList<>();
             lostData = new ArrayList<>();
+            lostTempData = new ArrayList<>();
+            markData = new ArrayList<>();
             c = getAppContext();
             notificationManagerCompat = NotificationManagerCompat.from(c);
             mUser = FirebaseAuth.getInstance().getCurrentUser();
+            Log.i("Service", "before mark info");
+            getMarkInfo();
+            Log.i("Service", "before geofence post data");
             getGeofencePostData();
+            Log.i("Service", "before lost data");
+            getLostData();
+            Log.i("Service", "before check");
+
+            Log.i("Service", "before markit");
+
+            Log.i("Service", "before return");
             return "Hello";
         }
 
@@ -90,7 +106,7 @@ public class JobServiceExample extends JobService {
                         }
                     }
                     //refreshData();
-                    getLostData();
+                    sleepThread();
                 }
 
                 @Override
@@ -100,33 +116,108 @@ public class JobServiceExample extends JobService {
             });
         }
 
+//        private void getLostata(){
+//            ref = FirebaseDatabase.getInstance().getReference().child("Lost");
+//            ref.addChildEventListener(new ChildEventListener() {
+//                @Override
+//                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                    lostData.clear();
+//                    if(dataSnapshot.exists()){
+//                        for(DataSnapshot d : dataSnapshot.getChildren()){
+//                            Log.i("LocationPostActivity", "Fired");
+//                            Post p = d.getValue(Post.class);
+//                            lostData.add(p);
+//                        }
+//                    }
+//                    getMarkInfo();
+//                    //check();
+//                }
+//
+//                @Override
+//                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//                }
+//
+//                @Override
+//                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//
+//                }
+//
+//                @Override
+//                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                }
+//            });
+//        }
+
         private void getLostData(){
             ref = FirebaseDatabase.getInstance().getReference().child("Lost");
-            ref.addChildEventListener(new ChildEventListener() {
+            ref.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     lostData.clear();
                     if(dataSnapshot.exists()){
-                        Log.i("LocationPostActivity", "Fired");
-                        Post p = dataSnapshot.getValue(Post.class);
-                        lostData.add(p);
+                        for(DataSnapshot d : dataSnapshot.getChildren()){
+                            Log.i("LocationPostActivity", "Fired");
+                            Post p = d.getValue(Post.class);
+                            lostData.add(p);
+                        }
+                    }
+                    getLostTempData();
+                    sleepThread();
+                    //check();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+        private void getLostTempData(){
+            ref = FirebaseDatabase.getInstance().getReference().child("LostTemp");
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    lostTempData.clear();
+                    if(dataSnapshot.exists()){
+                        for(DataSnapshot d : dataSnapshot.getChildren()){
+                            Log.i("LocationPostActivity", "Fired");
+                            Post p = d.getValue(Post.class);
+                            lostTempData.add(p);
+                        }
                     }
                     check();
+                    sleepThread();
+                    //check();
                 }
 
                 @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
+            });
+        }
 
+        private void getMarkInfo(){
+            ref = FirebaseDatabase.getInstance().getReference().child("GeoPostMark").child(mUser.getUid());
+            ref.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    markData.clear();
+                    if(dataSnapshot.exists()){
+                        for(DataSnapshot d : dataSnapshot.getChildren()){
+                            GeoPostMarkModel p = d.getValue(GeoPostMarkModel.class);
+                            markData.add(p);
+                        }
+                    }
+                    sleepThread();
                 }
 
                 @Override
@@ -143,51 +234,89 @@ public class JobServiceExample extends JobService {
             double lonR = 0;
             double val = 0.001;
             if(geofencePostData.size() != 0){
-                for(int i = 0; i < lostData.size(); i++){
-                    double latLost = Double.parseDouble(lostData.get(i).getLatitude()); //25
-                    double lonLost = Double.parseDouble(lostData.get(i).getLongitude()); //25
-                    double latMat = Double.parseDouble(geofencePostData.get(i).getLat()); //28
-                    double lonMat = Double.parseDouble(geofencePostData.get(i).getLon()); //25
-                    latL = latMat - val; //18
-                    latR = latMat + val; //38
-                    lonL = lonMat - val; //15
-                    lonR = lonMat + val; //35
-                    Log.i("latLost", String.valueOf(latLost));
-                    Log.i("lonLost", String.valueOf(lonLost));
-                    Log.i("latMat", String.valueOf(latMat));
-                    Log.i("lonMat", String.valueOf(lonMat));
-                    Log.i("latL", String.valueOf(latL));
-                    Log.i("latR", String.valueOf(latR));
-                    Log.i("lonL", String.valueOf(lonL));
-                    Log.i("lonR", String.valueOf(lonR));
-                    if(latL < latLost && latR > latLost){
-                        if(lonL < lonLost && lonR > lonLost){
-                            Log.i("JobService", "Matchhhhhh");
+                for(int i = 0; i < lostTempData.size(); i++){
+                    for(int j = 0; j < geofencePostData.size(); j++){
+                        double latLost = Double.parseDouble(lostTempData.get(i).getLatitude()); //25
+                        double lonLost = Double.parseDouble(lostTempData.get(i).getLongitude()); //25
+                        double latMat = Double.parseDouble(geofencePostData.get(j).getLat()); //28
+                        double lonMat = Double.parseDouble(geofencePostData.get(j).getLon()); //25
+                        latL = latMat - val; //18
+                        latR = latMat + val; //38
+                        lonL = lonMat - val; //15
+                        lonR = lonMat + val; //35
+                        Log.i("latLost", String.valueOf(latLost));
+                        Log.i("lonLost", String.valueOf(lonLost));
+                        Log.i("latMat", String.valueOf(latMat));
+                        Log.i("lonMat", String.valueOf(lonMat));
+                        Log.i("latL", String.valueOf(latL));
+                        Log.i("latR", String.valueOf(latR));
+                        Log.i("lonL", String.valueOf(lonL));
+                        Log.i("lonR", String.valueOf(lonR));
+                        if(latL < latLost && latR > latLost){
+                            if(lonL < lonLost && lonR > lonLost){
+                                Log.i("JobService", "Matchhhhhh");
 //                            SharedPreferences ss = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 //                            boolean switchNot = ss.getBoolean(NOTIFICATION_SWITCH, false);
 //                            Log.i("JobService", String.valueOf(switchNot));
 
-                            //if(switchNot){
-                                String id = CHANNEL_3_ID;
-                                Notification n = new NotificationCompat.Builder(c, id)
-                                        .setSmallIcon(R.mipmap.ic_launcher_round)
-                                        .setContentTitle("Post Match")
-                                        .setContentText("Post Reminder")
-                                        .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                        .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                                        .build();
-                                notificationManagerCompat.notify(1, n);
-                            //}
-                            Toast.makeText(c, "Matchhhhhhh..........",
-                                    Toast.LENGTH_SHORT).show();
+                                //if(switchNot){
+                                int y = markData.size();
+                                if(markData.size() != 0){
+                                    for(int q = 0; q < markData.size(); q++){
+                                        if(!markData.get(q).getLostId().equals(lostTempData.get(i).getId())){
+                                            if(!lostTempData.get(i).getUserId().equals(mUser.getUid())){
+                                                String id = CHANNEL_3_ID;
+                                                //sleepThread();
+                                                final Notification n = new NotificationCompat.Builder(c, id)
+                                                        .setSmallIcon(R.mipmap.ic_launcher_round)
+                                                        .setContentTitle("Post Match")
+                                                        .setContentText(lostTempData.get(i).getTitle())
+                                                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                                        .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                                                        .build();
+                                                notificationManagerCompat.notify(1, n);
+                                                Log.i("JobService", "Noti");
+                                                ref = FirebaseDatabase.getInstance().getReference().child("LostTemp").child(lostTempData.get(i).getId());
+                                                ref.removeValue();
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
                         }
                     }
-                }
-            }
+                    }
 
+            }
+            markIt();
+            sleepThread();
         }
 
 
+
+        private void markIt(){
+            if(lostData.size() != 0){
+                for(int i = 0; i < lostData.size(); i++){
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("GeoPostMark").child(mUser.getUid());
+                    String key = ref.push().getKey();
+                    GeoPostMarkModel g = new GeoPostMarkModel(key, lostData.get(i).getId(), mUser.getUid());
+                    ref = FirebaseDatabase.getInstance().getReference().child("GeoPostMark").child(mUser.getUid()).child(lostData.get(i).getId());
+                    ref.setValue(g);
+                    Log.i("JobService", "Struck here");
+                }
+            }
+            sleepThread();
+        }
+
+
+        private void sleepThread(){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 
 

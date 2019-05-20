@@ -241,6 +241,9 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 Toast.makeText(PostLostItems.this, "Submitted",
                         Toast.LENGTH_LONG).show();
                 getGeofencePostData();
+                ref = FirebaseDatabase.getInstance().getReference().child("LostTemp").child(u);
+                Post kkk = new Post(t, da, loc, u, e, ca, uid, d, addrs, lat, lon, date, country, street, tit_cou_cat);
+                ref.setValue(kkk);
 
             }
         });
@@ -430,7 +433,7 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 address = place.getAddress().toString();
                 latlon = place.getLatLng();
                 location.setText(toastMsg);
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
             }
         }
 
