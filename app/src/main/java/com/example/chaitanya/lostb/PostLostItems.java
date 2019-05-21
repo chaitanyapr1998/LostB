@@ -562,4 +562,11 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
         location.setError(null);//removes error
         location.clearFocus();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(PostLostItems.this, LostActivity.class);
+        startActivity(intent);
+    }
 }

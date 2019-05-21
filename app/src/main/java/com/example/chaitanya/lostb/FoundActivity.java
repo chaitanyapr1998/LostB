@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -73,6 +74,8 @@ public class FoundActivity extends AppCompatActivity {
 
     Date datadate, datefrom, dateto;
 
+    TextView empty, filempty;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +96,10 @@ public class FoundActivity extends AppCompatActivity {
 
         edtSearch = (EditText)findViewById(R.id.edt_search);
         btnSearch = (ImageButton)findViewById(R.id.btn_search);
+        empty = (TextView)findViewById(R.id.txt_empty);
+        filempty = (TextView)findViewById(R.id.txt_filterempty);
+        empty.setVisibility(View.GONE);
+        filempty.setVisibility(View.GONE);
 //        btnFilter = (ImageButton)findViewById(R.id.btn_filter);
 
         data = new ArrayList<Post>();
@@ -110,6 +117,9 @@ public class FoundActivity extends AppCompatActivity {
                         Post p = d.getValue(Post.class);
                         data.add(p);
                     }
+                    refreshData();
+                } else {
+                    refreshData();
                 }
             }
 
@@ -119,8 +129,8 @@ public class FoundActivity extends AppCompatActivity {
             }
         });
 
-        adapter = new FoundRecyclerviewAdapter(FoundActivity.this, data);
-        v.setAdapter(adapter);
+//        adapter = new FoundRecyclerviewAdapter(FoundActivity.this, data);
+//        v.setAdapter(adapter);
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +147,10 @@ public class FoundActivity extends AppCompatActivity {
                                 search.add(p);
                             }
                             searchRefresh();
-
+                        } else {
+                            Toast toast = Toast.makeText(FoundActivity.this,"No search items found", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
                         }
                     }
 
@@ -180,6 +193,26 @@ public class FoundActivity extends AppCompatActivity {
         itemTouchHelper.attachToRecyclerView(v);
     }
 
+    private void emptyView(){
+        if(adapter.getItemCount() <= 0){
+            v.setVisibility(View.GONE);
+            empty.setVisibility(View.VISIBLE);
+        } else {
+            v.setVisibility(View.VISIBLE);
+            empty.setVisibility(View.GONE);
+        }
+    }
+
+    private void emptyViewForFilter(){
+        if(adapter.getItemCount() <= 0){
+            v.setVisibility(View.GONE);
+            filempty.setVisibility(View.VISIBLE);
+        } else {
+            v.setVisibility(View.VISIBLE);
+            filempty.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -201,8 +234,10 @@ public class FoundActivity extends AppCompatActivity {
 
     private void refreshData(){
         //System.out.print("Hello");
+        filempty.setVisibility(View.GONE);
         adapter = new FoundRecyclerviewAdapter(FoundActivity.this, data);
         v.setAdapter(adapter);
+        emptyView();
     }
 
     private void searchRefresh(){
@@ -441,9 +476,10 @@ public class FoundActivity extends AppCompatActivity {
     }
 
     private void refreshFilterData(){
-        //System.out.print("Hello");
+        empty.setVisibility(View.GONE);
         adapter = new FoundRecyclerviewAdapter(FoundActivity.this, filteredData);
         v.setAdapter(adapter);
+        emptyViewForFilter();
     }
 
     @SuppressLint("ClickableViewAccessibility")

@@ -113,15 +113,6 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
         return mData.size();
     }
 
-
-    private void sleepThread(){
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        }
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         ImageView image;

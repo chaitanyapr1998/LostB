@@ -18,6 +18,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -103,6 +104,8 @@ public class LostActivity extends AppCompatActivity
 
     Date datadate, datefrom, dateto;
 
+    TextView empty, filempty;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +142,10 @@ public class LostActivity extends AppCompatActivity
 //        btnFilter = (ImageButton)findViewById(R.id.btn_filter);
         ppImgView = (CircleImageView) nav.findViewById(R.id.propicImgView);
         emailTextView = (TextView) nav.findViewById(R.id.emailTextView);
-
+        empty = (TextView)findViewById(R.id.txt_empty);
+        filempty = (TextView)findViewById(R.id.txt_filterempty);
+        empty.setVisibility(View.GONE);
+        filempty.setVisibility(View.GONE);
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         String email = mUser.getEmail();
         emailTextView.setText(email);
@@ -166,7 +172,10 @@ public class LostActivity extends AppCompatActivity
                                 search.add(p);
                             }
                             searchRefresh();
-
+                        } else {
+                            Toast toast = Toast.makeText(LostActivity.this,"No search items found", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
                         }
                     }
 
@@ -196,6 +205,9 @@ public class LostActivity extends AppCompatActivity
                         Post p = d.getValue(Post.class);
                         data.add(p);
                     }
+                    refreshData();
+                } else {
+                    refreshData();
                 }
             }
 
@@ -205,9 +217,9 @@ public class LostActivity extends AppCompatActivity
             }
         });
 
-        adapter = new RecyclerviewAdapter(LostActivity.this, data);
-        v.setAdapter(adapter);
-
+//        adapter = new RecyclerviewAdapter(LostActivity.this, data);
+//        v.setAdapter(adapter);
+//        emptyView();
         permission = new PermissionManager() {};
         permission.checkAndRequestPermissions(this);
 
@@ -236,6 +248,28 @@ public class LostActivity extends AppCompatActivity
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(v);
 
+        //refreshData();
+
+    }
+
+    private void emptyView(){
+        if(adapter.getItemCount() <= 0){
+            v.setVisibility(View.GONE);
+            empty.setVisibility(View.VISIBLE);
+        } else {
+            v.setVisibility(View.VISIBLE);
+            empty.setVisibility(View.GONE);
+        }
+    }
+
+    private void emptyViewForFilter(){
+        if(adapter.getItemCount() <= 0){
+            v.setVisibility(View.GONE);
+            filempty.setVisibility(View.VISIBLE);
+        } else {
+            v.setVisibility(View.VISIBLE);
+            filempty.setVisibility(View.GONE);
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -398,71 +432,18 @@ public class LostActivity extends AppCompatActivity
         }
     }
 
-//    private void displayItemImages(){
-//        ref = FirebaseDatabase.getInstance().getReference().child("ImgMeta").child(uid);
-//        ref.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                //dataSnapshot.getChildren();
-//                Object value = dataSnapshot.getValue();
-//                if(value instanceof List) {
-//                    List<Object> values = (List<Object>) value;
-//                    // do your magic with values
-//                    for(int i = 0; i < values.size(); i++){
-//                        imgName.add(values.get(i).toString());
-//                    }
-//
-//                }
-//                else {
-//                    // handle other possible types
-//                }
-//                getUri();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//
-//    }
-//
-//
-//
-//    private void getUri(){
-//        for(int h = 0; h < imgName.size(); h++){
-//            String abc = imgName.get(h);
-//            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("UploadImages").child(uid).child(abc);
-//            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                @Override
-//                public void onSuccess(Uri uri) {
-//                    // Got the download URL for 'users/me/profile.png'
-//                    //Uri u = uri;
-//                    disImg.add(uri.toString());
-//                    //recView();
-//                }
-//            }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception exception) {
-//                    // Handle any errors
-//                }
-//            });
-//        }
-//    }
-
-
-
-
     private void refreshData(){
         //System.out.print("Hello");
+        filempty.setVisibility(View.GONE);
         adapter = new RecyclerviewAdapter(LostActivity.this, data);
         v.setAdapter(adapter);
+        emptyView();
     }
 
     private void searchRefresh(){
         adapter = new RecyclerviewAdapter(LostActivity.this, search);
         v.setAdapter(adapter);
+        emptyView();
     }
 
 
@@ -523,6 +504,12 @@ public class LostActivity extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.nav_map) {
             Intent intent = new Intent(LostActivity.this, MapsActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_about) {
+            Intent intent = new Intent(LostActivity.this, AboutActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_feedback) {
+            Intent intent = new Intent(LostActivity.this, FeedbackActivity.class);
             startActivity(intent);
         }
 
@@ -777,8 +764,9 @@ public class LostActivity extends AppCompatActivity
     }
 
     private void refreshFilterData(){
-        //System.out.print("Hello");
+        empty.setVisibility(View.GONE);
         adapter = new RecyclerviewAdapter(LostActivity.this, filteredData);
         v.setAdapter(adapter);
+        emptyViewForFilter();
     }
 }
