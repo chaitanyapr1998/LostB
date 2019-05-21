@@ -1,6 +1,7 @@
 package com.example.chaitanya.lostb;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -50,6 +51,8 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
         Log.i(TAG, String.valueOf(switchNot));
 
         if(switchNot){
+            Intent in = new Intent(c, GeofenceActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(c, 0, in, 0);
             String id = CHANNEL_2_ID;
             Notification n = new NotificationCompat.Builder(c, id)
                     .setSmallIcon(R.mipmap.ic_launcher_round)
@@ -57,6 +60,7 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                     .setContentText("Location Reminder")
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                    .setContentIntent(pendingIntent)
                     .build();
             notificationManagerCompat.notify(1, n);
         }

@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -28,6 +29,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static com.example.chaitanya.lostb.SettingsActivity.NOTIFICATION_SWITCH;
+import static com.example.chaitanya.lostb.SettingsActivity.getSharedPreferences;
 
 public class LocationBroadcastReceiver extends BroadcastReceiver {
 
@@ -220,17 +224,21 @@ public class LocationBroadcastReceiver extends BroadcastReceiver {
                 if(!lostCountry.isEmpty() && !matchCountry.isEmpty() && !lostStreet.isEmpty() && !matchStreet.isEmpty()){
                     if(lostCountry.equals(matchCountry) && lostStreet.equals(matchStreet)){
                         if(!lostData.get(i).getUserId().equals(mUser.getUid())){
-                            Notification n = new NotificationCompat.Builder(c, FirebaseApplication.CHANNEL_1_ID)
-                                    .setSmallIcon(R.mipmap.logoicon)
-                                    .setContentTitle("Location Match")
-                                    .setContentText("Can you help someone to find their lost item?")
-                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                                    .build();
-                            Intent intent = new Intent(c, LocationHistory.class);
-
-                            PendingIntent activity = PendingIntent.getActivity(c, 0, intent, 0);
-                            notificationManagerCompat.notify(1, n);
+                            SharedPreferences ss = getSharedPreferences(c);
+                            boolean switchNot = ss.getBoolean(NOTIFICATION_SWITCH, false);
+                            if(switchNot){
+                                Intent intent = new Intent(c, LocationHistory.class);
+                                PendingIntent pendingIntent = PendingIntent.getActivity(c, 0, intent, 0);
+                                Notification n = new NotificationCompat.Builder(c, FirebaseApplication.CHANNEL_1_ID)
+                                        .setSmallIcon(R.mipmap.logoicon)
+                                        .setContentTitle("Location Match")
+                                        .setContentText("Can you help someone to find their lost item?")
+                                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                        .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                                        .setContentIntent(pendingIntent)
+                                        .build();
+                                notificationManagerCompat.notify(1, n);
+                            }
                         }
                     }
                 }

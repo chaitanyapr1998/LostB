@@ -266,7 +266,6 @@ public class JobServiceExample extends JobService {
                                         if(!markData.get(q).getLostId().equals(lostTempData.get(i).getId())){
                                             if(!lostTempData.get(i).getUserId().equals(mUser.getUid())){
                                                 String id = CHANNEL_3_ID;
-                                                //sleepThread();
                                                 final Notification n = new NotificationCompat.Builder(c, id)
                                                         .setSmallIcon(R.mipmap.ic_launcher_round)
                                                         .setContentTitle("Post Match")
