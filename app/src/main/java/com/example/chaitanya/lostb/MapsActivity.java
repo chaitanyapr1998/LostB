@@ -129,9 +129,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     LatLng mark = new LatLng(Double.valueOf(lat.get(i)), Double.valueOf(lon.get(i)));
                     mMap.addMarker(new MarkerOptions().position(mark).title(tit.get(i))).setIcon(bitmapDescriptor1);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(mark));
+                    final int finalI = i;
+                    mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                        @Override
+                        public void onInfoWindowClick(Marker marker) {
+                            Intent intent = new Intent(MapsActivity.this, DetailedViewActivity.class);
+                            String title = data.get(finalI).getTitle();
+                            String date = data.get(finalI).getDate();
+                            String place = data.get(finalI).getLocation();
+                            String email = data.get(finalI).getEmail();
+                            String uid = data.get(finalI).getId();
+                            String userid = data.get(finalI).getUserId();
+                            String des = data.get(finalI).getDescription();
+                            String cat = data.get(finalI).getCategory();
+                            String country = data.get(finalI).getCountry();
+                            String address = data.get(finalI).getAddress();
+                            intent.putExtra("title", title);
+                            intent.putExtra("date", date);
+                            intent.putExtra("place", place);
+                            intent.putExtra("email", email);
+                            intent.putExtra("uid", uid);
+                            intent.putExtra("userid", userid);
+                            intent.putExtra("des", des);
+                            intent.putExtra("cat", cat);
+                            intent.putExtra("country", country);
+                            intent.putExtra("address", address);
+                            startActivity(intent);
+                            Toast.makeText(MapsActivity.this, "Viewing item in detail",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
             }
-
 
 
             BitmapDescriptor bitmapDescriptor
@@ -143,7 +172,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     LatLng mark = new LatLng(Double.valueOf(flat.get(i)), Double.valueOf(flon.get(i)));
                     mMap.addMarker(new MarkerOptions().position(mark).title(ftit.get(i))).setIcon(bitmapDescriptor);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(mark));
-
+                    final int finalI = i;
+                    mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                        @Override
+                        public void onInfoWindowClick(Marker marker) {
+                            Intent intent = new Intent(MapsActivity.this, DetailedViewActivity.class);
+                            String title = dataFound.get(finalI).getTitle();
+                            String date = dataFound.get(finalI).getDate();
+                            String place = dataFound.get(finalI).getLocation();
+                            String email = dataFound.get(finalI).getEmail();
+                            String uid = dataFound.get(finalI).getId();
+                            String userid = dataFound.get(finalI).getUserId();
+                            String des = dataFound.get(finalI).getDescription();
+                            String cat = dataFound.get(finalI).getCategory();
+                            String country = dataFound.get(finalI).getCountry();
+                            String address = dataFound.get(finalI).getAddress();
+                            intent.putExtra("title", title);
+                            intent.putExtra("date", date);
+                            intent.putExtra("place", place);
+                            intent.putExtra("email", email);
+                            intent.putExtra("uid", uid);
+                            intent.putExtra("userid", userid);
+                            intent.putExtra("des", des);
+                            intent.putExtra("cat", cat);
+                            intent.putExtra("country", country);
+                            intent.putExtra("address", address);
+                            startActivity(intent);
+                            Toast.makeText(MapsActivity.this, "Viewing item in detail",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
             }
 
@@ -399,6 +457,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LatLng mark = new LatLng(Double.valueOf(filteredData.get(i).getLatitude()), Double.valueOf(filteredData.get(i).getLongitude()));
                 mMap.addMarker(new MarkerOptions().position(mark).title(filteredData.get(i).getTitle())).setIcon(bitmapDescriptor1);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(mark));
+                final int finalI = i;
+                mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
+                        Intent intent = new Intent(MapsActivity.this, DetailedViewActivity.class);
+                        String title = filteredData.get(finalI).getTitle();
+                        String date = filteredData.get(finalI).getDate();
+                        String place = filteredData.get(finalI).getLocation();
+                        String email = filteredData.get(finalI).getEmail();
+                        String uid = filteredData.get(finalI).getId();
+                        String userid = filteredData.get(finalI).getUserId();
+                        String des = filteredData.get(finalI).getDescription();
+                        String cat = filteredData.get(finalI).getCategory();
+                        String country = filteredData.get(finalI).getCountry();
+                        String address = filteredData.get(finalI).getAddress();
+                        intent.putExtra("title", title);
+                        intent.putExtra("date", date);
+                        intent.putExtra("place", place);
+                        intent.putExtra("email", email);
+                        intent.putExtra("uid", uid);
+                        intent.putExtra("userid", userid);
+                        intent.putExtra("des", des);
+                        intent.putExtra("cat", cat);
+                        intent.putExtra("country", country);
+                        intent.putExtra("address", address);
+                        startActivity(intent);
+                        Toast.makeText(MapsActivity.this, "Viewing item in detail",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         }
 
@@ -413,7 +501,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LatLng mark = new LatLng(Double.valueOf(filteredDataFound.get(i).getLatitude()), Double.valueOf(filteredDataFound.get(i).getLongitude()));
                 mMap.addMarker(new MarkerOptions().position(mark).title(filteredDataFound.get(i).getTitle())).setIcon(bitmapDescriptor);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(mark));
-
+                final int finalI = i;
+                mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
+                        Intent intent = new Intent(MapsActivity.this, DetailedViewActivity.class);
+                        String title = filteredDataFound.get(finalI).getTitle();
+                        String date = filteredDataFound.get(finalI).getDate();
+                        String place = filteredDataFound.get(finalI).getLocation();
+                        String email = filteredDataFound.get(finalI).getEmail();
+                        String uid = filteredDataFound.get(finalI).getId();
+                        String userid = filteredDataFound.get(finalI).getUserId();
+                        String des = filteredDataFound.get(finalI).getDescription();
+                        String cat = filteredDataFound.get(finalI).getCategory();
+                        String country = filteredDataFound.get(finalI).getCountry();
+                        String address = filteredDataFound.get(finalI).getAddress();
+                        intent.putExtra("title", title);
+                        intent.putExtra("date", date);
+                        intent.putExtra("place", place);
+                        intent.putExtra("email", email);
+                        intent.putExtra("uid", uid);
+                        intent.putExtra("userid", userid);
+                        intent.putExtra("des", des);
+                        intent.putExtra("cat", cat);
+                        intent.putExtra("country", country);
+                        intent.putExtra("address", address);
+                        startActivity(intent);
+                        Toast.makeText(MapsActivity.this, "Viewing item in detail",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         }
 
@@ -857,8 +974,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
     }
-
-
 
     private void sleepThread(){
         try {

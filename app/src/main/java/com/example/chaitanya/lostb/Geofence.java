@@ -20,7 +20,7 @@ import java.util.List;
 
 public class Geofence implements ResultCallback {
 
-    public static final float GEOFENCING_RADIUS = 100;
+    public static final float GEOFENCING_RADIUS = 500;
 
     private List<com.google.android.gms.location.Geofence> mGeofenceLocationLst;
     private PendingIntent mGeofencePendingIntent;
