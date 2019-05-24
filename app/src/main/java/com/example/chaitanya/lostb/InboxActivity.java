@@ -18,7 +18,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -119,7 +118,7 @@ public class InboxActivity extends AppCompatActivity {
 
     private void updateToken(String token){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
-        NTokens token1 = new NTokens(token);
+        NotificationTokensModel token1 = new NotificationTokensModel(token);
         reference.child(mUser.getUid()).setValue(token1);
     }
 

@@ -19,7 +19,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 
-public class NFirebaseMessaging extends FirebaseMessagingService {
+public class FirebaseNotificationMessaging extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -28,10 +28,6 @@ public class NFirebaseMessaging extends FirebaseMessagingService {
         String sented = remoteMessage.getData().get("sent");
         String user = remoteMessage.getData().get("user");
         String toEmail = remoteMessage.getData().get("toEmail");
-
-        Log.i("NFMESSAGING", sented);
-        Log.i("NFMESSAGING", user);
-        Log.i("NFMESSAGING", toEmail);
 
         SharedPreferences preferences = getSharedPreferences("PREFS", MODE_PRIVATE);
         String currentUser = preferences.getString("currentuser", "none");
@@ -51,7 +47,6 @@ public class NFirebaseMessaging extends FirebaseMessagingService {
 
     private void sendOreoNotification(RemoteMessage remoteMessage){
         String user = remoteMessage.getData().get("user");
-        //String icon = remoteMessage.getData().get("icon");
         String title = remoteMessage.getData().get("title");
         String body = remoteMessage.getData().get("msg");
         String toEmail = remoteMessage.getData().get("toEmail");

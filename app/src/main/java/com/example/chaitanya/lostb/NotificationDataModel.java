@@ -1,16 +1,16 @@
 package com.example.chaitanya.lostb;
 
-public class NData {
+public class NotificationDataModel {
     private String user;
     private String title;
     private String msg;
     private String sent;
     private String toEmail;
 
-    public NData() {
+    public NotificationDataModel() {
     }
 
-    public NData(String user, String title, String msg, String sent, String toEmail) {
+    public NotificationDataModel(String user, String title, String msg, String sent, String toEmail) {
         this.user = user;
         this.title = title;
         this.msg = msg;

@@ -2,16 +2,13 @@ package com.example.chaitanya.lostb;
 
     import android.content.Intent;
         import android.support.annotation.NonNull;
-        import android.support.annotation.Nullable;
-        import android.support.v7.app.AppCompatActivity;
+    import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.support.v7.widget.LinearLayoutManager;
         import android.support.v7.widget.RecyclerView;
-    import android.view.LayoutInflater;
     import android.view.View;
         import android.widget.Button;
         import android.widget.EditText;
-    import android.widget.LinearLayout;
     import android.widget.Toast;
 
     import com.google.firebase.auth.FirebaseAuth;
@@ -55,7 +52,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        apiService = NClient.getClient("https://fcm.googleapis.com/").create(APIService.class);
+        apiService = NotificationClientModel.getClient("https://fcm.googleapis.com/").create(APIService.class);
         v = (RecyclerView)findViewById(R.id.chat_recyclerview);
         v.setLayoutManager(new LinearLayoutManager(this));
 
@@ -112,16 +109,16 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    NTokens token = snapshot.getValue(NTokens.class);
-                    NData data = new NData(mUser.getUid(), username+": "+message, "New Message",
+                    NotificationTokensModel token = snapshot.getValue(NotificationTokensModel.class);
+                    NotificationDataModel data = new NotificationDataModel(mUser.getUid(), username+": "+message, "New Message",
                             toUserid, username);
 
-                    NSender sender = new NSender(data, token.getToken());
+                    NotificationSenderModel sender = new NotificationSenderModel(data, token.getToken());
 
                     apiService.sendNotification(sender)
-                            .enqueue(new Callback<NMyResponse>() {
+                            .enqueue(new Callback<NotificationResponse>() {
                                 @Override
-                                public void onResponse(Call<NMyResponse> call, Response<NMyResponse> response) {
+                                public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> response) {
                                     if (response.code() == 200){
                                         if (response.body().success != 1){
                                             Toast.makeText(ChatActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
@@ -130,7 +127,7 @@ public class ChatActivity extends AppCompatActivity {
                                 }
 
                                 @Override
-                                public void onFailure(Call<NMyResponse> call, Throwable t) {
+                                public void onFailure(Call<NotificationResponse> call, Throwable t) {
 
                                 }
                             });

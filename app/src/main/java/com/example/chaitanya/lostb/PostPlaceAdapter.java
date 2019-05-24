@@ -51,7 +51,6 @@ public class PostPlaceAdapter extends RecyclerView.Adapter<PostPlaceAdapter.Plac
 
     @Override
     public PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.geofence_listitem, parent, false);
         return new PlaceViewHolder(view);
@@ -102,7 +101,6 @@ public class PostPlaceAdapter extends RecyclerView.Adapter<PostPlaceAdapter.Plac
         if(place.getCount() == 1){
             place = null;         //doing like this because view is not updating for the last item so when item count is 1 making it null
         }
-        //notifyItemRemoved(pos);
         this.notifyDataSetChanged();
     }
 

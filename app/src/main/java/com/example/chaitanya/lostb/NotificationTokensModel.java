@@ -1,13 +1,13 @@
 package com.example.chaitanya.lostb;
 
-public class NTokens {
+public class NotificationTokensModel {
 
     private String Token;
 
-    public NTokens() {
+    public NotificationTokensModel() {
     }
 
-    public NTokens(String token) {
+    public NotificationTokensModel(String token) {
         Token = token;
     }
 

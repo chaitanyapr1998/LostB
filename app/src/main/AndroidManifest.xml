@@ -102,7 +102,7 @@
         </activity>
 
         <service
-            android:name=".NFirebaseIdService"
+            android:name=".NotificationFirebaseIdService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -110,7 +110,7 @@
             </intent-filter>
         </service>
         <service
-            android:name=".NFirebaseMessaging"
+            android:name=".FirebaseNotificationMessaging"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

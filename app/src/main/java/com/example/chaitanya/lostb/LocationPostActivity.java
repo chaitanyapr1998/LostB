@@ -1,14 +1,9 @@
 package com.example.chaitanya.lostb;
 
-import android.app.Notification;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
@@ -79,7 +73,7 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
         setContentView(R.layout.activity_location_post);
         setTitle("Geofence for Post");
         notificationManagerCompat = NotificationManagerCompat.from(this);
-        apiService = NClient.getClient("https://fcm.googleapis.com/").create(APIService.class);
+        apiService = NotificationClientModel.getClient("https://fcm.googleapis.com/").create(APIService.class);
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         geofencePostData = new ArrayList<>();
         lostData = new ArrayList<>();

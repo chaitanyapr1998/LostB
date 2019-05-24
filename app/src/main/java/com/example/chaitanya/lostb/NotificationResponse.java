@@ -1,5 +1,5 @@
 package com.example.chaitanya.lostb;
 
-public class NMyResponse {
+public class NotificationResponse {
     public int success;
 }

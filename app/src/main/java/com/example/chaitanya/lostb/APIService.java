@@ -15,5 +15,5 @@ public interface APIService {
     )
 
     @POST("fcm/send")
-    Call<NMyResponse> sendNotification(@Body NSender body);
+    Call<NotificationResponse> sendNotification(@Body NotificationSenderModel body);
 }
