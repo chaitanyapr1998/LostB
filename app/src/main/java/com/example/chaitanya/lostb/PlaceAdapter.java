@@ -100,9 +100,8 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
 
     public void refreshData() {
         if(place.getCount() == 1){
-            place = null;         //doing like this because view is not updating for the last item so when item count is 1 making it null
+            place = null;  //doing like this because view is not updating for the last item so when item count is 1 making it null
         }
-        //notifyItemRemoved(pos);
         this.notifyDataSetChanged();
     }
 

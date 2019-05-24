@@ -21,6 +21,7 @@ import java.util.List;
 public class Geofence implements ResultCallback {
 
     public static final float GEOFENCING_RADIUS = 500;
+    public static final long GEOFENCING_EXPIRY_TIME = 999999;
 
     private List<com.google.android.gms.location.Geofence> mGeofenceLocationLst;
     private PendingIntent mGeofencePendingIntent;
@@ -81,13 +82,13 @@ public class Geofence implements ResultCallback {
         for (Place place : places) {
 
             String placeUID = place.getId();
-            double placeLat = place.getLatLng().latitude;
-            double placeLng = place.getLatLng().longitude;
+            double lat = place.getLatLng().latitude;
+            double lng = place.getLatLng().longitude;
 
             com.google.android.gms.location.Geofence geofence = new com.google.android.gms.location.Geofence.Builder()
                     .setRequestId(placeUID)
-                    .setExpirationDuration(999999)
-                    .setCircularRegion(placeLat, placeLng, GEOFENCING_RADIUS)
+                    .setExpirationDuration(GEOFENCING_EXPIRY_TIME)
+                    .setCircularRegion(lat, lng, GEOFENCING_RADIUS)
                     .setTransitionTypes(com.google.android.gms.location.Geofence.GEOFENCE_TRANSITION_ENTER | com.google.android.gms.location.Geofence.GEOFENCE_TRANSITION_EXIT)
                     .build();
 
@@ -96,7 +97,6 @@ public class Geofence implements ResultCallback {
     }
 
     private PendingIntent getGeofencePendingIntent() {
-
         if (mGeofencePendingIntent != null) {
             return mGeofencePendingIntent;
         }

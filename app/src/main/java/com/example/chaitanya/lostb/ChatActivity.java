@@ -9,12 +9,10 @@ package com.example.chaitanya.lostb;
     import android.view.View;
         import android.widget.Button;
         import android.widget.EditText;
-    import android.widget.Toast;
 
     import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.auth.FirebaseUser;
-        import com.google.firebase.database.ChildEventListener;
-        import com.google.firebase.database.DataSnapshot;
+    import com.google.firebase.database.DataSnapshot;
         import com.google.firebase.database.DatabaseError;
         import com.google.firebase.database.DatabaseReference;
         import com.google.firebase.database.FirebaseDatabase;
@@ -23,7 +21,6 @@ package com.example.chaitanya.lostb;
 
         import java.util.ArrayList;
         import java.util.HashMap;
-        import java.util.List;
 
     import retrofit2.Call;
     import retrofit2.Callback;
@@ -35,24 +32,21 @@ public class ChatActivity extends AppCompatActivity {
     ChatRecyclerviewAdapter adapter;
     ArrayList<ChatModel> mChatData = new ArrayList<>();
     DatabaseReference mRef;
-    DatabaseReference mCM;
     EditText editMsg;
     Button btnSend;
     private String toEmail, toUid, toUserid;
-    private Boolean check = false;
     FirebaseUser mUser;
-    ChildEventListener mChildEventListener;
-    List<ChatMeta> list;
+
 
     APIService apiService;
-    boolean notify;
+    boolean check;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        apiService = NotificationClientModel.getClient("https://fcm.googleapis.com/").create(APIService.class);
+        apiService = NotificationClient.getClient("https://fcm.googleapis.com/").create(APIService.class);
         v = (RecyclerView)findViewById(R.id.chat_recyclerview);
         v.setLayoutManager(new LinearLayoutManager(this));
 
@@ -60,7 +54,7 @@ public class ChatActivity extends AppCompatActivity {
         btnSend = (Button)findViewById(R.id.btn_send);
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
-        list = new ArrayList<>();
+
 
         Intent i= getIntent();
         Bundle b = i.getExtras();
@@ -77,11 +71,10 @@ public class ChatActivity extends AppCompatActivity {
         String uid = toUserid;
 
         setTitle(toEmail);
-//        setTitle(toUserid);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                notify = true;
+                check = true;
                 String from = mUser.getUid();
                 String to = toUserid;
                 String msg = editMsg.getText().toString();
@@ -102,28 +95,21 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    private void sendNotifiaction(String receiver, final String username, final String message){
-        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
-        Query query = tokens.orderByKey().equalTo(receiver);
+    private void notifyUserWithMessage(String toUser, final String useremail, final String message){
+        mRef = FirebaseDatabase.getInstance().getReference().child("Tokens");
+        Query query = mRef.orderByKey().equalTo(toUser);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    NotificationTokensModel token = snapshot.getValue(NotificationTokensModel.class);
-                    NotificationDataModel data = new NotificationDataModel(mUser.getUid(), username+": "+message, "New Message",
-                            toUserid, username);
-
-                    NotificationSenderModel sender = new NotificationSenderModel(data, token.getToken());
-
-                    apiService.sendNotification(sender)
+                for (DataSnapshot d : dataSnapshot.getChildren()){
+                    NotificationTokensModel token = d.getValue(NotificationTokensModel.class);
+                    NotificationDataModel data = new NotificationDataModel(mUser.getUid(), useremail, message, toUserid, useremail);
+                    NotificationSenderModel sentby = new NotificationSenderModel(data, token.getToken());
+                    apiService.sendNotification(sentby)
                             .enqueue(new Callback<NotificationResponse>() {
                                 @Override
                                 public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> response) {
-                                    if (response.code() == 200){
-                                        if (response.body().success != 1){
-                                            Toast.makeText(ChatActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
+
                                 }
 
                                 @Override
@@ -153,16 +139,15 @@ public class ChatActivity extends AppCompatActivity {
 
         final String msgg = m;
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(mUser.getUid());
-        reference.addValueEventListener(new ValueEventListener() {
+        mRef = FirebaseDatabase.getInstance().getReference("Users").child(mUser.getUid());
+        mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Users user = dataSnapshot.getValue(Users.class);
-
-                if (notify) {
-                    sendNotifiaction(t, user.getEmail(), msgg);
+                if (check) {
+                    notifyUserWithMessage(t, user.getEmail(), msgg);
                 }
-                notify = false;
+                check = false;
             }
 
             @Override
@@ -181,9 +166,9 @@ public class ChatActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mChatData.clear();
                 for(DataSnapshot d : dataSnapshot.getChildren()){
-                    ChatModel cm = d.getValue(ChatModel.class);
-                    if(cm.getTo().equals(f) && cm.getFrom().equals(t) || cm.getTo().equals(t) && cm.getFrom().equals(f)){
-                        mChatData.add(cm);
+                    ChatModel chatmodel = d.getValue(ChatModel.class);
+                    if(chatmodel.getTo().equals(f) && chatmodel.getFrom().equals(t) || chatmodel.getTo().equals(t) && chatmodel.getFrom().equals(f)){
+                        mChatData.add(chatmodel);
                     }
                     adapter = new ChatRecyclerviewAdapter(ChatActivity.this, mChatData);
                     v.setAdapter(adapter);

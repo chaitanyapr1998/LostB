@@ -68,7 +68,6 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
     ImageButton dateBtn, locBtn;
     private static int num = 0;
     private static String userId;
-    //private DatePickerDialog.OnDateSetListener mDate;
     private DatePickerDialog.OnDateSetListener dateSetListener;
 
     private int PLACE_PICKER_REQUEST = 1;
@@ -94,8 +93,6 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
     ArrayList<GeofencePostModel> gP;
     ArrayList<Post> lostData;
     private NotificationManagerCompat notificationManagerCompat;
-    APIService apiService;
-    //boolean notify;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -104,7 +101,6 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_post_lost_items);
         setTitle("Post Lost Item");
         notificationManagerCompat = NotificationManagerCompat.from(this);
-        apiService = NotificationClientModel.getClient("https://fcm.googleapis.com/").create(APIService.class);
         title = (EditText)findViewById(R.id.edt_title);
         description = (EditText)findViewById(R.id.edt_description);
         date = (EditText)findViewById(R.id.edt_date);
@@ -153,14 +149,12 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
             description.setText(des);
             location.setText(loc);
             date.setText(d);
-            //mRootReference =
         }
 
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //notify = true;
                 String t = title.getText().toString().toLowerCase();
                 if(t.isEmpty()){
                     title.setError("Please enter name of an item");
@@ -211,7 +205,6 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 }
 
                 String tit_cou_cat = t +"_"+ country +"_"+ ca;
-                //String check = "";
 
                 uploadingToFirebase(u);
 
@@ -388,10 +381,8 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 Log.i("lonR", String.valueOf(lonR));
                 if(latL < latLost && latR > latLost){
                     if(lonL < lonLost && lonR > lonLost){
-                        //Log.i(TAG, "Matchhhhhh");
                         SharedPreferences ss = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
                         boolean switchNot = ss.getBoolean(NOTIFICATION_SWITCH, false);
-                        //Log.i(TAG, String.valueOf(switchNot));
 
                         if(switchNot){
                             String id = CHANNEL_3_ID;
@@ -423,7 +414,6 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 address = place.getAddress().toString();
                 latlon = place.getLatLng();
                 location.setText(toastMsg);
-                //Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
             }
         }
 
@@ -456,7 +446,6 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String cat = parent.getItemAtPosition(position).toString();
 
     }
 
@@ -481,7 +470,6 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
             file.putFile(imgUri.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
                     Toast.makeText(PostLostItems.this, "Images Uploaded",
                             Toast.LENGTH_LONG).show();
                 }
@@ -507,14 +495,12 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
 
     //cc
     public static String getCountryName(Context context, double latitude, double longitude) {
-        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-        List<Address> addresses = null;
+        Geocoder geo = new Geocoder(context, Locale.getDefault());
+        List<Address> countryName;
         try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            Address result;
-
-            if (addresses != null && !addresses.isEmpty()) {
-                return addresses.get(0).getCountryName();
+            countryName = geo.getFromLocation(latitude, longitude, 1);
+            if (countryName != null && !countryName.isEmpty()) {
+                return countryName.get(0).getCountryName();
             }
 
         } catch (IOException ignored) {
@@ -524,14 +510,13 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
     }
 
     public static String getStreetName(Context context, double latitude, double longitude) {
-        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-        List<Address> addresses = null;
+        Geocoder geo = new Geocoder(context, Locale.getDefault());
+        List<Address> streetName;
         try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            Address result;
+            streetName = geo.getFromLocation(latitude, longitude, 1);
 
-            if (addresses != null && !addresses.isEmpty()) {
-                return addresses.get(0).getAdminArea();
+            if (streetName != null && !streetName.isEmpty()) {
+                return streetName.get(0).getAdminArea();
             }
 
         } catch (IOException ignored) {

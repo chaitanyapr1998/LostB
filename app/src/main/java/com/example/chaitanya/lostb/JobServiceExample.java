@@ -105,7 +105,6 @@ public class JobServiceExample extends JobService {
                             geofencePostData.add(p);
                         }
                     }
-                    //refreshData();
                     sleepThread();
                 }
 
@@ -131,7 +130,6 @@ public class JobServiceExample extends JobService {
                     }
                     getLostTempData();
                     sleepThread();
-                    //check();
                 }
 
                 @Override
@@ -156,7 +154,6 @@ public class JobServiceExample extends JobService {
                     }
                     check();
                     sleepThread();
-                    //check();
                 }
 
                 @Override
@@ -216,11 +213,6 @@ public class JobServiceExample extends JobService {
                         if(latL < latLost && latR > latLost){
                             if(lonL < lonLost && lonR > lonLost){
                                 Log.i("JobService", "Matchhhhhh");
-//                            SharedPreferences ss = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-//                            boolean switchNot = ss.getBoolean(NOTIFICATION_SWITCH, false);
-//                            Log.i("JobService", String.valueOf(switchNot));
-
-                                //if(switchNot){
                                 int y = markData.size();
                                 if(markData.size() != 0){
                                     for(int q = 0; q < markData.size(); q++){
@@ -246,7 +238,7 @@ public class JobServiceExample extends JobService {
                             }
                         }
                     }
-                    }
+                }
 
             }
             markIt();

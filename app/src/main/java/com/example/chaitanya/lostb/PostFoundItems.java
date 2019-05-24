@@ -58,11 +58,8 @@ public class PostFoundItems extends AppCompatActivity implements AdapterView.OnI
     EditText title, description, date, location;
     Spinner category;
     Button submit, cancel, upload;
-    String unique;
     ImageButton dateBtn, locBtn;
-    private static int num = 0;
     private static String userId;
-    //private DatePickerDialog.OnDateSetListener mDate;
     private DatePickerDialog.OnDateSetListener dateSetListener;
 
     private int PLACE_PICKER_REQUEST = 1;
@@ -136,7 +133,6 @@ public class PostFoundItems extends AppCompatActivity implements AdapterView.OnI
             description.setText(des);
             location.setText(loc);
             date.setText(d);
-            //mRootReference =
         }
 
 
@@ -192,7 +188,6 @@ public class PostFoundItems extends AppCompatActivity implements AdapterView.OnI
                     street = strt;
                 }
                 String tit_cou_cat = t +"_"+ country +"_"+ ca;
-                //String check = "";
 
                 uploadingToFirebase(u);
 
@@ -290,7 +285,6 @@ public class PostFoundItems extends AppCompatActivity implements AdapterView.OnI
                 address = place.getAddress().toString();
                 latlon = place.getLatLng();
                 location.setText(toastMsg);
-                //Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
             }
         }
 
@@ -323,7 +317,6 @@ public class PostFoundItems extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String cat = parent.getItemAtPosition(position).toString();
 
     }
 
@@ -348,7 +341,6 @@ public class PostFoundItems extends AppCompatActivity implements AdapterView.OnI
             file.putFile(imgUri.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
                     Toast.makeText(PostFoundItems.this, "Images Uploaded",
                             Toast.LENGTH_LONG).show();
                 }
@@ -374,14 +366,13 @@ public class PostFoundItems extends AppCompatActivity implements AdapterView.OnI
 
     //cc
     public static String getCountryName(Context context, double latitude, double longitude) {
-        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-        List<Address> addresses = null;
+        Geocoder geo = new Geocoder(context, Locale.getDefault());
+        List<Address> countryName;
         try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            Address result;
+            countryName = geo.getFromLocation(latitude, longitude, 1);
 
-            if (addresses != null && !addresses.isEmpty()) {
-                return addresses.get(0).getCountryName();
+            if (countryName != null && !countryName.isEmpty()) {
+                return countryName.get(0).getCountryName();
             }
 
         } catch (IOException ignored) {
@@ -391,14 +382,13 @@ public class PostFoundItems extends AppCompatActivity implements AdapterView.OnI
     }
 
     public static String getStreetName(Context context, double latitude, double longitude) {
-        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-        List<Address> addresses = null;
+        Geocoder geo = new Geocoder(context, Locale.getDefault());
+        List<Address> streetName;
         try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            Address result;
+            streetName = geo.getFromLocation(latitude, longitude, 1);
 
-            if (addresses != null && !addresses.isEmpty()) {
-                return addresses.get(0).getAdminArea();
+            if (streetName != null && !streetName.isEmpty()) {
+                return streetName.get(0).getAdminArea();
             }
 
         } catch (IOException ignored) {

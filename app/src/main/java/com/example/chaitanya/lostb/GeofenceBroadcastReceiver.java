@@ -38,14 +38,6 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
             return;
         }
 
-
-        //int geofenceTransition = geofencingEvent.getGeofenceTransition();
-//        if(){
-//
-//        }
-
-//        SharedPreferences sharedPreferences = PreferenceManager.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-//        boolean checkNotSwitch = sharedPreferences.getBoolean(NOTIFICATION_SWITCH, false);
         SharedPreferences ss = getSharedPreferences(context);
         boolean switchNot = ss.getBoolean(NOTIFICATION_SWITCH, false);
         Log.i(TAG, String.valueOf(switchNot));
@@ -62,11 +54,9 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                     .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                     .setContentIntent(pendingIntent)
                     .build();
-            notificationManagerCompat.notify(1, n);
+            notificationManagerCompat.notify(2, n);
         }
 
-
     }
-
 
 }

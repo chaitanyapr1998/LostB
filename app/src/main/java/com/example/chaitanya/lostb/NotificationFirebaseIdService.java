@@ -8,23 +8,26 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
+
+
 public class NotificationFirebaseIdService extends FirebaseInstanceIdService {
+
+    FirebaseUser mUser;
+    DatabaseReference ref;
+
     @Override
     public void onTokenRefresh() {
         super.onTokenRefresh();
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        String refreshToken = FirebaseInstanceId.getInstance().getToken();
-        if (firebaseUser != null){
-            updateToken(refreshToken);
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        String t = FirebaseInstanceId.getInstance().getToken();
+        if (mUser != null){
+            newToken(t);
         }
     }
 
-    private void updateToken(String refreshToken) {
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
-        NotificationTokensModel token = new NotificationTokensModel(refreshToken);
-        reference.child(firebaseUser.getUid()).setValue(token);
+    private void newToken(String t) {
+        ref = FirebaseDatabase.getInstance().getReference("Tokens");
+        NotificationTokensModel token = new NotificationTokensModel(t);
+        ref.child(mUser.getUid()).setValue(token);
     }
 }

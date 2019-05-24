@@ -62,7 +62,6 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
     private PostPlaceAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private GoogleApiClient mClient;
-    APIService apiService;
 
     Button st, sp;
     private FirebaseJobDispatcher jb;
@@ -73,7 +72,6 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
         setContentView(R.layout.activity_location_post);
         setTitle("Geofence for Post");
         notificationManagerCompat = NotificationManagerCompat.from(this);
-        apiService = NotificationClientModel.getClient("https://fcm.googleapis.com/").create(APIService.class);
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         geofencePostData = new ArrayList<>();
         lostData = new ArrayList<>();
