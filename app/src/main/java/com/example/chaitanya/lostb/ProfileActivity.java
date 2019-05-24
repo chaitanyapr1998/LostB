@@ -48,8 +48,6 @@ public class ProfileActivity extends AppCompatActivity {
     private static final int PROFILE_PIC = 345;
     CircleImageView profilePic;
     TextView id, his;
-    private SectionPageAdapter mSectionPageAdapter;
-    private ViewPager mViewPager;
     FirebaseUser user;
     Uri proPicUri;
     StorageReference mSRef;
@@ -80,12 +78,6 @@ public class ProfileActivity extends AppCompatActivity {
             id.setText(email);
         }
 
-//        mViewPager = (ViewPager)findViewById(R.id.container);
-//        viewPager(mViewPager);
-
-//        TabLayout tab = (TabLayout)findViewById(R.id.tab_layout);
-//        tab.setupWithViewPager(mViewPager);
-
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,12 +104,6 @@ public class ProfileActivity extends AppCompatActivity {
         displayProfilePic();
     }
 
-    private void viewPager(ViewPager v){
-        SectionPageAdapter a = new SectionPageAdapter(getSupportFragmentManager());
-        a.add(new LostFragment(), "Lost Items");
-        a.add(new FoundFragment(), "Found Items");
-        v.setAdapter(a);
-    }
 
     private void profilePicChooser(){
         Intent intent = new Intent();
@@ -168,7 +154,6 @@ public class ProfileActivity extends AppCompatActivity {
                 imageURL = uri.toString();
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("Link");
                 ref.setValue(imageURL);
-                //Glide.with(getApplicationContext()).load(imageURL).into(profilePic);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -205,12 +190,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_remove) {
             removeProfilePic();
         } else if(id == R.id.action_lochis) {

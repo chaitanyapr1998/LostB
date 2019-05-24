@@ -38,16 +38,11 @@ public class InboxRecyclerviewAdapter extends RecyclerView.Adapter<InboxRecycler
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
-
-//        Uri uri = Uri.parse(mChat.get(i).getLink());
-//        viewHolder.img.setImageURI(uri);
-//        Glide.with(mContext).load(mChat.get(i).getLink()).into(img);
         Glide.with(mContext)
                 .asBitmap()
                 .load(mChat.get(i).getLink())
                 .into(viewHolder.img);
         viewHolder.email.setText(mChat.get(i).getEmail());
-        //viewHolder.msg.setText(mChat.get(i).getMsg());
         viewHolder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +54,6 @@ public class InboxRecyclerviewAdapter extends RecyclerView.Adapter<InboxRecycler
                 v.getContext().startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -68,14 +62,12 @@ public class InboxRecyclerviewAdapter extends RecyclerView.Adapter<InboxRecycler
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-
         TextView email, msg;
         RelativeLayout layout;
         CircleImageView img;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             img = itemView.findViewById(R.id.img_pp);
             email = itemView.findViewById(R.id.chat_email);
             msg = itemView.findViewById(R.id.chat_msg);

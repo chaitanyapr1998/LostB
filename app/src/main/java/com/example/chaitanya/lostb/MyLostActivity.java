@@ -48,19 +48,8 @@ public class MyLostActivity extends AppCompatActivity {
         listView.setEmptyView(emptyView);
 
         getPostedByMe();
-        //sleepThread();
         adapter = new CustomAdapter(this, p);
-
-
     }
-
-//    private void getTitleData(){
-//        if(p != null){
-//            for(int i = 0; i < p.size(); i++){
-//                title.add(p.get(i).getTitle());
-//            }
-//        }
-//    }
 
     private void getPostedByMe(){
         ref = FirebaseDatabase.getInstance().getReference().child("Lost");
@@ -75,11 +64,8 @@ public class MyLostActivity extends AppCompatActivity {
                         p.add(post);
                         Log.i("My Lost Activity", "Here");
                     }
-//                    getTitleData();
                     listView.setAdapter(adapter);
-
                 }
-
             }
 
             @Override
@@ -88,13 +74,5 @@ public class MyLostActivity extends AppCompatActivity {
             }
         });
         progressBar.setVisibility(View.GONE);
-    }
-
-    private void sleepThread(){
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        }
     }
 }

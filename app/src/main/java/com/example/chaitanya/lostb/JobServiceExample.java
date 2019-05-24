@@ -116,45 +116,6 @@ public class JobServiceExample extends JobService {
             });
         }
 
-//        private void getLostata(){
-//            ref = FirebaseDatabase.getInstance().getReference().child("Lost");
-//            ref.addChildEventListener(new ChildEventListener() {
-//                @Override
-//                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                    lostData.clear();
-//                    if(dataSnapshot.exists()){
-//                        for(DataSnapshot d : dataSnapshot.getChildren()){
-//                            Log.i("LocationPostActivity", "Fired");
-//                            Post p = d.getValue(Post.class);
-//                            lostData.add(p);
-//                        }
-//                    }
-//                    getMarkInfo();
-//                    //check();
-//                }
-//
-//                @Override
-//                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//                }
-//
-//                @Override
-//                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-//
-//                }
-//
-//                @Override
-//                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                }
-//            });
-//        }
-
         private void getLostData(){
             ref = FirebaseDatabase.getInstance().getReference().child("Lost");
             ref.addValueEventListener(new ValueEventListener() {

@@ -233,7 +233,6 @@ public class FoundActivity extends AppCompatActivity {
     }
 
     private void refreshData(){
-        //System.out.print("Hello");
         filempty.setVisibility(View.GONE);
         adapter = new FoundRecyclerviewAdapter(FoundActivity.this, data);
         v.setAdapter(adapter);

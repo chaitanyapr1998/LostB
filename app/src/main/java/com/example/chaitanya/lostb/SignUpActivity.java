@@ -32,7 +32,6 @@ public class SignUpActivity extends AppCompatActivity {
     DatabaseReference reference;
     ImageView imgLogo;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +45,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
-        //mUser = mAuth.getCurrentUser();
         btnacc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,8 +104,6 @@ public class SignUpActivity extends AppCompatActivity {
                                 }
                             });
 
-
-
                         } else {
                             if(task.getException() instanceof FirebaseAuthUserCollisionException){
                                 Toast.makeText(SignUpActivity.this, "User already registered!",
@@ -123,6 +119,5 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
-
 
 }

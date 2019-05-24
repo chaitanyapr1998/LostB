@@ -45,7 +45,6 @@ public class InboxActivity extends AppCompatActivity {
         mChats = new ArrayList<>();
         emails = new ArrayList<>();
         uqEmails = new ArrayList<>();
-        //uqChatList = new List<Object>() ;
         mUser = FirebaseAuth.getInstance().getCurrentUser();
 
         mRef = FirebaseDatabase.getInstance().getReference("Chat");

@@ -46,12 +46,7 @@ public class LocCustomAdapter extends BaseAdapter {
         TextView time = (TextView) v.findViewById(R.id.txt_time);
         TextView address = (TextView) v.findViewById(R.id.txt_address);
         ImageButton direction = (ImageButton) v.findViewById(R.id.btn_direction);
-//        long timeInMilli = Long.parseLong(items.get(position).getTime());
         String timee = convertTime(items.get(position).getTime(),"hh:mm");
-//        Log.i("Here", "------------------------");
-//        Log.i("addressssss", items.get(position).getAddress());
-//        Log.i("timeeeee", timee);
-//        Log.i("Here", "------------------------");
         time.setText(timee);
         address.setText(items.get(position).getAddress());
         direction.setOnClickListener(new View.OnClickListener() {

@@ -51,11 +51,6 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
-
-//
-//        if(disImg.size() != 0){
-
-//        }
         viewHolder.title.setText(mData.get(i).getTitle());
         viewHolder.date.setText(mData.get(i).getDate());
         viewHolder.place.setText(mData.get(i).getLocation());

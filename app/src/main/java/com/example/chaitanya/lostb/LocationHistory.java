@@ -74,7 +74,6 @@ public class LocationHistory extends AppCompatActivity {
 
         instance = this;
         mUser = FirebaseAuth.getInstance().getCurrentUser();
-        //txtLoc = (TextView) findViewById(R.id.txt_loc);
         btnStart = (Button) findViewById(R.id.btn_start);
         btnStop = (Button) findViewById(R.id.btn_stop);
         lhListView = (ListView) findViewById(R.id.lv_lochis);
@@ -103,9 +102,6 @@ public class LocationHistory extends AppCompatActivity {
         });
 
         loadLocHis();
-
-
-
     }
 
     private boolean checkForPermission() {
@@ -153,27 +149,6 @@ public class LocationHistory extends AppCompatActivity {
         req.setInterval(10000);
         req.setFastestInterval(10000);
         req.setSmallestDisplacement(0);
-    }
-
-    public void updateTextview(final double lat, final double lon){
-        LocationHistory.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                String res = getCountryName(getApplicationContext(), lat, lon);
-                if(locHis.size() < 24){
-                    locHis.add(res);
-                    adapter.notifyDataSetChanged();
-                } else {
-                    locHis.clear();
-                    locHis.add(res);
-                    adapter.notifyDataSetChanged();
-                }
-                //txtLoc.append(res);
-                Log.i("MyLocation", res);
-                Toast.makeText(LocationHistory.this, res,
-                        Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     private void startBroadCastReceiver() {
@@ -232,29 +207,6 @@ public class LocationHistory extends AppCompatActivity {
 
             }
         });
-//        String c = mUser.getUid();
-//        ref = FirebaseDatabase.getInstance().getReference().child("LocationHistory");
-//        Query q = ref.child("LocationHistory").orderByChild("Uid").equalTo(mUser.getUid());
-//        q.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                locHisData.clear();
-//                if(dataSnapshot.exists()){
-//                    for(DataSnapshot d : dataSnapshot.getChildren()){
-//                        LocationModel p = d.getValue(LocationModel.class);
-//                        locHisData.add(p);
-//                    }
-//                    refreshLocHis();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-
-
     }
 
     private void filtering(){
@@ -270,7 +222,6 @@ public class LocationHistory extends AppCompatActivity {
 
 
     private void refreshLocHis(){
-        //int a = locHisData.size();
         adapter = new LocCustomAdapter(this, filLocHisData);
         lhListView.setAdapter(adapter);
     }

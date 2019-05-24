@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     static FirebaseAuth mAuth;
     ImageView imgLogo;
     TextView txtForgotPass;
-    //static String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,11 +91,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(MainActivity.this, "Successful!",
-                                    Toast.LENGTH_LONG).show();
-
+                            Toast.makeText(MainActivity.this, "Successful!", Toast.LENGTH_LONG).show();
                             finishAffinity();
-
                             Intent intent = new Intent(MainActivity.this, LostActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);

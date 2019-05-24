@@ -187,14 +187,6 @@ public class LostActivity extends AppCompatActivity
             }
         });
 
-//        btnFilter.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-
-
         ref = FirebaseDatabase.getInstance().getReference().child("Lost");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -217,9 +209,6 @@ public class LostActivity extends AppCompatActivity
             }
         });
 
-//        adapter = new RecyclerviewAdapter(LostActivity.this, data);
-//        v.setAdapter(adapter);
-//        emptyView();
         permission = new PermissionManager() {};
         permission.checkAndRequestPermissions(this);
 
@@ -247,9 +236,6 @@ public class LostActivity extends AppCompatActivity
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(v);
-
-        //refreshData();
-
     }
 
     private void emptyView(){
@@ -433,7 +419,6 @@ public class LostActivity extends AppCompatActivity
     }
 
     private void refreshData(){
-        //System.out.print("Hello");
         filempty.setVisibility(View.GONE);
         adapter = new RecyclerviewAdapter(LostActivity.this, data);
         v.setAdapter(adapter);
@@ -538,8 +523,6 @@ public class LostActivity extends AppCompatActivity
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, "Lost Item - " + t + "\n" + "Date - " + d + "\n" +"Location - " + l + "\n\n" + "Findingg App");
-//        sendIntent.putExtra(Intent.EXTRA_TEXT, "Date - " + d);
-//        sendIntent.putExtra(Intent.EXTRA_TEXT, "Location - " + l);
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
     }

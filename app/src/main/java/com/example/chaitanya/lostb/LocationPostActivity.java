@@ -45,20 +45,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static com.example.chaitanya.lostb.FirebaseApplication.CHANNEL_2_ID;
-import static com.example.chaitanya.lostb.FirebaseApplication.CHANNEL_3_ID;
-import static com.example.chaitanya.lostb.SettingsActivity.NOTIFICATION_SWITCH;
-import static com.example.chaitanya.lostb.SettingsActivity.SHARED_PREFS;
 
 public class LocationPostActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
@@ -77,12 +68,8 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
     private PostPlaceAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private GoogleApiClient mClient;
-
-
     APIService apiService;
-    boolean notify;
 
-    //
     Button st, sp;
     private FirebaseJobDispatcher jb;
 
@@ -139,7 +126,6 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
     }
 
     private void startJob(View v){
-
         Job job = jb.newJobBuilder()
                 .setService(JobServiceExample.class)
                 .setLifetime(Lifetime.FOREVER)
@@ -153,8 +139,6 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
         jb.mustSchedule(job);
 
         Log.i("Job service", "Schedulled");
-
-
     }
 
     private void stopJob(View v){
@@ -213,7 +197,6 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
 
     }
 
-
     private void getGeofencePostData() {
         ref = FirebaseDatabase.getInstance().getReference().child("GeofencePost").child(mUser.getUid());
         ref.addValueEventListener(new ValueEventListener() {
@@ -248,8 +231,6 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
                     Post p = dataSnapshot.getValue(Post.class);
                     lostData.add(p);
                 }
-                //check();
-                //makePrevPostMarked();
             }
 
             @Override
@@ -274,52 +255,6 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
         });
     }
 
-    private void makePrevPostMarked(){
-//        double latL = 0;
-//        double latR = 0;
-//        double lonL = 0;
-//        double lonR = 0;
-//        double val = 0.001;
-//        if(geofencePostData.size() != 0){
-//            for(int i = 0; i < lostData.size(); i++){
-//                double latLost = Double.parseDouble(lostData.get(i).getLatitude()); //25
-//                double lonLost = Double.parseDouble(lostData.get(i).getLongitude()); //25
-//                double latMat = Double.parseDouble(geofencePostData.get(i).getLat()); //28
-//                double lonMat = Double.parseDouble(geofencePostData.get(i).getLon()); //25
-//                latL = latMat - val; //18
-//                latR = latMat + val; //38
-//                lonL = lonMat - val; //15
-//                lonR = lonMat + val; //35
-//                Log.i("latLost", String.valueOf(latLost));
-//                Log.i("lonLost", String.valueOf(lonLost));
-//                Log.i("latMat", String.valueOf(latMat));
-//                Log.i("lonMat", String.valueOf(lonMat));
-//                Log.i("latL", String.valueOf(latL));
-//                Log.i("latR", String.valueOf(latR));
-//                Log.i("lonL", String.valueOf(lonL));
-//                Log.i("lonR", String.valueOf(lonR));
-//                if(latL < latLost && latR > latLost){
-//                    if(lonL < lonLost && lonR > lonLost){
-//                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("GeoPostMark").child(mUser.getUid());
-//                        String key = ref.push().getKey();
-//                        GeoPostMarkModel g = new GeoPostMarkModel(key, lostData.get(i).getId(), mUser.getUid());
-//                        ref = FirebaseDatabase.getInstance().getReference().child("GeoPostMark").child(mUser.getUid()).child(lostData.get(i).getId());
-//                        ref.setValue(g);
-//                    }
-//                }
-//            }
-//        }
-        if(lostData.size() != 0){
-            for(int i = 0; i < lostData.size(); i++){
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("GeoPostMark").child(mUser.getUid());
-                String key = ref.push().getKey();
-                GeoPostMarkModel g = new GeoPostMarkModel(key, lostData.get(i).getId(), mUser.getUid());
-                ref = FirebaseDatabase.getInstance().getReference().child("GeoPostMark").child(mUser.getUid()).child(lostData.get(i).getId());
-                ref.setValue(g);
-            }
-        }
-    }
-
     private void refreshData(){
         List<String> plc = new ArrayList<>();
         if(geofencePostData.size() > 0){
@@ -340,58 +275,5 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
                 }
             });
         }
-
-    }
-
-
-    private void check(){
-        double latL = 0;
-        double latR = 0;
-        double lonL = 0;
-        double lonR = 0;
-        double val = 0.001;
-        if(geofencePostData.size() != 0){
-            for(int i = 0; i < lostData.size(); i++){
-                double latLost = Double.parseDouble(lostData.get(i).getLatitude()); //25
-                double lonLost = Double.parseDouble(lostData.get(i).getLongitude()); //25
-                double latMat = Double.parseDouble(geofencePostData.get(i).getLat()); //28
-                double lonMat = Double.parseDouble(geofencePostData.get(i).getLon()); //25
-                latL = latMat - val; //18
-                latR = latMat + val; //38
-                lonL = lonMat - val; //15
-                lonR = lonMat + val; //35
-                Log.i("latLost", String.valueOf(latLost));
-                Log.i("lonLost", String.valueOf(lonLost));
-                Log.i("latMat", String.valueOf(latMat));
-                Log.i("lonMat", String.valueOf(lonMat));
-                Log.i("latL", String.valueOf(latL));
-                Log.i("latR", String.valueOf(latR));
-                Log.i("lonL", String.valueOf(lonL));
-                Log.i("lonR", String.valueOf(lonR));
-                if(latL < latLost && latR > latLost){
-                    if(lonL < lonLost && lonR > lonLost){
-                        Log.i(TAG, "Matchhhhhh");
-                        SharedPreferences ss = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-                        boolean switchNot = ss.getBoolean(NOTIFICATION_SWITCH, false);
-                        Log.i(TAG, String.valueOf(switchNot));
-
-                        if(switchNot){
-//                            String id = CHANNEL_3_ID;
-//                            Notification n = new NotificationCompat.Builder(this, id)
-//                                    .setSmallIcon(R.mipmap.ic_launcher_round)
-//                                    .setContentTitle("Post Match")
-//                                    .setContentText("Post Reminder")
-//                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-//                                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-//                                    .build();
-//                            notificationManagerCompat.notify(1, n);
-                        }
-                        Toast.makeText(LocationPostActivity.this, "Matchhhhhhh..........",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        }
-
     }
 }

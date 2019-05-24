@@ -115,10 +115,6 @@ public class LocationBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
-//    private void query(){
-//
-//    }
-
     public void uploadLocation(){
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         ref = FirebaseDatabase.getInstance().getReference().child("LocationHistory");

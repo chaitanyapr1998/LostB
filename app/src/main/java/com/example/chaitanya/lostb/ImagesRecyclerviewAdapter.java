@@ -47,8 +47,6 @@ public class ImagesRecyclerviewAdapter extends RecyclerView.Adapter<ImagesRecycl
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-
-        //TextView email, msg;
         ImageView img;
         RelativeLayout layout;
 

@@ -148,13 +148,7 @@ public class DetailedViewActivity extends AppCompatActivity {
             }
         });
 
-
-
         displayItemImages();
-        //sleepThread();
-
-
-
     }
 
     private void displayItemImages(){

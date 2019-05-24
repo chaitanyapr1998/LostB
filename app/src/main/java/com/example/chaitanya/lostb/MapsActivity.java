@@ -81,7 +81,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         data = new ArrayList<>();
         dataFound = new ArrayList<>();
 
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -117,20 +116,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        //googleMap.clear();
         mMap = googleMap;
 
-            BitmapDescriptor bitmapDescriptor1
+        BitmapDescriptor bitmapDescriptor1
                     = BitmapDescriptorFactory.defaultMarker(
                     BitmapDescriptorFactory.HUE_YELLOW);
 
-            if(lat.size() != 0){
-                for(int i = 0; i < lat.size(); i++){
-                    LatLng mark = new LatLng(Double.valueOf(lat.get(i)), Double.valueOf(lon.get(i)));
-                    mMap.addMarker(new MarkerOptions().position(mark).title(tit.get(i))).setIcon(bitmapDescriptor1);
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(mark));
-                    final int finalI = i;
-                    mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+        if(lat.size() != 0){
+            for(int i = 0; i < lat.size(); i++){
+                LatLng mark = new LatLng(Double.valueOf(lat.get(i)), Double.valueOf(lon.get(i)));
+                mMap.addMarker(new MarkerOptions().position(mark).title(tit.get(i))).setIcon(bitmapDescriptor1);
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(mark));
+                final int finalI = i;
+                mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                         @Override
                         public void onInfoWindowClick(Marker marker) {
                             Intent intent = new Intent(MapsActivity.this, DetailedViewActivity.class);
@@ -155,25 +153,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             intent.putExtra("country", country);
                             intent.putExtra("address", address);
                             startActivity(intent);
-                            Toast.makeText(MapsActivity.this, "Viewing item in detail",
-                                    Toast.LENGTH_LONG).show();
+                            Toast.makeText(MapsActivity.this, "Viewing item in detail", Toast.LENGTH_LONG).show();
                         }
                     });
                 }
             }
 
-
-            BitmapDescriptor bitmapDescriptor
+        BitmapDescriptor bitmapDescriptor
                     = BitmapDescriptorFactory.defaultMarker(
                     BitmapDescriptorFactory.HUE_BLUE);
 
-            if(flat.size() != 0){
-                for(int i = 0; i < flat.size(); i++){
-                    LatLng mark = new LatLng(Double.valueOf(flat.get(i)), Double.valueOf(flon.get(i)));
-                    mMap.addMarker(new MarkerOptions().position(mark).title(ftit.get(i))).setIcon(bitmapDescriptor);
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(mark));
-                    final int finalI = i;
-                    mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+        if(flat.size() != 0){
+             for(int i = 0; i < flat.size(); i++){
+                 LatLng mark = new LatLng(Double.valueOf(flat.get(i)), Double.valueOf(flon.get(i)));
+                 mMap.addMarker(new MarkerOptions().position(mark).title(ftit.get(i))).setIcon(bitmapDescriptor);
+                 mMap.moveCamera(CameraUpdateFactory.newLatLng(mark));
+                 final int finalI = i;
+                 mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                         @Override
                         public void onInfoWindowClick(Marker marker) {
                             Intent intent = new Intent(MapsActivity.this, DetailedViewActivity.class);
@@ -201,11 +197,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             Toast.makeText(MapsActivity.this, "Viewing item in detail",
                                     Toast.LENGTH_LONG).show();
                         }
-                    });
-                }
-            }
-
-
+                 });
+             }
+        }
 
     }
 
@@ -440,9 +434,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void refreshFilterData() {
-        //check = 1;
         filteredMarkers();
-        //mapFragment.getMapAsync(this);
     }
 
     private void filteredMarkers(){
