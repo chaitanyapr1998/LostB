@@ -14,6 +14,7 @@ public class FirebaseApplication extends Application {
     public static final String CHANNEL_1_ID = "LocationMatch";
     public static final String CHANNEL_2_ID = "GeofenceMatch";
     public static final String CHANNEL_3_ID = "PostMatch";
+    public static final String CHANNEL_4_ID = "Chat";
 
     private static Context context;
 
@@ -40,10 +41,14 @@ public class FirebaseApplication extends Application {
             android.app.NotificationChannel channel3 = new android.app.NotificationChannel(CHANNEL_3_ID, "Post Match", NotificationManager.IMPORTANCE_HIGH);
             channel3.setDescription("Post Reminder");
 
+            android.app.NotificationChannel channel4 = new android.app.NotificationChannel(CHANNEL_4_ID, "Chat", NotificationManager.IMPORTANCE_HIGH);
+            channel4.setDescription("New message");
+
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
             manager.createNotificationChannel(channel2);
             manager.createNotificationChannel(channel3);
+            manager.createNotificationChannel(channel4);
 
         }
     }

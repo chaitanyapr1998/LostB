@@ -50,6 +50,7 @@ public class ChatActivity extends AppCompatActivity {
         v = (RecyclerView)findViewById(R.id.chat_recyclerview);
         v.setLayoutManager(new LinearLayoutManager(this));
 
+
         editMsg = (EditText)findViewById(R.id.edt_message);
         btnSend = (Button)findViewById(R.id.btn_send);
 
@@ -172,6 +173,7 @@ public class ChatActivity extends AppCompatActivity {
                     }
                     adapter = new ChatRecyclerviewAdapter(ChatActivity.this, mChatData);
                     v.setAdapter(adapter);
+                    v.scrollToPosition(mChatData.size() - 1);
                 }
             }
 
