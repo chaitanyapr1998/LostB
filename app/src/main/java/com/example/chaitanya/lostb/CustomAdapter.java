@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,12 +19,15 @@ public class CustomAdapter extends BaseAdapter {
 
     private Context context;
     private List<Post> items;
+    private List<Integer> prg;
     DatabaseReference ref;
     int pos;
+    int progress;
 
     public CustomAdapter(Context context, List<Post> items) {
         this.context = context;
         this.items = items;
+//        this.prg = prg;
     }
 
     @Override
@@ -47,7 +51,9 @@ public class CustomAdapter extends BaseAdapter {
         TextView tit = (TextView) v.findViewById(R.id.txt_item);
         ImageButton edit = (ImageButton) v.findViewById(R.id.btn_edit);
         ImageButton del = (ImageButton) v.findViewById(R.id.btn_del);
+        //ProgressBar pg = (ProgressBar) v.findViewById(R.id.progressBar);
         tit.setText(items.get(position).getTitle());
+        //pg.setProgress(prg.get(position));
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
