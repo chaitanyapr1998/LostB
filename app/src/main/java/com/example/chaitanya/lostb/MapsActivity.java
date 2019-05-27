@@ -127,6 +127,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LatLng mark = new LatLng(Double.valueOf(lat.get(i)), Double.valueOf(lon.get(i)));
                 mMap.addMarker(new MarkerOptions().position(mark).title(tit.get(i))).setIcon(bitmapDescriptor1);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(mark));
+                mMap.getUiSettings().setZoomControlsEnabled(true);
+                mMap.getUiSettings().setMyLocationButtonEnabled(true);
                 final int finalI = i;
                 mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                         @Override
@@ -168,6 +170,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                  LatLng mark = new LatLng(Double.valueOf(flat.get(i)), Double.valueOf(flon.get(i)));
                  mMap.addMarker(new MarkerOptions().position(mark).title(ftit.get(i))).setIcon(bitmapDescriptor);
                  mMap.moveCamera(CameraUpdateFactory.newLatLng(mark));
+                 mMap.getUiSettings().setZoomControlsEnabled(true);
+                 mMap.getUiSettings().setMyLocationButtonEnabled(true);
                  final int finalI = i;
                  mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                         @Override
@@ -449,6 +453,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LatLng mark = new LatLng(Double.valueOf(filteredData.get(i).getLatitude()), Double.valueOf(filteredData.get(i).getLongitude()));
                 mMap.addMarker(new MarkerOptions().position(mark).title(filteredData.get(i).getTitle())).setIcon(bitmapDescriptor1);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(mark));
+                mMap.getUiSettings().setZoomControlsEnabled(true);
+                mMap.getUiSettings().setMyLocationButtonEnabled(true);
                 final int finalI = i;
                 mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                     @Override
@@ -493,6 +499,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LatLng mark = new LatLng(Double.valueOf(filteredDataFound.get(i).getLatitude()), Double.valueOf(filteredDataFound.get(i).getLongitude()));
                 mMap.addMarker(new MarkerOptions().position(mark).title(filteredDataFound.get(i).getTitle())).setIcon(bitmapDescriptor);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(mark));
+                mMap.getUiSettings().setZoomControlsEnabled(true);
+                mMap.getUiSettings().setMyLocationButtonEnabled(true);
                 final int finalI = i;
                 mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                     @Override
