@@ -77,7 +77,7 @@ public class DiscussionCommentsActivity extends AppCompatActivity {
 
     private void addComments(){
         AlertDialog.Builder b = new AlertDialog.Builder(this);
-        b.setTitle("Type or ask something");
+        b.setTitle("Add Comment");
         final EditText post = new EditText(DiscussionCommentsActivity.this);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         post.setLayoutParams(params);

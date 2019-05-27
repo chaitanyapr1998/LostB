@@ -40,17 +40,21 @@
         android:id="@+id/grp_others"
         android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_purchase"
+            android:icon="@drawable/ic_purchase_black_24dp"
+            android:title="In-App Purchase"/>
+        <item
             android:id="@+id/nav_discussion"
             android:icon="@drawable/ic_people_black_24dp"
             android:title="Discussions"/>
         <item
-            android:id="@+id/nav_about"
-            android:icon="@drawable/ic_info_black_24dp"
-            android:title="About us"/>
-        <item
             android:id="@+id/nav_feedback"
             android:icon="@drawable/ic_feedback_black_24dp"
             android:title="Feedback"/>
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_info_black_24dp"
+            android:title="About us"/>
     </group>
 
 </menu>
