@@ -14,8 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".DiscussionCommentsActivity"
+            android:parentActivityName=".DiscussionActivity"/>
+        <activity
+            android:name=".DiscussionActivity"
+            android:parentActivityName=".LostActivity" />
+        <activity
             android:name=".FeedbackActivity"
-            android:parentActivityName=".LostActivity"/>
+            android:parentActivityName=".LostActivity" />
         <activity
             android:name=".AboutActivity"
             android:parentActivityName=".LostActivity" />

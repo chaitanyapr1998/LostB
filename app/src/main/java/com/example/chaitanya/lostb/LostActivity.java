@@ -496,6 +496,9 @@ public class LostActivity extends AppCompatActivity
         } else if (id == R.id.nav_feedback) {
             Intent intent = new Intent(LostActivity.this, FeedbackActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_discussion) {
+            Intent intent = new Intent(LostActivity.this, DiscussionActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
