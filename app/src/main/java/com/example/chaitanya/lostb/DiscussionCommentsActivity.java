@@ -58,6 +58,9 @@ public class DiscussionCommentsActivity extends AppCompatActivity {
             }
         });
 
+        View emptyView = findViewById(R.id.empty_view);
+        lv.setEmptyView(emptyView);
+
         Intent i= getIntent();
         Bundle b = i.getExtras();
 

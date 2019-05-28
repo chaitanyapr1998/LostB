@@ -54,6 +54,9 @@ public class DiscussionActivity extends AppCompatActivity {
             }
         });
 
+        View emptyView = findViewById(R.id.empty_view);
+        listView.setEmptyView(emptyView);
+
         getDiscussionsData();
     }
 

@@ -59,6 +59,9 @@ dependencies {
     //background task
     implementation 'com.firebase:firebase-jobdispatcher:0.8.6'
 
+    //paypal
+    implementation 'com.paypal.sdk:paypal-android-sdk:2.16.0'
+
 }
 apply plugin: 'com.google.gms.google-services'
 com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
