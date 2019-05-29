@@ -223,8 +223,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         lon.add(p.getLongitude());
                         tit.add(p.getTitle());
                         data.add(p);
-                        Toast.makeText(MapsActivity.this, p.getLatitude(),
-                                Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -251,8 +249,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         flon.add(p.getLongitude());
                         ftit.add(p.getTitle());
                         dataFound.add(p);
-                        Toast.makeText(MapsActivity.this, p.getLatitude(),
-                                Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -422,9 +418,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     refreshFilterData();
                 }
 
-
-
-
             }
         });
 
@@ -435,8 +428,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
         mDialog.show();
-
-
     }
 
     private void refreshFilterData() {
@@ -490,8 +481,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
 
-
-
         BitmapDescriptor bitmapDescriptor
                 = BitmapDescriptorFactory.defaultMarker(
                 BitmapDescriptorFactory.HUE_BLUE);
@@ -535,8 +524,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 });
             }
         }
-
-
     }
 
     private void filterData(String tit, String loc, String datef, String datet, String cat, String cou){
@@ -941,7 +928,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
 
-
         //country, category, date
         if(t.length() == 0 && country.length() != 0 && c.length() != 0 && df.length() != 0){
             for(int i = 0; i < dataFound.size(); i++){
@@ -984,6 +970,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e1.printStackTrace();
         }
     }
-
 
 }

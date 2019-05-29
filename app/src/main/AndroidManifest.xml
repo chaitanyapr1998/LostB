@@ -63,7 +63,8 @@
             android:parentActivityName=".FoundActivity" />
         <activity
             android:name=".FoundDetailedViewActivity"
-            android:parentActivityName=".FoundActivity" />
+            android:parentActivityName=".FoundActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".FoundActivity"
             android:parentActivityName=".LostActivity" />
@@ -81,7 +82,8 @@
             android:parentActivityName=".LostActivity" />
         <activity
             android:name=".DetailedViewActivity"
-            android:parentActivityName=".LostActivity" />
+            android:parentActivityName=".LostActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SettingsActivity"
             android:parentActivityName=".LostActivity" />
