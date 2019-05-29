@@ -400,13 +400,13 @@ public class LostActivity extends AppCompatActivity
     public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
         permission.checkResult(requestCode,permissions, grantResults);
         //To get Granted Permission and Denied Permission
-        ArrayList<String> granted=permission.getStatus().get(0).granted;
-        ArrayList<String> denied=permission.getStatus().get(0).denied;
+//        ArrayList<String> granted=permission.getStatus().get(0).granted;
+//        ArrayList<String> denied=permission.getStatus().get(0).denied;
 
-        for(String i : granted){
-            Toast.makeText(LostActivity.this, i,
-                    Toast.LENGTH_LONG).show();
-        }
+//        for(String i : granted){
+//            Toast.makeText(LostActivity.this, i,
+//                    Toast.LENGTH_LONG).show();
+//        }
     }
 
     private void refreshData(){
