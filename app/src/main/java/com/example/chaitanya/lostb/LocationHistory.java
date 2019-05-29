@@ -42,11 +42,10 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+//Location history page in the app
 public class LocationHistory extends AppCompatActivity {
 
     Button btnStart, btnStop;
-    //TextView txtLoc;
-    private BroadcastReceiver receiver;
     ArrayList<String> mMyLocation;
     LocationRequest req;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -125,7 +124,6 @@ public class LocationHistory extends AppCompatActivity {
         }
     }
 
-
     private void btnClickable() {
         locationRequest();
 
@@ -167,25 +165,6 @@ public class LocationHistory extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Location history is turned off", Toast.LENGTH_SHORT).show();
     }
 
-    //cc
-    public static String getCountryName(Context context, double latitude, double longitude) {
-        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-        List<Address> addresses = null;
-        try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-
-            Address result;
-
-            if (addresses != null && !addresses.isEmpty()) {
-                return addresses.get(0).getAddressLine(0);
-            }
-
-        } catch (IOException ignored) {
-            //do something
-        }
-        return null;
-    }
-
     private void loadLocHis(){
         ref = FirebaseDatabase.getInstance().getReference().child("LocationHistory");
         ref.addValueEventListener(new ValueEventListener() {
@@ -219,7 +198,6 @@ public class LocationHistory extends AppCompatActivity {
             }
         }
     }
-
 
     private void refreshLocHis(){
         adapter = new LocCustomAdapter(this, filLocHisData);

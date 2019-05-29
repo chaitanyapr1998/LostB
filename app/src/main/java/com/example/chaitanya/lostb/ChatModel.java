@@ -1,5 +1,6 @@
 package com.example.chaitanya.lostb;
 
+//Model class for chat data
 public class ChatModel {
     private String from;
     private String msg;

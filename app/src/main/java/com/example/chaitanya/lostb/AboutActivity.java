@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+//About page
 public class AboutActivity extends AppCompatActivity {
 
     TextView about, aboutinfo, mail;

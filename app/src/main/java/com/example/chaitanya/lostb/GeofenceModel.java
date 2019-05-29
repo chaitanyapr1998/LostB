@@ -1,5 +1,6 @@
 package com.example.chaitanya.lostb;
 
+//Model class for location reminder
 public class GeofenceModel {
 
     private String PlaceId;

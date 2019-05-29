@@ -18,6 +18,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//Adapter to display comments posted by the users
 public class CommentsAdapter extends BaseAdapter {
 
     Context context;

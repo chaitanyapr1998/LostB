@@ -5,6 +5,7 @@ import android.util.Log;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+//Retrofit to make network request
 public class NotificationClient {
     private static Retrofit retrofit = null;
 

@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
+//Adapter to display my found items
 public class FoundCustomAdapter extends BaseAdapter {
 
     private Context context;

@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+//Reset password page in the app
 public class ForgotPasswordActivity extends AppCompatActivity {
 
     EditText edtEmail;
@@ -29,6 +30,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         sendEmail = (Button) findViewById(R.id.btn_sendemail);
         mAuth = FirebaseAuth.getInstance();
 
+        //Sends email to reset the password
         sendEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

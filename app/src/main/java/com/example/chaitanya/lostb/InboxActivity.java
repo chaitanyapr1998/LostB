@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//Inbox page in the app
 public class InboxActivity extends AppCompatActivity {
 
     RecyclerView v;
@@ -31,7 +32,6 @@ public class InboxActivity extends AppCompatActivity {
     List<Object> uqChatList;
     ArrayList<Users> emails;
     ArrayList<Users> uqEmails;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +83,9 @@ public class InboxActivity extends AppCompatActivity {
         uqChatList = mChats.stream()
                 .distinct()
                 .collect(Collectors.toList());
-
-
     }
 
+    //Getting email id of the person whom user have chatted with
     private void getInfo(){
         if(uqChatList != null){
             for(int i = 0; i < uqChatList.size(); i++){
@@ -95,15 +94,12 @@ public class InboxActivity extends AppCompatActivity {
                 mRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        //emails.clear();
                         if(dataSnapshot.exists()){
-                            //for(DataSnapshot d : dataSnapshot.getChildren()){
                                 Users p = dataSnapshot.getValue(Users.class);
                                 emails.add(p);
                                 makeEmailsUnique();
                                 adapter = new InboxRecyclerviewAdapter(InboxActivity.this, uqEmails);
                                 v.setAdapter(adapter);
-                            //}
                         }
                     }
 
@@ -116,15 +112,16 @@ public class InboxActivity extends AppCompatActivity {
         }
     }
 
+    //Updating user token
     private void updateToken(String token){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
-        NotificationTokensModel token1 = new NotificationTokensModel(token);
-        reference.child(mUser.getUid()).setValue(token1);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
+        NotificationTokensModel tok = new NotificationTokensModel(token);
+        ref.child(mUser.getUid()).setValue(tok);
     }
 
+    //Making email id unique in the inbox activity (To not show the same user email id twice)
     private void makeEmailsUnique(){
         uqEmails.clear();
-
         for (Users u : emails) {
             boolean check = false;
             for (Users e : uqEmails) {
@@ -135,6 +132,5 @@ public class InboxActivity extends AppCompatActivity {
             }
             if (!check) uqEmails.add(u);
         }
-
     }
 }

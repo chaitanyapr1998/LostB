@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+//Comments page in the app
 public class DiscussionCommentsActivity extends AppCompatActivity {
 
     TextView txtEmail, txtMsg, txtDate, txtCmt;
@@ -80,6 +81,7 @@ public class DiscussionCommentsActivity extends AppCompatActivity {
         getCommentsData();
     }
 
+    //When user clicks floating action button, a edit text dialog shows to add comments for the post
     private void addComments(){
         AlertDialog.Builder b = new AlertDialog.Builder(this);
         b.setTitle("Add Comment");
@@ -94,9 +96,6 @@ public class DiscussionCommentsActivity extends AppCompatActivity {
                 String email = mUser.getEmail();
                 String msg = post.getText().toString();
                 String date = String.valueOf(System.currentTimeMillis());
-
-                //ref = FirebaseDatabase.getInstance().getReference().child("Comments");
-                //id = ref.push().getKey();
                 ref = FirebaseDatabase.getInstance().getReference().child("Comments").child(id);
                 idComment = ref.push().getKey();
                 ref = FirebaseDatabase.getInstance().getReference().child("Comments").child(id).child(idComment);
@@ -117,6 +116,7 @@ public class DiscussionCommentsActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    //Getting comments data from the database
     private void getCommentsData(){
             ref = FirebaseDatabase.getInstance().getReference().child("Comments").child(id);
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -139,11 +139,13 @@ public class DiscussionCommentsActivity extends AppCompatActivity {
             });
     }
 
+    //To update comments list view
     private void refresh(){
         adapter = new CommentsAdapter(this, cmtsData);
         lv.setAdapter(adapter);
     }
 
+    //To convert time from milli seconds to readable date/time
     public static String convertTime(String timeInMilli,String timeFormat) {
         return DateFormat.format(timeFormat, Long.parseLong(timeInMilli)).toString();
     }

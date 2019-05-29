@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+//Discussions page in the app
 public class DiscussionActivity extends AppCompatActivity {
 
     Dialog mDialog;
@@ -65,6 +66,7 @@ public class DiscussionActivity extends AppCompatActivity {
         getDiscussionsData();
     }
 
+    //Getting discussions data from database
     private void getDiscussionsData(){
         ref = FirebaseDatabase.getInstance().getReference().child("Discussions");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -88,11 +90,13 @@ public class DiscussionActivity extends AppCompatActivity {
         });
     }
 
+    //To refresh the list view of discussions
     private void refresh(){
         adapter = new DiscussionAdapter(this, data);
         listView.setAdapter(adapter);
     }
 
+    //When user clicks floating action button a dialog with edit text field is shown to post or ask any questions to the other users
     private void showAddPost(){
         AlertDialog.Builder b = new AlertDialog.Builder(this);
         b.setTitle("Type or ask something");
@@ -112,8 +116,8 @@ public class DiscussionActivity extends AppCompatActivity {
                 id = ref.push().getKey();
                 ref = FirebaseDatabase.getInstance().getReference().child("Discussions").child(id);
                 DiscussionModel dm = new DiscussionModel(id, email, msg, date);
-                ref.setValue(dm);
-                getDiscussionsData();
+                ref.setValue(dm);   //uploading user posted question to database
+                getDiscussionsData(); //getting the discussion data again to update the list view
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
             }
         });

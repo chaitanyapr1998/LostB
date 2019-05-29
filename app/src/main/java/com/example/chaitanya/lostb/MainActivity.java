@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.database.FirebaseDatabase;
 
+//Login page in the app
 public class MainActivity extends AppCompatActivity {
 
     Button login, signup;

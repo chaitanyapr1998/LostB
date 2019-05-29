@@ -1,5 +1,6 @@
 package com.example.chaitanya.lostb;
 
+//Model class for notification token
 public class NotificationTokensModel {
 
     private String Token;

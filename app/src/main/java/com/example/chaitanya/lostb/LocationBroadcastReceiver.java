@@ -33,6 +33,7 @@ import java.util.Locale;
 import static com.example.chaitanya.lostb.SettingsActivity.NOTIFICATION_SWITCH;
 import static com.example.chaitanya.lostb.SettingsActivity.getSharedPreferences;
 
+//Broadcast receiver class to notify user when user location matches lost item post
 public class LocationBroadcastReceiver extends BroadcastReceiver {
 
     public static final String ACTION_PROCESS_UPDATE = "com.example.chaitanya.lostb.UPDATE_LOCATION";

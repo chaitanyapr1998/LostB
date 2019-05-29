@@ -53,6 +53,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+//Post found items page in the app
 public class PostFoundItems extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     EditText title, description, date, location;

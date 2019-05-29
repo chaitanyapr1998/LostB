@@ -1,5 +1,6 @@
 package com.example.chaitanya.lostb;
 
+//Model class for user purchase data
 public class PurchaseModel {
     private String userId;
     private String email;

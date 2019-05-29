@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+//Adapter to display user location history
 public class LocCustomAdapter extends BaseAdapter {
 
     private Context context;
@@ -62,7 +63,7 @@ public class LocCustomAdapter extends BaseAdapter {
         return v;
     }
 
-
+    //Convert time from milliseconds to readable time
     public static String convertTime(String timeInMilli,String timeFormat) {
         return DateFormat.format(timeFormat, Long.parseLong(timeInMilli)).toString();
     }

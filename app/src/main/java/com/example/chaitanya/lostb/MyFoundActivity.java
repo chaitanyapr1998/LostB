@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+//My found items page in the app
 public class MyFoundActivity extends AppCompatActivity {
 
     ListView listView;
@@ -52,6 +53,7 @@ public class MyFoundActivity extends AppCompatActivity {
 
     }
 
+    //Getting the data of found items posted by the user
     private void getPostedByMe(){
         ref = FirebaseDatabase.getInstance().getReference().child("Found");
         Query q = ref.orderByChild("userId").equalTo(mUser.getUid());

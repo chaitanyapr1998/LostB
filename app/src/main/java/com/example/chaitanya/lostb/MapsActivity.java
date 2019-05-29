@@ -42,6 +42,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
+//Mapview page in the app
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -207,7 +208,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
+    //Getting lost data latitude and longitude
     private void getLatLon(){
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -235,6 +236,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
+    //Getting found data latitude and longitude
     private void getFoundLatLon(){
         ref.addValueEventListener(new ValueEventListener() {
             @Override

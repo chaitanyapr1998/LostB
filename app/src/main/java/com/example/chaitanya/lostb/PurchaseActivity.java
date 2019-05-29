@@ -29,8 +29,8 @@ import org.json.JSONObject;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+//In-app purchase page in the app
 public class PurchaseActivity extends AppCompatActivity {
-
     Button pay, cancel;
     FirebaseUser mUser;
     DatabaseReference ref;
@@ -71,6 +71,7 @@ public class PurchaseActivity extends AppCompatActivity {
         getPaymentInfo();
     }
 
+    //When user clicks cancel payment, this method will be triggered to reset the payment data of the user
     private void cancelPayment(){
         String date = String.valueOf(System.currentTimeMillis());
         String amount = "0.00";
@@ -81,6 +82,7 @@ public class PurchaseActivity extends AppCompatActivity {
         getPaymentInfo();
     }
 
+    //To get payment info of the user (To check paid user or not)
     private void getPaymentInfo(){
         ref = FirebaseDatabase.getInstance().getReference().child("Purchase").child(mUser.getUid());
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -101,6 +103,7 @@ public class PurchaseActivity extends AppCompatActivity {
         });
     }
 
+    //Checking to display button
     private void checkIfUserPaid(){
         if(data.size() != 0){
             if(data.get(0).isAds()){
@@ -113,6 +116,7 @@ public class PurchaseActivity extends AppCompatActivity {
         }
     }
 
+    //To open pay pal page
     private void paymentBtnClicked(){
         PayPalPayment payment = new PayPalPayment(new BigDecimal("1.00"), "USD", "Remove Ads", PayPalPayment.PAYMENT_INTENT_SALE);
         Intent intent = new Intent(this, PaymentActivity.class);
@@ -121,6 +125,7 @@ public class PurchaseActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_CODE);
     }
 
+    //After coming back from the pay pal page
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -147,6 +152,7 @@ public class PurchaseActivity extends AppCompatActivity {
         }
     }
 
+    //After successful payment, uploading the data to the database
     private void savePaymentInfo(){
         String date = String.valueOf(System.currentTimeMillis());
         String amount = "1.00";
@@ -157,6 +163,7 @@ public class PurchaseActivity extends AppCompatActivity {
         getPaymentInfo();
     }
 
+    //To stop pay pal service
     @Override
     protected void onDestroy() {
         stopService(new Intent(this, PayPalService.class));

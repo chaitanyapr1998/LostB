@@ -1,5 +1,6 @@
 package com.example.chaitanya.lostb;
 
+//Model class for users location history
 public class LocationModel {
     private String Time;
     private String Address;

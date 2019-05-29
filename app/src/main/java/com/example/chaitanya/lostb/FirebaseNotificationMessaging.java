@@ -16,7 +16,7 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import static com.example.chaitanya.lostb.FirebaseApplication.CHANNEL_4_ID;
 
-
+//Creating notification for the chat
 public class FirebaseNotificationMessaging extends FirebaseMessagingService {
 
     FirebaseUser mUser;

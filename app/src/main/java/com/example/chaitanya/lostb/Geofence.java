@@ -18,6 +18,7 @@ import com.google.android.gms.location.places.PlaceBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+//Geofence class for location reminder
 public class Geofence implements ResultCallback {
 
     public static final float GEOFENCING_RADIUS = 500;
@@ -76,6 +77,7 @@ public class Geofence implements ResultCallback {
         return builder.build();
     }
 
+    //Updating geofence location list
     public void updateGeofenceLst(PlaceBuffer places) {
         mGeofenceLocationLst = new ArrayList<>();
         if (places == null || places.getCount() == 0) return;
@@ -96,6 +98,7 @@ public class Geofence implements ResultCallback {
         }
     }
 
+    //Calls geofence broadcast receiver to notify user
     private PendingIntent getGeofencePendingIntent() {
         if (mGeofencePendingIntent != null) {
             return mGeofencePendingIntent;

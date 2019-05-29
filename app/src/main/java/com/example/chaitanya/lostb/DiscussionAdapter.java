@@ -24,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+//Adapter to display discussion data
 public class DiscussionAdapter extends BaseAdapter {
 
     private Context context;

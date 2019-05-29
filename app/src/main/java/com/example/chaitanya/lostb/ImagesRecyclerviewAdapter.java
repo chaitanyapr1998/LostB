@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+//Adapter to show images in the detailed activity
 public class ImagesRecyclerviewAdapter extends RecyclerView.Adapter<ImagesRecyclerviewAdapter.ViewHolder>{
 
     private Context mContext;

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+//Adapter to display found items in the activity
 public class FoundRecyclerviewAdapter extends RecyclerView.Adapter<FoundRecyclerviewAdapter.ViewHolder>{
 
     private Context mContext;

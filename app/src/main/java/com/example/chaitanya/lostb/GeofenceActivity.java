@@ -34,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+//Location reminder page in the app
 public class GeofenceActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     public static final int PLACE_PICKER = 222;
@@ -104,6 +105,7 @@ public class GeofenceActivity extends AppCompatActivity implements GoogleApiClie
 
     }
 
+    //Opens map to pick a location
     private void addGeoBtnClicked(){
         try {
             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
@@ -118,6 +120,7 @@ public class GeofenceActivity extends AppCompatActivity implements GoogleApiClie
         }
     }
 
+    //When coming back from the maps page
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == PLACE_PICKER && resultCode == RESULT_OK) {
@@ -138,6 +141,7 @@ public class GeofenceActivity extends AppCompatActivity implements GoogleApiClie
         }
     }
 
+    //Getting geofence location data from the database
     private void getGeofenceData() {
         ref = FirebaseDatabase.getInstance().getReference().child("Geofence").child(mUser.getUid());
         ref.addValueEventListener(new ValueEventListener() {

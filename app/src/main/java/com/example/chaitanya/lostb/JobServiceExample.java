@@ -33,6 +33,7 @@ import static com.example.chaitanya.lostb.SettingsActivity.SHARED_PREFS;
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
 
+//Service class to notify user for post geofence match
 public class JobServiceExample extends JobService {
 
     BackgroundTask bt;
@@ -245,8 +246,6 @@ public class JobServiceExample extends JobService {
             sleepThread();
         }
 
-
-
         private void markIt(){
             if(lostData.size() != 0){
                 for(int i = 0; i < lostData.size(); i++){
@@ -260,7 +259,6 @@ public class JobServiceExample extends JobService {
             }
             sleepThread();
         }
-
 
         private void sleepThread(){
             try {

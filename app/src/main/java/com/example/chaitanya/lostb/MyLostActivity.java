@@ -34,6 +34,7 @@ import java.util.List;
 
 import static com.example.chaitanya.lostb.LocCustomAdapter.convertTime;
 
+//My lost items page in the app
 public class MyLostActivity extends AppCompatActivity {
 
     ListView listView;
@@ -45,7 +46,7 @@ public class MyLostActivity extends AppCompatActivity {
     DatabaseReference ref;
     private CustomAdapter adapter;
     private ProgressBar progressBar;
-    public static final int DATE_DIFF = 30;
+    public static final int DATE_DIFF = 50;
     ArrayList<Integer> prg;
     Dialog mDialog;
     int progess = 0;
@@ -69,15 +70,10 @@ public class MyLostActivity extends AppCompatActivity {
         View emptyView = findViewById(R.id.empty_view);
         listView.setEmptyView(emptyView);
 
-        //adapter = new CustomAdapter(this, p, progess);
-
         getPostedByMe();
-
-        //checkPostedDate();
-
-
     }
 
+    //Getting lost items data posted by the user
     private void getPostedByMe(){
         ref = FirebaseDatabase.getInstance().getReference().child("Lost");
         Query q = ref.orderByChild("userId").equalTo(mUser.getUid());
@@ -104,8 +100,7 @@ public class MyLostActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
     }
 
-
-
+    //To refresh my lost items data
     private void getPostedByMeRefresh(){
         ref = FirebaseDatabase.getInstance().getReference().child("Lost");
         Query q = ref.orderByChild("userId").equalTo(mUser.getUid());
@@ -132,14 +127,13 @@ public class MyLostActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
     }
 
-
+    //Check if the user posted date exceeds 30 days
     private void checkPostedDate(){
         if(p.size() != 0){
             for(int aaa = 0; aaa < p.size(); aaa++){
                 String datePosted = p.get(aaa).getPostedDate();
                 String ctm = String.valueOf(System.currentTimeMillis());
                 String dateToday = convertTime(ctm, "yyyy-MM-dd");
-                //int dateDiff = dateToday.compareTo(datePosted);
                 Date date1 = null;
                 Date date2 = null;
 
@@ -155,15 +149,12 @@ public class MyLostActivity extends AppCompatActivity {
                 long difference = Math.abs(date1.getTime() - date2.getTime());
                 long differenceDates = difference / (24 * 60 * 60 * 1000);
 
-                //Convert long to String
                 String dateDiffStr = Long.toString(differenceDates);
 
                 int dateDiff = Integer.parseInt(dateDiffStr);
 
                 if(dateDiff < 50){
-//                    progess = dateDiff * 2;
-//                    exipedPost.add(p.get(aaa));
-//                    prg.add(progess);
+
                 } else {
                     progess = 100;
                     exipedPost.add(p.get(aaa));
@@ -174,9 +165,9 @@ public class MyLostActivity extends AppCompatActivity {
 
         }
         dia();
-        //refresh();
     }
 
+    //If there are expired post, posted by the user then show the multichooser dialog to keep or remove the item
     private void dia(){
         final String[] tit = new String[exipedPost.size()];
         final String[] id = new String[exipedPost.size()];
@@ -203,19 +194,16 @@ public class MyLostActivity extends AppCompatActivity {
             b.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    //int abc = 0;
                     for(int i = 0; i < tit.length; i++){
                         if(chk[i]){
                             idNum[i] = i;
                             DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Lost").child(exipedPost.get(i).getId());
                             ref.removeValue();
                             getPostedByMeRefresh();
-                            //abc = abc + 1;
                         } else {
                             idNum[i] = -1;
                         }
                     }
-                    //showtext();
                 }
             });
             b.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -228,57 +216,12 @@ public class MyLostActivity extends AppCompatActivity {
             AlertDialog dialog = b.create();
             dialog.show();
         }
-
         refresh();
-
     }
 
+    //To update the user posted lost item list view
     private void refresh(){
         adapter = new CustomAdapter(this, p);
         listView.setAdapter(adapter);
     }
-
-    private void showCustomDialog(){
-        TextView txtTitle;
-        Button rm, cancel;
-        mDialog.setContentView(R.layout.popup_mylist);
-
-        txtTitle = (TextView) mDialog.findViewById(R.id.txt_titlemylist);
-        rm = (Button) mDialog.findViewById(R.id.btn_remove);
-        cancel = (Button) mDialog.findViewById(R.id.btn_cancel);
-        if(exipedPost.size() != 0){
-            for(int i = 0; i < exipedPost.size(); i++){
-                txtTitle.setText(exipedPost.get(i).getTitle());
-                final int finalI = i;
-                rm.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Lost").child(exipedPost.get(finalI).getId());
-                        ref.removeValue();
-                    }
-                });
-
-                cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
-            }
-            mDialog.show();
-        }
-
-
-    }
-
-    private void sleepThread(){
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        }
-    }
-
-
-
 }

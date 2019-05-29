@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+//Adapter to display post reminder places data
 public class PostPlaceAdapter extends RecyclerView.Adapter<PostPlaceAdapter.PlaceViewHolder> {
 
     private Context mContext;
@@ -26,7 +27,6 @@ public class PostPlaceAdapter extends RecyclerView.Adapter<PostPlaceAdapter.Plac
     DatabaseReference ref;
     FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
     int pos;
-
 
     public PostPlaceAdapter(Context context, PlaceBuffer places) {
         this.mContext = context;
@@ -48,14 +48,12 @@ public class PostPlaceAdapter extends RecyclerView.Adapter<PostPlaceAdapter.Plac
 
     }
 
-
     @Override
     public PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.geofence_listitem, parent, false);
         return new PlaceViewHolder(view);
     }
-
 
     @Override
     public void onBindViewHolder(PlaceViewHolder holder, final int position) {
@@ -79,13 +77,13 @@ public class PostPlaceAdapter extends RecyclerView.Adapter<PostPlaceAdapter.Plac
 
     }
 
+    //To swap places with same names
     public void swapP(PlaceBuffer newPlaces){
         place = newPlaces;
         if (place != null) {
             this.notifyDataSetChanged();
         }
     }
-
 
     @Override
     public int getItemCount() {

@@ -1,5 +1,6 @@
 package com.example.chaitanya.lostb;
 
+//Model class to mark notified for geofence post reminder
 public class GeoPostMarkModel {
     private String id;
     private String lostId;

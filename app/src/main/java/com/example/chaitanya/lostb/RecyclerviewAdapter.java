@@ -29,6 +29,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+//Adapter to display lost items data posted by the user
 public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.ViewHolder>{
 
     private Context mContext;

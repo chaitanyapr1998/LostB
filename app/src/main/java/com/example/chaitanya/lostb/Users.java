@@ -1,5 +1,6 @@
 package com.example.chaitanya.lostb;
 
+//Users model class
 public class Users {
     private String Email;
     private String UserId;

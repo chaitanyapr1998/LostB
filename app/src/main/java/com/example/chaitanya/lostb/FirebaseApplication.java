@@ -8,7 +8,7 @@ import android.os.Build;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;
 
-
+//To initialze the notifcation channel
 public class FirebaseApplication extends Application {
 
     public static final String CHANNEL_1_ID = "LocationMatch";
@@ -30,6 +30,7 @@ public class FirebaseApplication extends Application {
 
     }
 
+    //Creates the notification channels
     private void createNotificationChannels(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             android.app.NotificationChannel channel = new android.app.NotificationChannel(CHANNEL_1_ID, "Location Match", NotificationManager.IMPORTANCE_HIGH);
@@ -53,6 +54,7 @@ public class FirebaseApplication extends Application {
         }
     }
 
+    //Returns the context of the application
     public static Context getAppContext() {
         return FirebaseApplication.context;
     }

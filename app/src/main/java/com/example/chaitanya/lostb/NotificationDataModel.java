@@ -1,5 +1,6 @@
 package com.example.chaitanya.lostb;
 
+//Model class for sending caht notification
 public class NotificationDataModel {
     private String user;
     private String title;

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+//Adapter to display chat messages to the user
 public class ChatRecyclerviewAdapter extends RecyclerView.Adapter<ChatRecyclerviewAdapter.ViewHolder>{
 
     private Context mContext;
@@ -57,6 +58,7 @@ public class ChatRecyclerviewAdapter extends RecyclerView.Adapter<ChatRecyclervi
         return mChat.size();
     }
 
+    //Checking whether message was sent by current user or other user to display the ui accordingly
     @Override
     public int getItemViewType(int position) {
         if(mChat.get(position).getFrom().equals(mUser.getUid())){

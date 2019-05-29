@@ -46,9 +46,8 @@ import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+//Found items page in the app
 public class FoundActivity extends AppCompatActivity {
-
-
 
     static ArrayList<Post> data;
     ArrayList<Post> search = new ArrayList<Post>();
@@ -60,15 +59,12 @@ public class FoundActivity extends AppCompatActivity {
     FirebaseUser mUser;
 
     EditText edtSearch;
-    ImageButton btnSearch, btnFilter;
+    ImageButton btnSearch;
 
     Dialog mDialog;
 
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private DatePickerDialog.OnDateSetListener toDateSetListener;
-
-
-    String imageURL;
 
     ArrayList<Post> filteredData;
 
@@ -81,10 +77,10 @@ public class FoundActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_found);
         setTitle("Found Items");
-        //setTitleColor(@color/black);
 
         mDialog = new Dialog(this);
 
+        //To add found items to the app (Opens post found items page)
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_found);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +96,6 @@ public class FoundActivity extends AppCompatActivity {
         filempty = (TextView)findViewById(R.id.txt_filterempty);
         empty.setVisibility(View.GONE);
         filempty.setVisibility(View.GONE);
-//        btnFilter = (ImageButton)findViewById(R.id.btn_filter);
 
         data = new ArrayList<Post>();
         filteredData = new ArrayList<>();
@@ -129,9 +124,7 @@ public class FoundActivity extends AppCompatActivity {
             }
         });
 
-//        adapter = new FoundRecyclerviewAdapter(FoundActivity.this, data);
-//        v.setAdapter(adapter);
-
+        //To search for found items
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,12 +155,10 @@ public class FoundActivity extends AppCompatActivity {
             }
         });
 
-
-
         permission = new PermissionManager() {};
         permission.checkAndRequestPermissions(this);
 
-
+        //Share found item info when swiped left or right
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT ) {
 
             @Override
@@ -185,7 +176,6 @@ public class FoundActivity extends AppCompatActivity {
                 String dat = data.get(position).getDate();
                 shareRecyclerViewItem(tit, dat, loc);
                 adapter.notifyDataSetChanged();
-
             }
         };
 
@@ -193,6 +183,7 @@ public class FoundActivity extends AppCompatActivity {
         itemTouchHelper.attachToRecyclerView(v);
     }
 
+    //Set empty view when the data is null
     private void emptyView(){
         if(adapter.getItemCount() <= 0){
             v.setVisibility(View.GONE);
@@ -203,6 +194,7 @@ public class FoundActivity extends AppCompatActivity {
         }
     }
 
+    //Set empty view when data is null after filtering it
     private void emptyViewForFilter(){
         if(adapter.getItemCount() <= 0){
             v.setVisibility(View.GONE);
@@ -213,6 +205,7 @@ public class FoundActivity extends AppCompatActivity {
         }
     }
 
+    //To display options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -220,6 +213,7 @@ public class FoundActivity extends AppCompatActivity {
         return true;
     }
 
+    //When any of the options is clicked in the options menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -232,6 +226,7 @@ public class FoundActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //To update recycler view found data items
     private void refreshData(){
         filempty.setVisibility(View.GONE);
         adapter = new FoundRecyclerviewAdapter(FoundActivity.this, data);
@@ -239,22 +234,22 @@ public class FoundActivity extends AppCompatActivity {
         emptyView();
     }
 
+    //To update recycler view found data items after performing search operation
     private void searchRefresh(){
         adapter = new FoundRecyclerviewAdapter(FoundActivity.this, search);
         v.setAdapter(adapter);
     }
 
+    //To show apps that are suitable to share the found item data
     private void shareRecyclerViewItem(String t, String d, String l){
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, "Found Item - " + t + "\n" + "Date - " + d + "\n" +"Location - " + l + "\n\n" + "Findingg App");
-//        sendIntent.putExtra(Intent.EXTRA_TEXT, "Date - " + d);
-//        sendIntent.putExtra(Intent.EXTRA_TEXT, "Location - " + l);
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
     }
 
-
+    //Getting user input (title, dates, category, country) and performing filter in the found items data
     private void filterData(String tit, String loc, String datef, String datet, String cat, String cou){
         String t = tit;
         String l = loc;
@@ -474,6 +469,7 @@ public class FoundActivity extends AppCompatActivity {
         }
     }
 
+    //To update recyceler view found item data after performing filter operation
     private void refreshFilterData(){
         empty.setVisibility(View.GONE);
         adapter = new FoundRecyclerviewAdapter(FoundActivity.this, filteredData);
@@ -481,6 +477,7 @@ public class FoundActivity extends AppCompatActivity {
         emptyViewForFilter();
     }
 
+    //To display custom dialog for the filter
     @SuppressLint("ClickableViewAccessibility")
     private void popUpView(View v){
         final EditText ti, lo, from, to;
@@ -578,12 +575,9 @@ public class FoundActivity extends AppCompatActivity {
             }
         };
 
-
-
         final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ca.setAdapter(adapter);
-
 
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -613,12 +607,9 @@ public class FoundActivity extends AppCompatActivity {
                 ref = FirebaseDatabase.getInstance().getReference().child("Found");
                 filterData(t, l, df, dt, c, country);
                 refreshFilterData();
-
                 mDialog.dismiss();
-
             }
         });
-
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,5 +1,6 @@
 package com.example.chaitanya.lostb;
 
+//Model class for lost and found items
 public class Post {
     private String title;
     private String date;

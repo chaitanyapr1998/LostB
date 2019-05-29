@@ -74,10 +74,9 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+//Lost items page in the app
 public class LostActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-
 
     static ArrayList<Post> data;
     ArrayList<Post> search = new ArrayList<Post>();
@@ -89,7 +88,7 @@ public class LostActivity extends AppCompatActivity
     FirebaseUser mUser;
 
     EditText edtSearch;
-    ImageButton btnSearch, btnFilter;
+    ImageButton btnSearch;
 
     Dialog mDialog;
 
@@ -99,13 +98,9 @@ public class LostActivity extends AppCompatActivity
     CircleImageView ppImgView;
     TextView emailTextView;
     String imageURL;
-
     ArrayList<Post> filteredData;
-
     Date datadate, datefrom, dateto;
-
     TextView empty, filempty;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +134,6 @@ public class LostActivity extends AppCompatActivity
 
         edtSearch = (EditText)findViewById(R.id.edt_search);
         btnSearch = (ImageButton)findViewById(R.id.btn_search);
-//        btnFilter = (ImageButton)findViewById(R.id.btn_filter);
         ppImgView = (CircleImageView) nav.findViewById(R.id.propicImgView);
         emailTextView = (TextView) nav.findViewById(R.id.emailTextView);
         empty = (TextView)findViewById(R.id.txt_empty);
@@ -155,7 +149,6 @@ public class LostActivity extends AppCompatActivity
         filteredData = new ArrayList<>();
         v = (RecyclerView)findViewById(R.id.lost_recyclerview);
         v.setLayoutManager(new LinearLayoutManager(this));
-
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -267,7 +260,6 @@ public class LostActivity extends AppCompatActivity
         mDialog.setContentView(R.layout.layout_popupview);
 
         ti = (EditText) mDialog.findViewById(R.id.edt_ti);
-        //lo = (EditText) mDialog.findViewById(R.id.edt_lo);
         from = (EditText) mDialog.findViewById(R.id.edt_datefrom);
         to = (EditText) mDialog.findViewById(R.id.edt_dateto);
         ca = (Spinner) mDialog.findViewById(R.id.spin_ca);
@@ -366,7 +358,6 @@ public class LostActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 String t = ti.getText().toString();
-                //String l = lo.getText().toString();
                 String l = "";
                 String df = from.getText().toString();
                 String dt = to.getText().toString();

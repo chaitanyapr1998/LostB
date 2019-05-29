@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 
+//Feedback page in the app
 public class FeedbackActivity extends AppCompatActivity {
 
     EditText name, emailid, comments;
@@ -39,6 +40,7 @@ public class FeedbackActivity extends AppCompatActivity {
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         emailid.setText(mUser.getEmail());
 
+        //Submits user entered data to the database
         sumbit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,8 +50,9 @@ public class FeedbackActivity extends AppCompatActivity {
                 String ratingTv = String.valueOf(ratingBar.getRating());
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
+                //Checking for a valid email
                 if(emailTv.matches(emailPattern) && emailTv.length() > 0){
-                    //Toast.makeText(getApplicationContext(),"Valid Email",Toast.LENGTH_SHORT).show();
+
                 } else {
                     Toast.makeText(getApplicationContext(),"Invalid Email",Toast.LENGTH_SHORT).show();
                     emailid.setError("Please enter valid email address");
@@ -57,7 +60,6 @@ public class FeedbackActivity extends AppCompatActivity {
                 }
 
                 HashMap<String, String> hm = new HashMap<String, String>();
-
                 hm.put("name", nameTv);
                 hm.put("emailid", emailTv);
                 hm.put("comments", commentsTv);
@@ -71,6 +73,7 @@ public class FeedbackActivity extends AppCompatActivity {
         });
     }
 
+    //To clear all the edit text fields and rating bar once user clicks submit
     private void clearText(){
         name.setText("");
         comments.setText("");

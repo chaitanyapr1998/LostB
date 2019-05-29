@@ -14,6 +14,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+//Settings page in the app
 public class SettingsActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
     TextView txtLoc, txtNot;
@@ -49,17 +50,14 @@ public class SettingsActivity extends AppCompatActivity implements CompoundButto
             }
         });
 
-
-
         loadPrefs();
         updateNotSwitch();
     }
 
+    //When the switch changes it's state this method will be triggered
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
         turningLocationOnOrOff();
-
     }
 
     public void checkingLocationOnOrOff(){
@@ -68,11 +66,13 @@ public class SettingsActivity extends AppCompatActivity implements CompoundButto
         Log.i("Location Check", String.valueOf(check));
     }
 
+    //Opens page to turn location on or off
     private void turningLocationOnOrOff(){
         Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         startActivity(intent);
     }
 
+    //When the app is resumed, checks the preferences
     @Override
     protected void onPostResume() {
         super.onPostResume();
@@ -85,6 +85,7 @@ public class SettingsActivity extends AppCompatActivity implements CompoundButto
         }
     }
 
+    //
     private void notificationSwitch(){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -93,6 +94,7 @@ public class SettingsActivity extends AppCompatActivity implements CompoundButto
         editor.apply();
     }
 
+    //Loads the app preferences
     private void loadPrefs(){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         checkNotSwitch = sharedPreferences.getBoolean(NOTIFICATION_SWITCH, false);
@@ -102,7 +104,7 @@ public class SettingsActivity extends AppCompatActivity implements CompoundButto
         switchNot.setChecked(checkNotSwitch);
     }
 
-
+    //Returns preferences
     public static SharedPreferences getSharedPreferences (Context context) {
         return context.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
     }

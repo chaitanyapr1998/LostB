@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+//Adapter to display inbox page
 public class InboxRecyclerviewAdapter extends RecyclerView.Adapter<InboxRecyclerviewAdapter.ViewHolder>{
 
     private Context mContext;

@@ -1,5 +1,6 @@
 package com.example.chaitanya.lostb;
 
+//Model class for discussions
 public class DiscussionModel {
     private String id;
     private String emailId;

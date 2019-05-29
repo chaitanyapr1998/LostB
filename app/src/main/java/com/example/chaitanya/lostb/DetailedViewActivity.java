@@ -38,6 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//Detailed view of lost items
 public class DetailedViewActivity extends AppCompatActivity {
 
     TextView txtT, txtD, txtP, tVal, dVal, pVal, cVal;
@@ -111,6 +112,7 @@ public class DetailedViewActivity extends AppCompatActivity {
             }
         }
 
+        //Shows all the available email apps in the user device and user can pick one to email the posted person
         btnEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,6 +129,7 @@ public class DetailedViewActivity extends AppCompatActivity {
             btnChat.getBackground().setAlpha(128);
         }
 
+        //To chat with the person posted the lost item
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,6 +154,7 @@ public class DetailedViewActivity extends AppCompatActivity {
         displayItemImages();
     }
 
+    //To display images in the activity
     private void displayItemImages(){
         ref = FirebaseDatabase.getInstance().getReference().child("ImgMeta").child(uid);
         ref.addValueEventListener(new ValueEventListener() {
@@ -181,8 +185,7 @@ public class DetailedViewActivity extends AppCompatActivity {
 
     }
 
-
-
+    //Gets uri of the images posted and adds it to the disImg array list
     private void getUri(){
         for(int h = 0; h < imgName.size(); h++){
             String abc = imgName.get(h);
@@ -204,8 +207,8 @@ public class DetailedViewActivity extends AppCompatActivity {
         }
     }
 
+    //Images uri is sent to images recycler view adapter to display the images in the activity
     private void recView(){
-        String check = "";
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = findViewById(R.id.rec_images);
         recyclerView.setLayoutManager(manager);
@@ -213,11 +216,4 @@ public class DetailedViewActivity extends AppCompatActivity {
         recyclerView.setAdapter(a);
     }
 
-    private void sleepThread(){
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        }
-    }
 }

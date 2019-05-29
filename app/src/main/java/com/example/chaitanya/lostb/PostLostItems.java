@@ -59,14 +59,13 @@ import static com.example.chaitanya.lostb.FirebaseApplication.CHANNEL_3_ID;
 import static com.example.chaitanya.lostb.SettingsActivity.NOTIFICATION_SWITCH;
 import static com.example.chaitanya.lostb.SettingsActivity.SHARED_PREFS;
 
+//Post lost items page in the app
 public class PostLostItems extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     EditText title, description, date, location;
     Spinner category;
     Button submit, cancel, upload;
-    String unique;
     ImageButton dateBtn, locBtn;
-    private static int num = 0;
     private static String userId;
     private DatePickerDialog.OnDateSetListener dateSetListener;
 
@@ -150,7 +149,6 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
             location.setText(loc);
             date.setText(d);
         }
-
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -264,8 +262,6 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                 date.setText(dateSet);
             }
         };
-
-
 
         locBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -383,7 +379,6 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
                     if(lonL < lonLost && lonR > lonLost){
                         SharedPreferences ss = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
                         boolean switchNot = ss.getBoolean(NOTIFICATION_SWITCH, false);
-
                         if(switchNot){
                             String id = CHANNEL_3_ID;
                             Notification n = new NotificationCompat.Builder(this, id)
@@ -404,7 +399,6 @@ public class PostLostItems extends AppCompatActivity implements AdapterView.OnIt
         }
 
     }
-
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {

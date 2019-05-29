@@ -96,6 +96,7 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    //Send notification to the user
     private void notifyUserWithMessage(String toUser, final String useremail, final String message){
         mRef = FirebaseDatabase.getInstance().getReference().child("Tokens");
         Query query = mRef.orderByKey().equalTo(toUser);
@@ -128,6 +129,7 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    //Send message
     private void send(String f, final String t, String m){
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -158,6 +160,7 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    //Display messages to the user
     private void displayMsg(final String f, final String t){
         mChatData = new ArrayList<>();
 

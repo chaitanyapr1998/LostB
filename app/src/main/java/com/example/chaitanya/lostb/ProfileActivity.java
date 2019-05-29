@@ -43,6 +43,7 @@ import java.net.URL;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+//Profile page in the app
 public class ProfileActivity extends AppCompatActivity {
 
     private static final int PROFILE_PIC = 345;
@@ -54,8 +55,6 @@ public class ProfileActivity extends AppCompatActivity {
     String imageURL;
     private ProgressBar progressBar;
     Button myLost, myFound;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +103,7 @@ public class ProfileActivity extends AppCompatActivity {
         displayProfilePic();
     }
 
-
+    //To open image chooser page
     private void profilePicChooser(){
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -112,6 +111,7 @@ public class ProfileActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select Profile picture"), PROFILE_PIC);
     }
 
+    //When coming back from image chooser page
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -131,6 +131,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    //Uploading user profile picture to the database
     private void uploadProPic(Uri proPicUri){
         String picName = user.getUid();
         StorageReference f = mSRef.child("pp").child(picName);
@@ -146,6 +147,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
+    //Getting uploaded link and adding it to the user data
     private void getUploadedProPicLink(){
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("pp").child(user.getUid());
         storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -163,6 +165,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
+    //To display users profile picture
     private void displayProfilePic(){
         progressBar.setVisibility(View.VISIBLE);
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("pp").child(user.getUid());
@@ -181,6 +184,7 @@ public class ProfileActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
     }
 
+    //To show options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -188,6 +192,7 @@ public class ProfileActivity extends AppCompatActivity {
         return true;
     }
 
+    //When user select one of the options menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -207,6 +212,7 @@ public class ProfileActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //To remove user profile picture
     private void removeProfilePic(){
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("pp").child(user.getUid());
         storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {

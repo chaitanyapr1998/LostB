@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
+//Adapter to display my lost items
 public class CustomAdapter extends BaseAdapter {
 
     private Context context;

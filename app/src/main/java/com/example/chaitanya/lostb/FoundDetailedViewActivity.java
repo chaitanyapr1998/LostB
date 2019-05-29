@@ -27,6 +27,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
+//Display found item in detail page in the app
 public class FoundDetailedViewActivity extends AppCompatActivity {
 
     TextView txtT, txtD, txtP, tVal, dVal, pVal, cVal;
@@ -61,7 +62,6 @@ public class FoundDetailedViewActivity extends AppCompatActivity {
         desVal = (TextView)findViewById(R.id.des_val);
         catVal = (TextView)findViewById(R.id.cat_val);
         postbyVal = (TextView)findViewById(R.id.postedby_val);
-        //img = (ImageView)findViewById(R.id.images);
 
         btnEmail = (Button)findViewById(R.id.btn_email);
         btnChat = (Button)findViewById(R.id.btn_chat);
@@ -136,32 +136,25 @@ public class FoundDetailedViewActivity extends AppCompatActivity {
             }
         });
 
-
-
         displayItemImages();
-        //sleepThread();
-
-
-
     }
 
+    //To display found items images to the user
     private void displayItemImages(){
         ref = FirebaseDatabase.getInstance().getReference().child("FoundImgMeta").child(uid);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //dataSnapshot.getChildren();
                 Object value = dataSnapshot.getValue();
                 if(value instanceof List) {
                     List<Object> values = (List<Object>) value;
-                    // do your magic with values
                     for(int i = 0; i < values.size(); i++){
                         imgName.add(values.get(i).toString());
                     }
 
                 }
                 else {
-                    // handle other possible types
+
                 }
                 getUri();
             }
@@ -175,8 +168,7 @@ public class FoundDetailedViewActivity extends AppCompatActivity {
 
     }
 
-
-
+    //To get uri of the found item image posted by the user
     private void getUri(){
         for(int h = 0; h < imgName.size(); h++){
             String abc = imgName.get(h);
@@ -184,8 +176,6 @@ public class FoundDetailedViewActivity extends AppCompatActivity {
             storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    // Got the download URL for 'users/me/profile.png'
-                    //Uri u = uri;
                     disImg.add(uri.toString());
                     recView();
                 }
@@ -198,20 +188,12 @@ public class FoundDetailedViewActivity extends AppCompatActivity {
         }
     }
 
+    //To update images of the found items posted by the user
     private void recView(){
-        String check = "";
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = findViewById(R.id.rec_images);
         recyclerView.setLayoutManager(manager);
         ImagesRecyclerviewAdapter a = new ImagesRecyclerviewAdapter(this, disImg);
         recyclerView.setAdapter(a);
-    }
-
-    private void sleepThread(){
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        }
     }
 }

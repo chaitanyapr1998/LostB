@@ -19,7 +19,7 @@ import static com.example.chaitanya.lostb.SettingsActivity.NOTIFICATION_SWITCH;
 import static com.example.chaitanya.lostb.SettingsActivity.SHARED_PREFS;
 import static com.example.chaitanya.lostb.SettingsActivity.getSharedPreferences;
 
-
+//Location reminder broadcast receiver
 public class GeofenceBroadcastReceiver extends BroadcastReceiver {
 
     public static final String TAG = GeofenceBroadcastReceiver.class.getSimpleName();
