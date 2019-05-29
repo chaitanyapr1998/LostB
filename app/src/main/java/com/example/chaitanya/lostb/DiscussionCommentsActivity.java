@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -70,9 +71,10 @@ public class DiscussionCommentsActivity extends AppCompatActivity {
             email = (String) b.get("email");
             msg = (String) b.get("msg");
             date = (String) b.get("date");
+            String datee = convertTime(date,"dd-MM-yyyy");
             txtEmail.setText(email);
             txtMsg.setText(msg);
-            txtDate.setText(date);
+            txtDate.setText(datee);
         }
 
         getCommentsData();
@@ -98,7 +100,7 @@ public class DiscussionCommentsActivity extends AppCompatActivity {
                 ref = FirebaseDatabase.getInstance().getReference().child("Comments").child(id);
                 idComment = ref.push().getKey();
                 ref = FirebaseDatabase.getInstance().getReference().child("Comments").child(id).child(idComment);
-                DiscussionModel dm = new DiscussionModel(idComment, email, msg, date);
+                DiscussionModel dm = new DiscussionModel(id, email, msg, date);
                 ref.setValue(dm);
                 getCommentsData();
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
@@ -116,29 +118,33 @@ public class DiscussionCommentsActivity extends AppCompatActivity {
     }
 
     private void getCommentsData(){
-        ref = FirebaseDatabase.getInstance().getReference().child("Comments").child(id);
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                cmtsData.clear();
-                if(dataSnapshot.exists()){
-                    for(DataSnapshot d : dataSnapshot.getChildren()){
-                        DiscussionModel dm = d.getValue(DiscussionModel.class);
-                        cmtsData.add(dm);
+            ref = FirebaseDatabase.getInstance().getReference().child("Comments").child(id);
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    cmtsData.clear();
+                    if(dataSnapshot.exists()){
+                        for(DataSnapshot d : dataSnapshot.getChildren()){
+                            DiscussionModel dm = d.getValue(DiscussionModel.class);
+                            cmtsData.add(dm);
+                        }
                     }
+                    refresh();
                 }
-                refresh();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
     }
 
     private void refresh(){
         adapter = new CommentsAdapter(this, cmtsData);
         lv.setAdapter(adapter);
+    }
+
+    public static String convertTime(String timeInMilli,String timeFormat) {
+        return DateFormat.format(timeFormat, Long.parseLong(timeInMilli)).toString();
     }
 }

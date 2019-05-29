@@ -41,6 +41,9 @@
         android:layout_height="wrap_content"
         android:text="Pay"
         android:layout_below="@+id/txt_ads"
+        android:background="@drawable/apply_btn"
+        android:fontFamily="@font/lato_bold"
+        android:textColor="@color/white"
         android:layout_margin="10dp"/>
 
     <Button
@@ -49,6 +52,9 @@
         android:layout_height="wrap_content"
         android:text="Cancel Payment (Non-refundable)"
         android:layout_below="@+id/payBtn"
+        android:background="@drawable/fil_cancel"
+        android:fontFamily="@font/lato_bold"
+        android:textColor="@color/white"
         android:layout_margin="10dp"/>
 
 </RelativeLayout>

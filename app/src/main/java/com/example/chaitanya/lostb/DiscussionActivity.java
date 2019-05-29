@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -33,6 +34,8 @@ public class DiscussionActivity extends AppCompatActivity {
     FirebaseUser mUser;
     DatabaseReference ref;
     private DiscussionAdapter adapter;
+    ArrayList<DiscussionModel> cmtsData;
+    ArrayList<Integer> cmtNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,8 @@ public class DiscussionActivity extends AppCompatActivity {
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         data = new ArrayList<>();
+        cmtsData = new ArrayList<>();
+        cmtNum = new ArrayList<>();
 
         listView = (ListView) findViewById(R.id.lv_dis);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_disadd);
