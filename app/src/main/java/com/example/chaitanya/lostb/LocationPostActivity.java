@@ -63,7 +63,6 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
     private RecyclerView mRecyclerView;
     private GoogleApiClient mClient;
 
-    Button st, sp;
     private FirebaseJobDispatcher jb;
 
     @Override
@@ -84,24 +83,9 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
             }
         });
 
-        st = (Button) findViewById(R.id.btn_startt);
-        sp = (Button) findViewById(R.id.btn_stopp);
-
         jb = new FirebaseJobDispatcher(new GooglePlayDriver(this));
 
-        st.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startJob(v);
-            }
-        });
-
-        sp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopJob(v);
-            }
-        });
+        startJob();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.listofplaces);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -117,7 +101,7 @@ public class LocationPostActivity extends AppCompatActivity implements GoogleApi
                 .build();
     }
 
-    private void startJob(View v){
+    private void startJob(){
         Job job = jb.newJobBuilder()
                 .setService(JobServiceExample.class)
                 .setLifetime(Lifetime.FOREVER)

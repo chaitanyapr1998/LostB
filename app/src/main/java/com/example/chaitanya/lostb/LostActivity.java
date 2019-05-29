@@ -205,7 +205,6 @@ public class LostActivity extends AppCompatActivity
         permission = new PermissionManager() {};
         permission.checkAndRequestPermissions(this);
 
-
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT ) {
 
             @Override

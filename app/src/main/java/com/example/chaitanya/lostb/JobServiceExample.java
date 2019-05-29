@@ -44,7 +44,7 @@ public class JobServiceExample extends JobService {
         bt = new BackgroundTask(){
             @Override
             protected void onPostExecute(String s) {
-                Toast.makeText(getApplicationContext(), "Message" + s, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Message" + s, Toast.LENGTH_SHORT).show();
                 jobFinished(job, false);
             }
         };
@@ -240,7 +240,6 @@ public class JobServiceExample extends JobService {
                         }
                     }
                 }
-
             }
             markIt();
             sleepThread();
