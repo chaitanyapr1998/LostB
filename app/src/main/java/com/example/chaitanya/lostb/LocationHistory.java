@@ -144,8 +144,8 @@ public class LocationHistory extends AppCompatActivity {
     private void locationRequest(){
         req = new LocationRequest();
         req.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        req.setInterval(10000);
-        req.setFastestInterval(10000);
+        req.setInterval(2700000);  //10000  //45 mins in millis
+        req.setFastestInterval(2700000);  //10000
         req.setSmallestDisplacement(0);
     }
 

@@ -44,7 +44,6 @@ public class ChatRecyclerviewAdapter extends RecyclerView.Adapter<ChatRecyclervi
             holder = new ViewHolder(view);
         }
 
-
         return holder;
     }
 
