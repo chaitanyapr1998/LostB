@@ -55,9 +55,11 @@ public class InboxActivity extends AppCompatActivity {
                 if(dataSnapshot.exists()){
                     for(DataSnapshot d : dataSnapshot.getChildren()){
                         ChatModel cm = d.getValue(ChatModel.class);
+                        //Getting all the chats that user sent
                         if(cm.getFrom().equals(mUser.getUid())){
                             mChats.add(cm.getTo());
                         }
+                        //Getting all the chats sent to the user
                         if(cm.getTo().equals(mUser.getUid())){
                             mChats.add(cm.getFrom());
                         }
@@ -77,7 +79,7 @@ public class InboxActivity extends AppCompatActivity {
         updateToken(FirebaseInstanceId.getInstance().getToken());
 
     }
-
+    //mChats consists of all the user id that user has chatted with, this methods makes the id uniques (removes duplicates)
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void chats(){
         uqChatList = mChats.stream()

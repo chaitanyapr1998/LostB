@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-
                 if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
                     edtEmail.setError("Please enter valid email address");
                     return;
